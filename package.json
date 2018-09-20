@@ -4,6 +4,10 @@
   "version": "0.1.0",
   "main": "index.js",
   "author": "Mohit Sakhuja <sakhuja.mohit@gmail.com>",
+  "repository": {
+      "url": "https://github.com/mohitsakhuja/weather-app",
+      "type": "git"
+  },
   "private": true,
   "dependencies": {
     "react": "^16.5.2",
