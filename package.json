@@ -11,9 +11,10 @@
   "license": "MIT",
   "private": true,
   "engines": {
-      "node": "10.10.0"
+    "node": "10.10.0"
   },
   "dependencies": {
+    "antd": "^3.9.2",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-scripts": "1.1.5"
