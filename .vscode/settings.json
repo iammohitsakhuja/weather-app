@@ -1,8 +1,19 @@
 {
     "editor.formatOnSave": true,
-    "editor.rulers" : [119],
+    "editor.rulers": [
+        79
+    ],
     "[javascript]": {
         "editor.formatOnSave": false,
+        "editor.rulers": [
+            119
+        ]
+    },
+    "[javascriptreact]": {
+        "editor.formatOnSave": false,
+        "editor.rulers": [
+            119
+        ]
     },
     "eslint.autoFixOnSave": true,
     "eslint.alwaysShowStatus": true,
