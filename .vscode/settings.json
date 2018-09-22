@@ -11,4 +11,7 @@
     },
     "eslint.autoFixOnSave": true,
     "eslint.alwaysShowStatus": true,
+    "files.watcherExclude": {
+        "**/node_modules/**": true
+    }
 }
