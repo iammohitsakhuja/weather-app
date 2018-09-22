@@ -1,5 +1,5 @@
 import React from 'react'
-import { Row, Col } from 'antd'
+import { Layout, Row, Col } from 'antd'
 
 import 'antd/dist/antd.css'
 
@@ -8,7 +8,7 @@ import TopBar from './components/TopBar'
 import WeatherCardsSection from './components/WeatherCardsSection'
 
 const App = () => (
-  <div>
+  <Layout>
     <TopBar />
     <Row>
       <Col span={12}>
@@ -18,7 +18,7 @@ const App = () => (
         <InfoCardsSection />
       </Col>
     </Row>
-  </div>
+  </Layout>
 )
 
 export default App
