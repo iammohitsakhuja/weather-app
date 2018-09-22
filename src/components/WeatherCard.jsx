@@ -1,19 +1,11 @@
 import React from 'react'
+import propTypes from 'prop-types'
 import { Card, Row, Col } from 'antd'
+import moment from 'moment'
 
 import 'antd/dist/antd.css'
 
 import Sun from '../img/sun.png'
-
-const styleCard = {
-  backgroundColor: '#FFB100',
-  width: 500,
-  height: 160,
-  color: '#FFFFFF',
-  borderRadius: 3,
-  fontSize: 25,
-  fontWeight: 'bold',
-}
 
 const leftColStyle = {
   marginLeft: 15,
@@ -26,49 +18,74 @@ const rightColStyle = {
   fontSize: 20,
 }
 
-const whetherIcon = {
-  float: 'right',
-  marginRight: 20,
-  height: 50,
-  width: 50,
-  marginBottom: 15,
+const WeatherCard = ({ cardStyle, weatherIcon, weatherInfo }) => {
+  const { location, temperature, time } = weatherInfo
+  const { city, country } = location
+
+  return (
+    <Card bordered={false} style={cardStyle}>
+      <Row type="flex" justify="start">
+        <Col span={12}>
+          <p style={leftColStyle}>
+            {city} &nbsp;
+            <span style={{ fontSize: 15 }}>{country}</span>
+          </p>
+        </Col>
+        <Col span={12}>
+          <img alt="sun" src={Sun} style={weatherIcon} />
+        </Col>
+      </Row>
+
+      <Row type="flex" justify="start">
+        <Col span={12}>
+          <p
+            style={{
+              fontSize: 35,
+              marginLeft: 20,
+              float: 'left',
+            }}
+          >
+            {temperature}
+            &#x2103;
+          </p>
+        </Col>
+        <Col span={12}>
+          <p style={rightColStyle}>
+            {moment(time).format('h:mm')} <span style={{ fontSize: 15 }}>{moment(time).format('A')}</span>
+            <br />
+            <span style={{ fontSize: 15 }}>{moment(time).format('dddd')}</span>
+          </p>
+        </Col>
+      </Row>
+    </Card>
+  )
 }
 
-const WeatherCard = () => (
-  <Card bordered={false} style={styleCard}>
-    <Row type="flex" justify="start">
-      <Col span={12}>
-        <p style={leftColStyle}>
-          Chandigarh, &nbsp;
-          <span style={{ fontSize: 15 }}>India</span>
-        </p>
-      </Col>
-      <Col span={12}>
-        <img alt="sun" src={Sun} style={whetherIcon} />
-      </Col>
-    </Row>
-
-    <Row type="flex" justify="start">
-      <Col span={12}>
-        <p
-          style={{
-            fontSize: 35,
-            marginLeft: 20,
-            float: 'left',
-          }}
-        >
-          36&#x2103;
-        </p>
-      </Col>
-      <Col span={12}>
-        <p style={rightColStyle}>
-          12:18 <span style={{ fontSize: 15 }}>PM</span>
-          <br />
-          <span style={{ fontSize: 15 }}>Wednesday</span>
-        </p>
-      </Col>
-    </Row>
-  </Card>
-)
+WeatherCard.propTypes = {
+  cardStyle: propTypes.shape({
+    backgroundColor: propTypes.string,
+    width: propTypes.number,
+    height: propTypes.number,
+    color: propTypes.string,
+    borderRadius: propTypes.number,
+    fontSize: propTypes.number,
+    fontWeight: propTypes.string,
+  }).isRequired,
+  weatherIcon: propTypes.shape({
+    float: propTypes.string,
+    marginRight: propTypes.number,
+    height: propTypes.number,
+    width: propTypes.number,
+    marginBottom: propTypes.number,
+  }).isRequired,
+  weatherInfo: propTypes.shape({
+    location: propTypes.shape({
+      city: propTypes.string,
+      country: propTypes.string,
+    }),
+    temperature: propTypes.number,
+    time: propTypes.instanceOf(Date),
+  }).isRequired,
+}
 
 export default WeatherCard
