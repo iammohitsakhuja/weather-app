@@ -1,8 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import './styles/index.css'
+
 import App from './App'
-import registerServiceWorker from './registerServiceWorker'
+import registerServiceWorker, { unregister } from './registerServiceWorker'
+
+import './styles/index.css'
 
 ReactDOM.render(<App />, document.getElementById('root'))
-registerServiceWorker()
+if (process.env.NODE_ENV === 'production') registerServiceWorker()
+else unregister()
