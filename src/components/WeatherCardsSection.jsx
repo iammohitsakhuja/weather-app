@@ -1,11 +1,7 @@
 import React from 'react'
 
-const WeatherCardsSection = () => (
-  <ul>
-    <li>lorem ipsum</li>
-    <li>lorem ipsum</li>
-    <li>lorem ipsum</li>
-  </ul>
-)
+import WeatherCard from './WeatherCard'
+
+const WeatherCardsSection = () => <WeatherCard />
 
 export default WeatherCardsSection
