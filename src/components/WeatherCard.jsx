@@ -3,8 +3,6 @@ import propTypes from 'prop-types'
 import { Card, Row, Col } from 'antd'
 import moment from 'moment'
 
-import 'antd/dist/antd.css'
-
 import Sun from '../img/sun.png'
 
 const leftColStyle = {

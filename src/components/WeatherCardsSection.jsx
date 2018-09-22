@@ -1,4 +1,5 @@
 import React from 'react'
+import propTypes from 'prop-types'
 
 import WeatherCard from './WeatherCard'
 
@@ -20,17 +21,26 @@ const weatherIcon = {
   marginBottom: 15,
 }
 
-const weatherInfo = {
-  location: {
-    city: 'Chandigarh',
-    country: 'India',
-  },
-  temperature: 36,
-  time: new Date(),
+const WeatherCardsSection = ({ data }) => {
+  // TODO: Create a loading card.
+  if (data === null) return <h3>Loading...</h3>
+
+  return data.map(city => (
+    <WeatherCard key={city.location.city} cardStyle={cardStyle} weatherIcon={weatherIcon} weatherInfo={city} />
+  ))
 }
 
-const WeatherCardsSection = () => (
-  <WeatherCard cardStyle={cardStyle} weatherIcon={weatherIcon} weatherInfo={weatherInfo} />
-)
+WeatherCardsSection.propTypes = {
+  data: propTypes.arrayOf(
+    propTypes.shape({
+      location: propTypes.shape({
+        city: propTypes.string,
+        country: propTypes.string,
+      }),
+      temperature: propTypes.number,
+      time: propTypes.instanceOf(Date),
+    })
+  ),
+}
 
 export default WeatherCardsSection
