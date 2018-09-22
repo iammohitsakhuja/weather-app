@@ -1,7 +1,9 @@
 import React from 'react'
-import 'antd/dist/antd.css'
 import { Card, Row, Col } from 'antd'
-import Sun from '../sun.png'
+
+import 'antd/dist/antd.css'
+
+import Sun from '../img/sun.png'
 
 const styleCard = {
   backgroundColor: '#FFB100',
