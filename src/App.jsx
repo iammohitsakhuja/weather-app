@@ -1,17 +1,23 @@
 import React from 'react'
+import { Row, Col } from 'antd'
 
-import logo from './logo.svg'
-import './styles/App.css'
+import 'antd/dist/antd.css'
+
+import InfoCardsSection from './components/InfoCardsSection'
+import TopBar from './components/TopBar'
+import WeatherCardsSection from './components/WeatherCardsSection'
 
 const App = () => (
-  <div className="App">
-    <header className="App-header">
-      <img src={logo} className="App-logo" alt="logo" />
-      <h1 className="App-title">Welcome to React</h1>
-    </header>
-    <p className="App-intro">
-      To get started, edit <code>src/App.js</code> and save to reload.
-    </p>
+  <div>
+    <TopBar />
+    <Row>
+      <Col span={12}>
+        <WeatherCardsSection />
+      </Col>
+      <Col span={12}>
+        <InfoCardsSection />
+      </Col>
+    </Row>
   </div>
 )
 
