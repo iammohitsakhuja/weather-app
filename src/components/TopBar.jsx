@@ -22,9 +22,8 @@ class TopBar extends Component {
   }
 
   handleSearch = async value => {
-    const requestURI = `${REACT_APP_AUTOCOMPLETE_URI}&query=${value}`
     try {
-      const response = await axios.get(requestURI)
+      const response = await axios.get(REACT_APP_AUTOCOMPLETE_URI, { params: { query: value } })
       const { suggestions } = response.data
 
       if (suggestions !== undefined) {
@@ -42,16 +41,13 @@ class TopBar extends Component {
   }
 
   handleSelect = async locationId => {
-    const requestURI = `${REACT_APP_PLACE_DETAILS_URI}&locationid=${locationId}`
-
     try {
-      const response = await axios.get(requestURI)
+      const response = await axios.get(REACT_APP_PLACE_DETAILS_URI, { params: { locationid: locationId } })
       const { Latitude, Longitude } = response.data.Response.View[0].Result[0].Location.DisplayPosition
 
-      console.log(Latitude)
-      console.log(Longitude)
+      const { handleClick } = this.props
 
-      // TODO: Add card.
+      handleClick({ lat: Latitude, lng: Longitude })
     } catch (err) {
       console.error(err)
     }
