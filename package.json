@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "antd": "^3.9.2",
+    "axios": "^0.18.0",
     "moment": "^2.22.2",
     "prop-types": "^15.6.2",
     "react": "^16.5.2",
@@ -23,6 +24,7 @@
     "webfontloader": "^1.6.28"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.1.0",
     "babel-eslint": "^9.0.0",
     "eslint": "^5.6.0",
     "eslint-config-airbnb": "^17.1.0",
@@ -34,7 +36,7 @@
     "prettier": "^1.14.3"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "HTTPS=true react-scripts start",
     "build": "react-scripts build",
     "eject": "react-scripts eject"
   }

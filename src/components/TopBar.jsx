@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import { AutoComplete, Input, Layout, Button, Row, Col } from 'antd'
+import { AutoComplete, Layout, Button, Row, Col } from 'antd'
 
 const { Header } = Layout
 
@@ -11,6 +11,10 @@ const topBarBrandStyle = {
   fontSize: 40,
   textAlign: 'center',
 }
+
+const API_URL = 'http://autocomplete.geocoder.api.here.com/6.2/suggest.json?'
+const API_ID = '1SgFftNNmh564V0Fwj8N'
+const API_CODE = 'bLmRUDRHR2DPghWk42I7IA'
 
 class TopBar extends Component {
   state = {
@@ -30,7 +34,13 @@ class TopBar extends Component {
     }
   }
 
-  handleSelect = value => console.log(value)
+  handleSelect = value => {
+    fetch(`https://geocoder.api.here.com/6.2/geocode.json?app_id=${API_ID}&app_code=${API_CODE}&locationid=${value}`)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data)
+      })
+  }
 
   render() {
     const { dataSource } = this.state
@@ -39,14 +49,15 @@ class TopBar extends Component {
       <Header>
         <Row>
           <Col span={8}>
-            <AutoComplete
-              dataSource={dataSource}
-              onSelect={this.handleSelect}
-              onSearch={this.handleSearch}
-              placeholder="City, state, country"
-            >
-              <Input suffix={<Button type="primary" icon="search" style={{ marginRight: -13 }} />} />
-            </AutoComplete>
+            <div>
+              <AutoComplete
+                dataSource={dataSource}
+                onSelect={this.handleSelect}
+                onSearch={this.handleSearch}
+                placeholder="City, state, country"
+              />
+              <Button type="primary" icon="search" shape="circle" />
+            </div>
           </Col>
           <Col span={8} style={topBarBrandStyle}>
             Weather

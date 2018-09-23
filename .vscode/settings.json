@@ -1,7 +1,7 @@
 {
     "editor.formatOnSave": true,
     "editor.rulers": [
-        119
+        79
     ],
     "[javascript]": {
         "editor.formatOnSave": false,
