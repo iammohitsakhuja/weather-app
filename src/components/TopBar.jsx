@@ -5,7 +5,7 @@ import { AutoComplete, Button, Col, Icon, Input, Layout, Row } from 'antd'
 const { Header } = Layout
 const { Option } = AutoComplete
 
-const { REACT_APP_AUTOCOMPLETE_URI } = process.env
+const { REACT_APP_AUTOCOMPLETE_URI, REACT_APP_PLACE_DETAILS_URI } = process.env
 
 // Brand styling.
 const topBarBrandStyle = {
@@ -34,13 +34,28 @@ class TopBar extends Component {
       ))
 
       this.setState({ cities })
-    } catch (error) {
-      console.error(error)
+    } catch (err) {
+      console.error(err)
     }
   }
 
-  handleSelect = async value => {
-    console.log('onSelect', value)
+  handleSelect = async placeId => {
+    const requestURL = `${REACT_APP_PLACE_DETAILS_URI}&placeid=${placeId}`
+
+    try {
+      const response = await axios.get(requestURL)
+      const { result } = response.data
+
+      const { location } = result.geometry
+      const { lat, lng } = location
+
+      console.log(lat)
+      console.log(lng)
+
+      // TODO: Add card over here.
+    } catch (err) {
+      console.error(err)
+    }
   }
 
   render() {
