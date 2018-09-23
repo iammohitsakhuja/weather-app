@@ -1,43 +1,30 @@
 import React from 'react'
 
-import { Layout, Icon, Row, Col } from 'antd'
-import WebFont from 'webfontloader'
+import { AutoComplete, Input, Layout, Button, Row, Col } from 'antd'
 
 const { Header } = Layout
-
-// load font from google
-WebFont.load({
-  google: {
-    families: ['Josefin Sans', 'sans-serif'],
-  },
-})
 
 // brand styling
 const topBarBrandStyle = {
   color: 'White',
-  fontFamily: 'Josefin Sans',
+  fontFamily: 'Spirax',
   fontSize: 40,
   textAlign: 'center',
-}
-
-// icon styling
-const iconStyle = {
-  fontSize: 35,
-  color: 'white',
-  paddingTop: 13,
 }
 
 const TopBar = () => (
   <Header>
     <Row>
       <Col span={8}>
-        <Icon type="search" theme="outlined" style={iconStyle} />
+        <AutoComplete placeholder="City, state, country">
+          <Input suffix={<Button type="primary" icon="search" style={{ marginRight: -13 }} />} />
+        </AutoComplete>
       </Col>
       <Col span={8} style={topBarBrandStyle}>
         Weather
       </Col>
       <Col span={8} style={{ textAlign: 'end' }}>
-        <Icon type="tool" theme="filled" style={iconStyle} />
+        <Button type="primary" icon="tool" shape="circle" />
       </Col>
     </Row>
   </Header>
