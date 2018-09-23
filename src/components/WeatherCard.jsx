@@ -4,6 +4,9 @@ import { Card, Row, Col } from 'antd'
 import moment from 'moment'
 
 import Sun from '../img/sun.png'
+import Moon from '../img/moon.png'
+import Rain from '../img/shower-rain.png'
+import RainSoonNight from '../img/few-cloud-night.png'
 
 const leftColStyle = {
   marginLeft: 15,
@@ -14,6 +17,32 @@ const rightColStyle = {
   marginRight: 15,
   float: 'right',
   fontSize: 20,
+}
+
+const weatherProfiles = {
+  day: {
+    background: '#FFB100',
+    alt: 'sun',
+    src: 'Sun',
+  },
+
+  night: {
+    background: '#004048',
+    alt: 'moon',
+    src: 'Moon',
+  },
+
+  rain: {
+    background: '#4169E1',
+    alt: 'rain',
+    src: 'Rain',
+  },
+
+  rainSoonNight: {
+    background: '#313131',
+    alt: 'rain-soon',
+    src: 'RainSoonNight',
+  },
 }
 
 const WeatherCard = ({ cardStyle, weatherIcon, weatherInfo }) => {
