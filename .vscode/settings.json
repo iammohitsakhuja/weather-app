@@ -1,7 +1,7 @@
 {
     "editor.formatOnSave": true,
     "editor.rulers": [
-        79
+        119
     ],
     "[javascript]": {
         "editor.formatOnSave": false,
@@ -23,4 +23,7 @@
     },
     "eslint.autoFixOnSave": true,
     "eslint.alwaysShowStatus": true,
+    "files.watcherExclude": {
+        "**/node_modules/**": true
+    }
 }
