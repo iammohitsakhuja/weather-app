@@ -5,6 +5,7 @@ import { AutoComplete, Button, Col, Icon, Input, Layout, Row } from 'antd'
 const { Header } = Layout
 const { Option } = AutoComplete
 
+// Get environment variables.
 const { REACT_APP_AUTOCOMPLETE_URI, REACT_APP_PLACE_DETAILS_URI } = process.env
 
 // Brand styling.
@@ -21,35 +22,36 @@ class TopBar extends Component {
   }
 
   handleSearch = async value => {
-    const requestURL = `${REACT_APP_AUTOCOMPLETE_URI}&types=(cities)&input=${value}`
-
+    const requestURI = `${REACT_APP_AUTOCOMPLETE_URI}&query=${value}`
     try {
-      const response = await axios.get(requestURL)
-      const { predictions } = response.data
+      const response = await axios.get(requestURI)
+      const { suggestions } = response.data
 
-      const cities = predictions.map(prediction => (
-        <Option key={prediction.id} value={prediction.place_id} description={prediction.description}>
-          {prediction.description}
-        </Option>
-      ))
+      if (suggestions !== undefined) {
+        const cities = suggestions.map(suggestion => (
+          <Option key={suggestion.locationId} value={suggestion.locationId} label={suggestion.label}>
+            {suggestion.label}
+          </Option>
+        ))
 
-      this.setState({ cities })
+        this.setState({ cities })
+      }
     } catch (err) {
       console.error(err)
     }
   }
 
-  handleSelect = async placeId => {
-    const requestURL = `${REACT_APP_PLACE_DETAILS_URI}&fields=geometry&placeid=${placeId}`
+  handleSelect = async locationId => {
+    const requestURI = `${REACT_APP_PLACE_DETAILS_URI}&locationid=${locationId}`
 
     try {
-      const response = await axios.get(requestURL)
-      const { lat, lng } = response.data.result.geometry.location
+      const response = await axios.get(requestURI)
+      const { Latitude, Longitude } = response.data.Response.View[0].Result[0].Location.DisplayPosition
 
-      console.log(lat)
-      console.log(lng)
+      console.log(Latitude)
+      console.log(Longitude)
 
-      // TODO: Add card over here.
+      // TODO: Add card.
     } catch (err) {
       console.error(err)
     }
@@ -66,7 +68,7 @@ class TopBar extends Component {
               dataSource={cities}
               onSelect={this.handleSelect}
               onSearch={this.handleSearch}
-              optionLabelProp="description"
+              optionLabelProp="label"
               placeholder="City, state, country"
             >
               <Input suffix={<Icon type="search" />} />
