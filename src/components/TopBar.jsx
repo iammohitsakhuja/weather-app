@@ -21,7 +21,7 @@ class TopBar extends Component {
   }
 
   handleSearch = async value => {
-    const requestURL = `${REACT_APP_AUTOCOMPLETE_URI}&input=${value}`
+    const requestURL = `${REACT_APP_AUTOCOMPLETE_URI}&types=(cities)&input=${value}`
 
     try {
       const response = await axios.get(requestURL)
@@ -40,14 +40,11 @@ class TopBar extends Component {
   }
 
   handleSelect = async placeId => {
-    const requestURL = `${REACT_APP_PLACE_DETAILS_URI}&placeid=${placeId}`
+    const requestURL = `${REACT_APP_PLACE_DETAILS_URI}&fields=geometry&placeid=${placeId}`
 
     try {
       const response = await axios.get(requestURL)
-      const { result } = response.data
-
-      const { location } = result.geometry
-      const { lat, lng } = location
+      const { lat, lng } = response.data.result.geometry.location
 
       console.log(lat)
       console.log(lng)
