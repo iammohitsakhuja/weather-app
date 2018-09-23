@@ -1,10 +1,14 @@
 import React, { Component } from 'react'
-
-import { AutoComplete, Layout, Button, Row, Col } from 'antd'
+import axios from 'axios'
+import { AutoComplete, Button, Col, Icon, Input, Layout, Row } from 'antd'
 
 const { Header } = Layout
+const { Option } = AutoComplete
 
-// brand styling
+// Get environment variables.
+const { REACT_APP_AUTOCOMPLETE_URI, REACT_APP_PLACE_DETAILS_URI } = process.env
+
+// Brand styling.
 const topBarBrandStyle = {
   color: 'White',
   fontFamily: 'Spirax',
@@ -12,52 +16,63 @@ const topBarBrandStyle = {
   textAlign: 'center',
 }
 
-const API_URL = 'http://autocomplete.geocoder.api.here.com/6.2/suggest.json?'
-const API_ID = '1SgFftNNmh564V0Fwj8N'
-const API_CODE = 'bLmRUDRHR2DPghWk42I7IA'
-
 class TopBar extends Component {
   state = {
-    dataSource: [],
+    cities: [],
   }
 
-  handleSearch = value => {
-    if (value !== '') {
-      fetch(`${API_URL}&app_id=${API_ID}&app_code=${API_CODE}&query=${value}`)
-        .then(response => response.json())
-        .then(data => {
-          const temp = data.suggestions.map(city => ({ value: city.locationId, text: city.label }))
-          this.setState({
-            dataSource: temp,
-          })
-        })
+  handleSearch = async value => {
+    const requestURI = `${REACT_APP_AUTOCOMPLETE_URI}&query=${value}`
+    try {
+      const response = await axios.get(requestURI)
+      const { suggestions } = response.data
+
+      if (suggestions !== undefined) {
+        const cities = suggestions.map(suggestion => (
+          <Option key={suggestion.locationId} value={suggestion.locationId} label={suggestion.label}>
+            {suggestion.label}
+          </Option>
+        ))
+
+        this.setState({ cities })
+      }
+    } catch (err) {
+      console.error(err)
     }
   }
 
-  handleSelect = value => {
-    fetch(`https://geocoder.api.here.com/6.2/geocode.json?app_id=${API_ID}&app_code=${API_CODE}&locationid=${value}`)
-      .then(response => response.json())
-      .then(data => {
-        console.log(data)
-      })
+  handleSelect = async locationId => {
+    const requestURI = `${REACT_APP_PLACE_DETAILS_URI}&locationid=${locationId}`
+
+    try {
+      const response = await axios.get(requestURI)
+      const { Latitude, Longitude } = response.data.Response.View[0].Result[0].Location.DisplayPosition
+
+      console.log(Latitude)
+      console.log(Longitude)
+
+      // TODO: Add card.
+    } catch (err) {
+      console.error(err)
+    }
   }
 
   render() {
-    const { dataSource } = this.state
+    const { cities } = this.state
 
     return (
       <Header>
         <Row>
           <Col span={8}>
-            <div>
-              <AutoComplete
-                dataSource={dataSource}
-                onSelect={this.handleSelect}
-                onSearch={this.handleSearch}
-                placeholder="City, state, country"
-              />
-              <Button type="primary" icon="search" shape="circle" />
-            </div>
+            <AutoComplete
+              dataSource={cities}
+              onSelect={this.handleSelect}
+              onSearch={this.handleSearch}
+              optionLabelProp="label"
+              placeholder="City, state, country"
+            >
+              <Input suffix={<Icon type="search" />} />
+            </AutoComplete>
           </Col>
           <Col span={8} style={topBarBrandStyle}>
             Weather
