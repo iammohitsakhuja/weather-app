@@ -6,8 +6,8 @@ An app that displays weather info. Built with React.
 
 ## Contributing
 
-For contributing guidelines, go through [CONTRIBUTING](CONTRIBUTING.md).
+For contributing guidelines, go through [CONTRIBUTING](.github/CONTRIBUTING.md).
 
 ## Contributors
 
-Full list of contributors and maintainers is available [here](CONTRIBUTORS.md).
+Full list of contributors and maintainers is available [here](.github/CONTRIBUTORS.md).
