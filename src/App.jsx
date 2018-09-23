@@ -1,10 +1,6 @@
 import React, { Component } from 'react'
 import { Row, Col } from 'antd'
 
-import 'antd/dist/antd.css'
-
-import './fonts'
-
 import InfoCardsSection from './components/InfoCardsSection'
 import TopBar from './components/TopBar'
 import WeatherCardsSection from './components/WeatherCardsSection'
