@@ -8,6 +8,24 @@ import Moon from '../img/moon.png'
 import Rain from '../img/shower-rain.png'
 import RainSoonNight from '../img/few-cloud-night.png'
 
+const cardStyle = {
+  backgroundColor: '#FFB100',
+  width: 500,
+  height: 160,
+  color: '#FFFFFF',
+  borderRadius: 3,
+  fontSize: 25,
+  fontWeight: 'bold',
+}
+
+const weatherIcon = {
+  float: 'right',
+  marginRight: 20,
+  height: 50,
+  width: 50,
+  marginBottom: 15,
+}
+
 const leftColStyle = {
   marginLeft: 15,
   float: 'left',
@@ -45,8 +63,8 @@ const weatherProfiles = {
   },
 }
 
-const WeatherCard = ({ location, cardStyle, weatherIcon }) => {
-  const { latitude, longitude, currently } = location
+const WeatherCard = ({ location }) => {
+  const { city, country, currently } = location
   const { temperature } = currently
   const time = Date.now()
 
@@ -55,8 +73,8 @@ const WeatherCard = ({ location, cardStyle, weatherIcon }) => {
       <Row type="flex" justify="start">
         <Col span={12}>
           <p style={leftColStyle}>
-            {latitude} &nbsp;
-            <span style={{ fontSize: 15 }}>{longitude}</span>
+            {city} &nbsp;
+            <span style={{ fontSize: 15 }}>{country}</span>
           </p>
         </Col>
         <Col span={12}>
@@ -73,7 +91,7 @@ const WeatherCard = ({ location, cardStyle, weatherIcon }) => {
               float: 'left',
             }}
           >
-            {temperature}
+            {parseInt(temperature)}
             &#x2103;
           </p>
         </Col>
@@ -90,25 +108,13 @@ const WeatherCard = ({ location, cardStyle, weatherIcon }) => {
 }
 
 WeatherCard.propTypes = {
-  cardStyle: propTypes.shape({
-    backgroundColor: propTypes.string,
-    width: propTypes.number,
-    height: propTypes.number,
-    color: propTypes.string,
-    borderRadius: propTypes.number,
-    fontSize: propTypes.number,
-    fontWeight: propTypes.string,
-  }).isRequired,
-  weatherIcon: propTypes.shape({
-    float: propTypes.string,
-    marginRight: propTypes.number,
-    height: propTypes.number,
-    width: propTypes.number,
-    marginBottom: propTypes.number,
-  }).isRequired,
   location: propTypes.shape({
-    latitude: propTypes.number.isRequired,
-    longitude: propTypes.number.isRequired,
+    locationId: propTypes.string.isRequired,
+    city: propTypes.string.isRequired,
+    state: propTypes.string.isRequired,
+    country: propTypes.string.isRequired,
+    lat: propTypes.number.isRequired,
+    lng: propTypes.number.isRequired,
     currently: propTypes.shape({
       time: propTypes.number.isRequired,
       summary: propTypes.string,

@@ -3,43 +3,22 @@ import propTypes from 'prop-types'
 
 import WeatherCard from './WeatherCard'
 
-const cardStyle = {
-  backgroundColor: '#FFB100',
-  width: 500,
-  height: 160,
-  color: '#FFFFFF',
-  borderRadius: 3,
-  fontSize: 25,
-  fontWeight: 'bold',
-}
-
-const weatherIcon = {
-  float: 'right',
-  marginRight: 20,
-  height: 50,
-  width: 50,
-  marginBottom: 15,
-}
-
 const WeatherCardsSection = ({ locations }) => {
-  // TODO: Create a loading card.
   if (locations.length === 0) return <h3>Search for a location!</h3>
 
-  return locations.map(location => (
-    <WeatherCard
-      key={location.latitude.toString() + location.longitude.toString()}
-      cardStyle={cardStyle}
-      location={location}
-      weatherIcon={weatherIcon}
-    />
-  ))
+  return locations.map(location => <WeatherCard key={location.locationId} location={location} />)
 }
 
+// Type checking for received props.
 WeatherCardsSection.propTypes = {
   locations: propTypes.arrayOf(
     propTypes.shape({
-      latitude: propTypes.number.isRequired,
-      longitude: propTypes.number.isRequired,
+      locationId: propTypes.string.isRequired,
+      city: propTypes.string.isRequired,
+      state: propTypes.string.isRequired,
+      country: propTypes.string.isRequired,
+      lat: propTypes.number.isRequired,
+      lng: propTypes.number.isRequired,
       currently: propTypes.shape({
         time: propTypes.number.isRequired,
         summary: propTypes.string,
