@@ -1,19 +1,25 @@
-import React from 'react'
-import { Skeleton, Card, Icon, Avatar } from 'antd'
+import React, { Component } from 'react'
+import { Card, Col, Icon, Row } from 'antd'
 
-const { Meta } = Card
+import { CloudyDay } from '../icons'
 
 const styles = {
-  marginTop: 50,
-  marginLeft: 50,
-  height: 350,
-  backgroundColor: '#FFFF99',
+  margin: 20,
+  backgroundColor: '#1890ff',
   width: 500,
   fontSize: 20,
-  borderWidth: 2,
+  color: '#fff',
 }
 
-class InfoCard extends React.Component {
+const weatherIcon = {
+  float: 'right',
+  marginRight: 20,
+  height: 50,
+  width: 50,
+  marginBottom: 15,
+}
+
+class InfoCard extends Component {
   state = {
     loading: false,
   }
@@ -22,20 +28,26 @@ class InfoCard extends React.Component {
     const { loading } = this.state
 
     return (
-      <Card style={styles} actions={[<Icon type="edit" />, <Icon type="ellipsis" />]}>
-        <h1>Patiala</h1>
-        <Skeleton loading={loading} avatar active>
-          <Meta
-            avatar={
-              <Avatar
-                src="https://tiresandparts.net/wp-content/uploads/stay-cool-article-1-1-2.jpg"
-                size={40}
-                shape="square"
-              />
-            }
-            description="Garmi Bahut Hai Yaar"
-          />
-        </Skeleton>
+      <Card bordered={false} loading={loading} style={styles} hoverable>
+        <Row type="flex" justify="start">
+          <Col span={4}>
+            <img alt="Weather icon" src={CloudyDay} style={weatherIcon} />
+          </Col>
+          <Col span={14}>
+            <p>Right Now</p>
+            <p>Moderate rain</p>
+          </Col>
+          <Col span={6}>
+            <p style={{ fontSize: 35, marginLeft: 20, float: 'left' }}>21&#x2103;</p>
+          </Col>
+        </Row>
+        <Row type="flex" justify="space-around">
+          <Icon type="loading" />
+          <Icon type="loading" />
+          <Icon type="loading" />
+          <Icon type="loading" />
+          <Icon type="loading" />
+        </Row>
       </Card>
     )
   }

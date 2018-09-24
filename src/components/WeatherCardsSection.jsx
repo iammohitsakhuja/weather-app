@@ -1,12 +1,22 @@
 import React from 'react'
 import propTypes from 'prop-types'
+import { Row } from 'antd'
 
 import WeatherCard from './WeatherCard'
 
 const WeatherCardsSection = ({ locations }) => {
-  if (locations.length === 0) return <h3>Search for a location!</h3>
+  const children =
+    locations.length === 0 ? (
+      <h3>Search for a location!</h3>
+    ) : (
+      locations.map(location => <WeatherCard key={location.locationId} location={location} />)
+    )
 
-  return locations.map(location => <WeatherCard key={location.locationId} location={location} />)
+  return (
+    <Row type="flex" justify="center">
+      {children}
+    </Row>
+  )
 }
 
 // Type checking for received props.
