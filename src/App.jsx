@@ -13,7 +13,6 @@ class App extends Component {
     locations: [],
   }
 
-  // handleClick = async ({ city, state, country, locationId, lat, lng }) => {
   handleClick = async location => {
     const requestURI = `${REACT_APP_WEATHER_API_URI}/${location.lat},${location.lng}?`
     console.log(requestURI)
