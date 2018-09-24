@@ -3,10 +3,7 @@ import propTypes from 'prop-types'
 import { Card, Row, Col } from 'antd'
 import moment from 'moment'
 
-import Sun from '../img/sun.png'
-import Moon from '../img/moon.png'
-import Rain from '../img/shower-rain.png'
-import RainSoonNight from '../img/few-cloud-night.png'
+import { SunnyDay } from '../icons'
 
 const cardStyle = {
   backgroundColor: '#FFB100',
@@ -78,7 +75,7 @@ const WeatherCard = ({ location }) => {
           </p>
         </Col>
         <Col span={12}>
-          <img alt="sun" src={Sun} style={weatherIcon} />
+          <img alt="Weather icon" src={SunnyDay} style={weatherIcon} />
         </Col>
       </Row>
 
@@ -91,7 +88,8 @@ const WeatherCard = ({ location }) => {
               float: 'left',
             }}
           >
-            {parseInt(temperature)}
+            {/* eslint-disable-next-line */}
+            {parseInt(temperature, 10)}
             &#x2103;
           </p>
         </Col>
