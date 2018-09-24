@@ -4,6 +4,9 @@ import { Card, Row, Col } from 'antd'
 import moment from 'moment'
 
 import Sun from '../img/sun.png'
+import Moon from '../img/moon.png'
+import Rain from '../img/shower-rain.png'
+import RainSoonNight from '../img/few-cloud-night.png'
 
 const leftColStyle = {
   marginLeft: 15,
@@ -16,17 +19,44 @@ const rightColStyle = {
   fontSize: 20,
 }
 
-const WeatherCard = ({ cardStyle, weatherIcon, weatherInfo }) => {
-  const { location, temperature, time } = weatherInfo
-  const { city, country } = location
+const weatherProfiles = {
+  day: {
+    background: '#FFB100',
+    alt: 'sun',
+    src: 'Sun',
+  },
+
+  night: {
+    background: '#004048',
+    alt: 'moon',
+    src: 'Moon',
+  },
+
+  rain: {
+    background: '#4169E1',
+    alt: 'rain',
+    src: 'Rain',
+  },
+
+  rainSoonNight: {
+    background: '#313131',
+    alt: 'rain-soon',
+    src: 'RainSoonNight',
+  },
+}
+
+const WeatherCard = ({ location, cardStyle, weatherIcon }) => {
+  const { latitude, longitude, currently } = location
+  const { temperature } = currently
+  const time = Date.now()
 
   return (
     <Card bordered={false} style={cardStyle}>
       <Row type="flex" justify="start">
         <Col span={12}>
           <p style={leftColStyle}>
-            {city} &nbsp;
-            <span style={{ fontSize: 15 }}>{country}</span>
+            {latitude} &nbsp;
+            <span style={{ fontSize: 15 }}>{longitude}</span>
           </p>
         </Col>
         <Col span={12}>
@@ -76,13 +106,28 @@ WeatherCard.propTypes = {
     width: propTypes.number,
     marginBottom: propTypes.number,
   }).isRequired,
-  weatherInfo: propTypes.shape({
-    location: propTypes.shape({
-      city: propTypes.string,
-      country: propTypes.string,
-    }),
-    temperature: propTypes.number,
-    time: propTypes.instanceOf(Date),
+  location: propTypes.shape({
+    latitude: propTypes.number.isRequired,
+    longitude: propTypes.number.isRequired,
+    currently: propTypes.shape({
+      time: propTypes.number.isRequired,
+      summary: propTypes.string,
+      icon: propTypes.string.isRequired,
+      precipIntensity: propTypes.number,
+      precipType: propTypes.string,
+      temperature: propTypes.number.isRequired,
+      apparentTemperature: propTypes.number.isRequired,
+      dewPoint: propTypes.number,
+      humidity: propTypes.number.isRequired,
+      pressure: propTypes.number.isRequired,
+      windSpeed: propTypes.number.isRequired,
+      windGust: propTypes.number,
+      windBearing: propTypes.number,
+      cloudCover: propTypes.number,
+      uvIndex: propTypes.number,
+      visibility: propTypes.number,
+      ozone: propTypes.number,
+    }).isRequired,
   }).isRequired,
 }
 

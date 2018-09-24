@@ -1,53 +1,47 @@
 import React, { Component } from 'react'
 import { Row, Col } from 'antd'
-
-import 'antd/dist/antd.css'
-
-import './fonts'
+import axios from 'axios'
 
 import InfoCardsSection from './components/InfoCardsSection'
 import TopBar from './components/TopBar'
 import WeatherCardsSection from './components/WeatherCardsSection'
 
+const { REACT_APP_WEATHER_API_URI } = process.env
+
 class App extends Component {
   state = {
-    cities: ['Chandigarh', 'Patiala'],
-    data: [],
+    locations: [],
   }
 
-  componentDidMount() {
-    // TODO: Make API requests here.
-    const { cities } = this.state
-    this.setState({
-      data: [
-        {
-          location: {
-            city: cities[0],
-            country: 'India',
-          },
-          temperature: 36,
-          time: new Date(),
+  handleClick = async ({ lat, lng }) => {
+    const requestURI = `${REACT_APP_WEATHER_API_URI}/${lat},${lng}?`
+    console.log(requestURI)
+
+    try {
+      const response = await axios.get(requestURI, {
+        params: {
+          exclude: 'minutely,hourly,daily',
+          units: 'ca',
         },
-        {
-          location: {
-            city: cities[1],
-            country: 'India',
-          },
-          temperature: 42,
-          time: new Date(),
-        },
-      ],
-    })
+      })
+
+      const { currently, latitude, longitude } = response.data
+      this.setState(prevState => ({
+        locations: [...prevState.locations, { latitude, longitude, currently }],
+      }))
+    } catch (err) {
+      console.error(err)
+    }
   }
 
   render() {
-    const { data } = this.state
+    const { locations } = this.state
     return (
       <div>
-        <TopBar />
+        <TopBar handleClick={this.handleClick} />
         <Row>
           <Col span={12}>
-            <WeatherCardsSection data={data} />
+            <WeatherCardsSection locations={locations} />
           </Col>
           <Col span={12}>
             <InfoCardsSection />
