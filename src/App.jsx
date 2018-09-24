@@ -13,8 +13,8 @@ class App extends Component {
     locations: [],
   }
 
-  handleClick = async ({ lat, lng }) => {
-    const requestURI = `${REACT_APP_WEATHER_API_URI}/${lat},${lng}?`
+  handleClick = async location => {
+    const requestURI = `${REACT_APP_WEATHER_API_URI}/${location.lat},${location.lng}?`
     console.log(requestURI)
 
     try {
@@ -27,7 +27,7 @@ class App extends Component {
 
       const { currently, latitude, longitude } = response.data
       this.setState(prevState => ({
-        locations: [...prevState.locations, { latitude, longitude, currently }],
+        locations: [...prevState.locations, { ...location, lat: latitude, lng: longitude, currently }],
       }))
     } catch (err) {
       console.error(err)
