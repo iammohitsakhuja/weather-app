@@ -21,6 +21,10 @@
     "[jsonc]": {
         "editor.formatOnSave": true
     },
+    "[css]": {
+        "editor.tabSize": 4,
+        "editor.formatOnSave": true
+    },
     "eslint.autoFixOnSave": true,
     "eslint.alwaysShowStatus": true,
     "files.watcherExclude": {

@@ -1,15 +1,16 @@
+import { Col, Row } from 'antd'
 import React, { Component } from 'react'
-import { Row, Col } from 'antd'
 import axios from 'axios'
 
 import InfoCardsSection from './components/InfoCardsSection'
-import TopBar from './components/TopBar'
+import TopBar from './components/TopBar/index'
 import WeatherCardsSection from './components/WeatherCardsSection'
 
 const { REACT_APP_WEATHER_API_URI } = process.env
 
 class App extends Component {
   state = {
+    // Dummy initial location.
     locations: [
       {
         city: 'Sahibzada Ajit Singh Nagar',
@@ -42,11 +43,13 @@ class App extends Component {
     ],
   }
 
-  handleClick = async location => {
+  /** Action to take when user selects a city from Search Bar. */
+  handleCitySelect = async location => {
     const requestURI = `${REACT_APP_WEATHER_API_URI}/${location.lat},${location.lng}?`
     console.log(requestURI)
 
     try {
+      // Fetch data.
       const response = await axios.get(requestURI, {
         params: {
           exclude: 'minutely,hourly,daily',
@@ -54,6 +57,7 @@ class App extends Component {
         },
       })
 
+      // Change state accordingly.
       const { currently, latitude, longitude } = response.data
       this.setState(prevState => ({
         locations: [...prevState.locations, { ...location, lat: latitude, lng: longitude, currently }],
@@ -67,7 +71,7 @@ class App extends Component {
     const { locations } = this.state
     return (
       <div>
-        <TopBar handleClick={this.handleClick} />
+        <TopBar handleCitySelect={this.handleCitySelect} />
         <Row type="flex" justify="space-around">
           <Col xs={24} sm={24} md={24} lg={12} xl={12}>
             <WeatherCardsSection locations={locations} />
