@@ -120,8 +120,12 @@ class TopBar extends Component {
               <Col span={8}>
                 {searchInput} {searchButton}
               </Col>
-              <Col span={8}>{brand}</Col>
-              <Col span={8}>{settingButton}</Col>
+              <Col span={8} className="topbar-brand">
+                {brand}
+              </Col>
+              <Col span={8} style={{ textAlign: 'end' }}>
+                {settingButton}
+              </Col>
             </Row>
           </MediaQuery>
         </Header>
