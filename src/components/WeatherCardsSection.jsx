@@ -1,19 +1,25 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import { Row } from 'antd'
+import { Col, Row } from 'antd'
 
 import WeatherCard from './WeatherCard'
+
+import '../styles/weather-card.css'
 
 const WeatherCardsSection = ({ locations }) => {
   const children =
     locations.length === 0 ? (
       <h3>Search for a location!</h3>
     ) : (
-      locations.map(location => <WeatherCard key={location.locationId} location={location} />)
+      locations.map(location => (
+        <Col key={location.locationId} className="weather-card-container" span={18}>
+          <WeatherCard location={location} />
+        </Col>
+      ))
     )
 
   return (
-    <Row type="flex" justify="center">
+    <Row className="weather-cards-section" gutter={12}>
       {children}
     </Row>
   )

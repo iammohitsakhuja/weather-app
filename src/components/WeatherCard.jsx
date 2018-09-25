@@ -5,35 +5,6 @@ import moment from 'moment'
 
 import { SunnyDay } from '../icons'
 
-const cardStyle = {
-  backgroundColor: '#FFB100',
-  width: 500,
-  height: 160,
-  color: '#FFFFFF',
-  borderRadius: 3,
-  fontSize: 25,
-  fontWeight: 'bold',
-}
-
-const weatherIcon = {
-  float: 'right',
-  marginRight: 20,
-  height: 50,
-  width: 50,
-  marginBottom: 15,
-}
-
-const leftColStyle = {
-  marginLeft: 15,
-  float: 'left',
-}
-
-const rightColStyle = {
-  marginRight: 15,
-  float: 'right',
-  fontSize: 20,
-}
-
 const weatherProfiles = {
   day: {
     background: '#FFB100',
@@ -66,39 +37,26 @@ const WeatherCard = ({ location }) => {
   const time = Date.now()
 
   return (
-    <Card bordered={false} style={cardStyle}>
-      <Row type="flex" justify="start">
-        <Col span={12}>
-          <p style={leftColStyle}>
-            {city} &nbsp;
-            <span style={{ fontSize: 15 }}>{country}</span>
-          </p>
+    <Card className="weather-card" bordered={false} style={{ backgroundColor: '#ffb100' }}>
+      <Row>
+        <Col span={20}>
+          <p className="weather-card-city">{city}</p>
+          <p className="weather-card-info">{country}</p>
         </Col>
-        <Col span={12}>
-          <img alt="Weather icon" src={SunnyDay} style={weatherIcon} />
+        <Col span={4} align="middle">
+          <img className="weather-card-icon" alt="Weather icon" src={SunnyDay} />
         </Col>
       </Row>
 
-      <Row type="flex" justify="start">
-        <Col span={12}>
-          <p
-            style={{
-              fontSize: 35,
-              marginLeft: 20,
-              float: 'left',
-            }}
-          >
-            {/* eslint-disable-next-line */}
-            {parseInt(temperature, 10)}
-            &#x2103;
-          </p>
+      <Row type="flex" justify="space-between">
+        <Col className="weather-card-temperature" span={6}>
+          {/* eslint-disable-next-line */}
+          {parseInt(temperature, 10)}
+          &#x2103;
         </Col>
-        <Col span={12}>
-          <p style={rightColStyle}>
-            {moment(time).format('h:mm')} <span style={{ fontSize: 15 }}>{moment(time).format('A')}</span>
-            <br />
-            <span style={{ fontSize: 15 }}>{moment(time).format('dddd')}</span>
-          </p>
+        <Col span={6} className="weather-card-time">
+          <div className="weather-card-time-number">{moment(time).format('h:mm')}</div>
+          <div className="weather-card-time-ampm">{moment(time).format('A')}</div>
         </Col>
       </Row>
     </Card>
