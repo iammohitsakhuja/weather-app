@@ -1,0 +1,26 @@
+.topbar-brand {
+  color: white;
+  font-family: 'spirax';
+  font-size: 20px;
+  text-align: center;
+}
+
+.ant-layout-header {
+  height: 100%;
+}
+
+.topbar-setting {
+  text-align: end;
+}
+
+.topbar-setting, .ant-btn {
+  border: none;
+}
+
+.ant-select-auto-complete {
+  width: 70%;
+}
+
+.ant-menu.ant-menu-dark .ant-menu-item-selected, .ant-menu-submenu-popup.ant-menu-dark .ant-menu-item-selected {
+  background: none;
+}
