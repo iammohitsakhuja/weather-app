@@ -11,7 +11,7 @@ const { REACT_APP_AUTOCOMPLETE_URI, REACT_APP_PLACE_DETAILS_URI } = process.env
 // Brand styling.
 const topBarBrandStyle = {
   color: 'White',
-  fontFamily: 'Spirax',
+  fontFamily: 'Cookie, Satisfy',
   fontSize: 40,
   textAlign: 'center',
 }

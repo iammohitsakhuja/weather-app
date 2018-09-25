@@ -1,12 +1,18 @@
 import React from 'react'
-import { Row } from 'antd'
+import { Col, Row } from 'antd'
 
 import InfoCard from './InfoCard'
 
+import '../styles/info-card.css'
+
 const InfoCardsSection = () => (
-  <Row style={{ padding: 30 }}>
-    <InfoCard />
-    <InfoCard />
+  <Row className="info-cards-section">
+    <Col span={18}>
+      <InfoCard />
+    </Col>
+    <Col span={18}>
+      <InfoCard />
+    </Col>
   </Row>
 )
 
