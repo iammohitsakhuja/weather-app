@@ -2,8 +2,11 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import { AutoComplete, Button, Layout, Menu, Row, Col } from 'antd'
 import MediaQuery from 'react-responsive'
+import propTypes from 'prop-types'
 
-import '../styles/TopBar.css'
+import SearchBar from './SearchBar'
+
+import '../../styles/top-bar.css'
 
 const { Header } = Layout
 const { Option } = AutoComplete
@@ -11,38 +14,25 @@ const { Option } = AutoComplete
 // Get environment variables.
 const { REACT_APP_AUTOCOMPLETE_URI, REACT_APP_PLACE_DETAILS_URI } = process.env
 
-// Render search bar according to state
-const SearchBar = ({ state, dataSource, Select, Search }) => {
-  if (!state) {
-    return null
-  }
-
-  return (
-    <AutoComplete
-      allowClear
-      autoFocus
-      dataSource={dataSource}
-      onSelect={Select}
-      onSearch={Search}
-      optionLabelProp="label"
-      placeholder="City, state, country"
-    />
-  )
-}
-
 class TopBar extends Component {
   state = {
     cities: [],
     toggleSearch: false,
   }
 
-  // Get prediction results
+  brand = <span className="topbar-brand">Weather</span>
+
+  settingButton = <Button icon="tool" shape="circle" ghost size="large" />
+
+  /** Gets prediction results when input is changed in the Search Bar. */
   handleSearch = async value => {
     try {
+      // Fetch data.
       const response = await axios.get(REACT_APP_AUTOCOMPLETE_URI, { params: { query: value } })
       const { suggestions } = response.data
 
       if (suggestions !== undefined) {
+        // Process received data.
         const cities = suggestions.map(suggestion => {
           const { address } = suggestion
           const data = {
@@ -62,6 +52,7 @@ class TopBar extends Component {
           )
         })
 
+        // Update state.
         this.setState({ cities })
       }
     } catch (err) {
@@ -69,20 +60,21 @@ class TopBar extends Component {
     }
   }
 
+  /** Fetches the latitude and longitude (among other things) of the selected location, and hands it over to the App. */
   handleSelect = async (locationId, suggestion) => {
     try {
       const response = await axios.get(REACT_APP_PLACE_DETAILS_URI, { params: { locationid: locationId } })
       const { Latitude, Longitude } = response.data.Response.View[0].Result[0].Location.DisplayPosition
 
-      const { handleClick } = this.props
+      const { handleCitySelect } = this.props
 
-      handleClick({ ...suggestion.props.data, locationId, lat: Latitude, lng: Longitude })
+      handleCitySelect({ ...suggestion.props.data, locationId, lat: Latitude, lng: Longitude })
     } catch (err) {
       console.error(err)
     }
   }
 
-  // change search bar state
+  /** Change search bar state. */
   handleToggleClick = () => {
     this.setState(prevState => ({
       toggleSearch: !prevState.toggleSearch,
@@ -90,14 +82,16 @@ class TopBar extends Component {
   }
 
   render() {
-    const { cities } = this.state
-    const { toggleSearch } = this.state
+    const { cities, toggleSearch } = this.state
 
     const searchButton = <Button icon="search" shape="circle" ghost size="large" onClick={this.handleToggleClick} />
-    const brand = <span className="topbar-brand">Weather</span>
-    const settingButton = <Button icon="tool" shape="circle" ghost size="large" />
     const searchInput = (
-      <SearchBar state={toggleSearch} dataSource={cities} Select={this.handleSelect} Search={this.handleSearch} />
+      <SearchBar
+        state={toggleSearch}
+        dataSource={cities}
+        handleSelect={this.handleSelect}
+        handleSearch={this.handleSearch}
+      />
     )
 
     return (
@@ -106,10 +100,10 @@ class TopBar extends Component {
           {/* Mobile layout */}
           <MediaQuery maxWidth={720}>
             <Menu mode="inline" theme="dark">
-              <Menu.SubMenu title={brand}>
+              <Menu.SubMenu title={this.brand}>
                 <Menu.Item>{searchButton}</Menu.Item>
                 {toggleSearch ? <Menu.Item>{searchInput}</Menu.Item> : null}
-                <Menu.Item>{settingButton}</Menu.Item>
+                <Menu.Item>{this.settingButton}</Menu.Item>
               </Menu.SubMenu>
             </Menu>
           </MediaQuery>
@@ -121,10 +115,10 @@ class TopBar extends Component {
                 {searchInput} {searchButton}
               </Col>
               <Col span={8} className="topbar-brand">
-                {brand}
+                {this.brand}
               </Col>
               <Col span={8} style={{ textAlign: 'end' }}>
-                {settingButton}
+                {this.settingButton}
               </Col>
             </Row>
           </MediaQuery>
@@ -132,6 +126,10 @@ class TopBar extends Component {
       </Layout>
     )
   }
+}
+
+TopBar.propTypes = {
+  handleCitySelect: propTypes.func.isRequired,
 }
 
 export default TopBar
