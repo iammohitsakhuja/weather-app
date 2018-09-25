@@ -12,17 +12,13 @@ const WeatherCardsSection = ({ locations }) => {
       <h3>Search for a location!</h3>
     ) : (
       locations.map(location => (
-        <Col key={location.locationId} className="weather-card-container" span={18}>
+        <Col key={location.locationId} span={18}>
           <WeatherCard location={location} />
         </Col>
       ))
     )
 
-  return (
-    <Row className="weather-cards-section" gutter={12}>
-      {children}
-    </Row>
-  )
+  return <Row className="weather-cards-section">{children}</Row>
 }
 
 // Type checking for received props.
