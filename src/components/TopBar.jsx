@@ -19,6 +19,8 @@ const SearchBar = ({ state, dataSource, Select, Search }) => {
 
   return (
     <AutoComplete
+      allowClear
+      autoFocus
       dataSource={dataSource}
       onSelect={Select}
       onSearch={Search}
@@ -41,11 +43,24 @@ class TopBar extends Component {
       const { suggestions } = response.data
 
       if (suggestions !== undefined) {
-        const cities = suggestions.map(suggestion => (
-          <Option key={suggestion.locationId} value={suggestion.locationId} label={suggestion.label}>
-            {suggestion.label}
-          </Option>
-        ))
+        const cities = suggestions.map(suggestion => {
+          const { address } = suggestion
+          const data = {
+            state: address.state,
+            country: address.country,
+          }
+
+          if (address.city !== undefined) data.city = address.city
+          else if (address.county !== undefined) data.city = address.county
+          else if (address.state !== undefined) data.city = address.state
+          else data.city = address.country
+
+          return (
+            <Option key={suggestion.locationId} value={suggestion.locationId} label="" data={data}>
+              {suggestion.label}
+            </Option>
+          )
+        })
 
         this.setState({ cities })
       }
@@ -54,15 +69,14 @@ class TopBar extends Component {
     }
   }
 
-  // Get temperature for selected result
-  handleSelect = async locationId => {
+  handleSelect = async (locationId, suggestion) => {
     try {
       const response = await axios.get(REACT_APP_PLACE_DETAILS_URI, { params: { locationid: locationId } })
       const { Latitude, Longitude } = response.data.Response.View[0].Result[0].Location.DisplayPosition
 
       const { handleClick } = this.props
 
-      handleClick({ lat: Latitude, lng: Longitude })
+      handleClick({ ...suggestion.props.data, locationId, lat: Latitude, lng: Longitude })
     } catch (err) {
       console.error(err)
     }

@@ -10,11 +10,40 @@ const { REACT_APP_WEATHER_API_URI } = process.env
 
 class App extends Component {
   state = {
-    locations: [],
+    locations: [
+      {
+        city: 'Sahibzada Ajit Singh Nagar',
+        country: 'India',
+        currently: {
+          apparentTemperature: 23.81,
+          cloudCover: 0.71,
+          dewPoint: 19.86,
+          humidity: 0.81,
+          icon: 'partly-cloudy-day',
+          ozone: 271.19,
+          precipIntensity: 0.0838,
+          precipProbability: 0.05,
+          precipType: 'rain',
+          pressure: 1010.46,
+          summary: 'Mostly Cloudy',
+          temperature: 23.3,
+          time: 1537850377,
+          uvIndex: 5,
+          visibility: 16.09,
+          windBearing: 232,
+          windGust: 10.44,
+          windSpeed: 2.29,
+        },
+        lat: 30.70347,
+        lng: 76.69162,
+        locationId: 'NT_slcvtDdQxNuhascaVc1.yD',
+        state: 'PB',
+      },
+    ],
   }
 
-  handleClick = async ({ lat, lng }) => {
-    const requestURI = `${REACT_APP_WEATHER_API_URI}/${lat},${lng}?`
+  handleClick = async location => {
+    const requestURI = `${REACT_APP_WEATHER_API_URI}/${location.lat},${location.lng}?`
     console.log(requestURI)
 
     try {
@@ -27,7 +56,7 @@ class App extends Component {
 
       const { currently, latitude, longitude } = response.data
       this.setState(prevState => ({
-        locations: [...prevState.locations, { latitude, longitude, currently }],
+        locations: [...prevState.locations, { ...location, lat: latitude, lng: longitude, currently }],
       }))
     } catch (err) {
       console.error(err)
@@ -39,11 +68,11 @@ class App extends Component {
     return (
       <div>
         <TopBar handleClick={this.handleClick} />
-        <Row>
-          <Col span={12}>
+        <Row type="flex" justify="space-around">
+          <Col xs={24} sm={24} md={24} lg={12} xl={12}>
             <WeatherCardsSection locations={locations} />
           </Col>
-          <Col span={12}>
+          <Col xs={24} sm={24} md={24} lg={12} xl={12}>
             <InfoCardsSection />
           </Col>
         </Row>

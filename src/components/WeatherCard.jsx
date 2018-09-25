@@ -3,21 +3,7 @@ import propTypes from 'prop-types'
 import { Card, Row, Col } from 'antd'
 import moment from 'moment'
 
-import Sun from '../img/sun.png'
-import Moon from '../img/moon.png'
-import Rain from '../img/shower-rain.png'
-import RainSoonNight from '../img/few-cloud-night.png'
-
-const leftColStyle = {
-  marginLeft: 15,
-  float: 'left',
-}
-
-const rightColStyle = {
-  marginRight: 15,
-  float: 'right',
-  fontSize: 20,
-}
+import { SunnyDay } from '../icons'
 
 const weatherProfiles = {
   day: {
@@ -45,44 +31,32 @@ const weatherProfiles = {
   },
 }
 
-const WeatherCard = ({ location, cardStyle, weatherIcon }) => {
-  const { latitude, longitude, currently } = location
+const WeatherCard = ({ location }) => {
+  const { city, country, currently } = location
   const { temperature } = currently
   const time = Date.now()
 
   return (
-    <Card bordered={false} style={cardStyle}>
-      <Row type="flex" justify="start">
-        <Col span={12}>
-          <p style={leftColStyle}>
-            {latitude} &nbsp;
-            <span style={{ fontSize: 15 }}>{longitude}</span>
-          </p>
+    <Card className="weather-card" bordered={false} style={{ backgroundColor: '#ffb100' }}>
+      <Row>
+        <Col span={20}>
+          <p className="weather-card-city">{city}</p>
+          <p className="weather-card-info">{country}</p>
         </Col>
-        <Col span={12}>
-          <img alt="sun" src={Sun} style={weatherIcon} />
+        <Col span={4} align="middle">
+          <img className="weather-card-icon" alt="Weather icon" src={SunnyDay} />
         </Col>
       </Row>
 
-      <Row type="flex" justify="start">
-        <Col span={12}>
-          <p
-            style={{
-              fontSize: 35,
-              marginLeft: 20,
-              float: 'left',
-            }}
-          >
-            {temperature}
-            &#x2103;
-          </p>
+      <Row type="flex" justify="space-between">
+        <Col className="weather-card-temperature" span={6}>
+          {/* eslint-disable-next-line */}
+          {parseInt(temperature, 10)}
+          &#x2103;
         </Col>
-        <Col span={12}>
-          <p style={rightColStyle}>
-            {moment(time).format('h:mm')} <span style={{ fontSize: 15 }}>{moment(time).format('A')}</span>
-            <br />
-            <span style={{ fontSize: 15 }}>{moment(time).format('dddd')}</span>
-          </p>
+        <Col span={6} className="weather-card-time">
+          <div className="weather-card-time-number">{moment(time).format('h:mm')}</div>
+          <div className="weather-card-time-ampm">{moment(time).format('A')}</div>
         </Col>
       </Row>
     </Card>
@@ -90,25 +64,13 @@ const WeatherCard = ({ location, cardStyle, weatherIcon }) => {
 }
 
 WeatherCard.propTypes = {
-  cardStyle: propTypes.shape({
-    backgroundColor: propTypes.string,
-    width: propTypes.number,
-    height: propTypes.number,
-    color: propTypes.string,
-    borderRadius: propTypes.number,
-    fontSize: propTypes.number,
-    fontWeight: propTypes.string,
-  }).isRequired,
-  weatherIcon: propTypes.shape({
-    float: propTypes.string,
-    marginRight: propTypes.number,
-    height: propTypes.number,
-    width: propTypes.number,
-    marginBottom: propTypes.number,
-  }).isRequired,
   location: propTypes.shape({
-    latitude: propTypes.number.isRequired,
-    longitude: propTypes.number.isRequired,
+    locationId: propTypes.string.isRequired,
+    city: propTypes.string.isRequired,
+    state: propTypes.string.isRequired,
+    country: propTypes.string.isRequired,
+    lat: propTypes.number.isRequired,
+    lng: propTypes.number.isRequired,
     currently: propTypes.shape({
       time: propTypes.number.isRequired,
       summary: propTypes.string,
