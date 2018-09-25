@@ -1,0 +1,51 @@
+.weather-cards-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-items: space-around;
+    background-color: #000;
+}
+
+.weather-card-container {
+    padding: 1em;
+}
+
+.weather-card {
+    color: #fff;
+    border-radius: 5px;
+}
+
+.weather-card-city {
+    margin: 0;
+    font-size: 1.7em;
+}
+
+.weather-card-info {
+    margin: 0;
+    font-size: 1.1em;
+}
+
+.weather-card-icon {
+    height: 50%;
+    width: 50%;
+}
+
+.weather-card-temperature {
+    font-size: 2.6em;
+}
+
+.weather-card-time {
+    display: flex;
+    align-items: baseline;
+    justify-content: flex-end;
+    margin: 1em;
+}
+
+.weather-card-time-number {
+    font-size: 1.6em;
+}
+
+.weather-card-time-ampm {
+    font-size: 1.1em;
+}
+
