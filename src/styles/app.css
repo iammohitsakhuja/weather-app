@@ -1,0 +1,22 @@
+.container {
+    width: 80%;
+    margin: auto;
+}
+
+header.app-brand {
+    width: 100%;
+    color: white;
+    font-family: 'Cookie', 'Satisfy';
+    font-size: 40px;
+    text-align: center;
+}
+
+.searchbar {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.searchbar > * {
+    width: 40%;
+}

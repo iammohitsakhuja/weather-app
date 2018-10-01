@@ -5,32 +5,6 @@ import moment from 'moment'
 
 import { SunnyDay } from '../icons'
 
-const weatherProfiles = {
-  day: {
-    background: '#FFB100',
-    alt: 'sun',
-    src: 'Sun',
-  },
-
-  night: {
-    background: '#004048',
-    alt: 'moon',
-    src: 'Moon',
-  },
-
-  rain: {
-    background: '#4169E1',
-    alt: 'rain',
-    src: 'Rain',
-  },
-
-  rainSoonNight: {
-    background: '#313131',
-    alt: 'rain-soon',
-    src: 'RainSoonNight',
-  },
-}
-
 const WeatherCard = ({ location }) => {
   const { city, country, currently } = location
   const { temperature } = currently
