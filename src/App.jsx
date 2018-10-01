@@ -1,10 +1,10 @@
-import { Col, Row } from 'antd'
 import React, { Component } from 'react'
 import axios from 'axios'
 
-import InfoCardsSection from './components/InfoCardsSection'
-import TopBar from './components/TopBar/index'
+import SearchBar from './components/SearchBar'
 import WeatherCardsSection from './components/WeatherCardsSection'
+
+import './styles/app.css'
 
 const { REACT_APP_WEATHER_API_URI } = process.env
 
@@ -69,17 +69,14 @@ class App extends Component {
 
   render() {
     const { locations } = this.state
+
     return (
-      <div>
-        <TopBar handleCitySelect={this.handleCitySelect} />
-        <Row type="flex" justify="space-around">
-          <Col xs={24} sm={24} md={24} lg={12} xl={12}>
-            <WeatherCardsSection locations={locations} />
-          </Col>
-          <Col xs={24} sm={24} md={24} lg={12} xl={12}>
-            <InfoCardsSection />
-          </Col>
-        </Row>
+      <div className="container">
+        <header className="app-brand">Weather</header>
+        <div className="searchbar">
+          <SearchBar handleCitySelect={this.handleCitySelect} />
+        </div>
+        <WeatherCardsSection locations={locations} />
       </div>
     )
   }
