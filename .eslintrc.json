@@ -40,10 +40,6 @@
       }
     ],
     "func-names": "off",
-    "indent": [
-      "error",
-      2
-    ],
     "max-len": [
       "error",
       {
@@ -82,6 +78,7 @@
         "allowTemplateLiterals": true
       }
     ],
+    "react/jsx-filename-extension": "off",
     "radix": [
       "error",
       "as-needed"

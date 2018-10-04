@@ -1,8 +1,8 @@
 import WebFont from 'webfontloader'
 
-// load font from google
+// Load font from Google.
 WebFont.load({
   google: {
-    families: ['Cookie', 'Satisfy'],
+    families: ['Cookie', 'Satisfy', 'Source Sans Pro', 'Roboto'],
   },
 })
