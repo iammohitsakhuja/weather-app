@@ -11,7 +11,7 @@ const WeatherCardsSection = ({ locations }) => {
       <h3>Search for a location!</h3>
     ) : (
       locations.map(location => (
-        <div key={location.locationId}>
+        <div key={location.id}>
           <WeatherCard location={location} />
         </div>
       ))
@@ -24,7 +24,7 @@ const WeatherCardsSection = ({ locations }) => {
 WeatherCardsSection.propTypes = {
   locations: propTypes.arrayOf(
     propTypes.shape({
-      locationId: propTypes.string.isRequired,
+      id: propTypes.string.isRequired,
       city: propTypes.string.isRequired,
       state: propTypes.string.isRequired,
       country: propTypes.string.isRequired,

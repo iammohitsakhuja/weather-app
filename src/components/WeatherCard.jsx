@@ -39,7 +39,7 @@ const WeatherCard = ({ location }) => {
 
 WeatherCard.propTypes = {
   location: propTypes.shape({
-    locationId: propTypes.string.isRequired,
+    id: propTypes.string.isRequired,
     city: propTypes.string.isRequired,
     state: propTypes.string.isRequired,
     country: propTypes.string.isRequired,
