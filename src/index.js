@@ -3,9 +3,12 @@ import ReactDOM from 'react-dom'
 
 import 'antd/dist/antd.min.css'
 
-import App from './App'
+import Root from './components/Root'
+import configureStore from './configureStore'
 
 import './fonts'
 import './styles/index.css'
 
-ReactDOM.render(<App />, document.getElementById('root'))
+const store = configureStore()
+
+ReactDOM.render(<Root store={store} />, document.getElementById('root'))

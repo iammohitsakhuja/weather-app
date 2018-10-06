@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 
-import SearchBar from './components/SearchBar'
-import WeatherCardsSection from './components/WeatherCardsSection'
+import SearchBar from './SearchBar'
+import WeatherCardsSection from './WeatherCardsSection'
 
-import './styles/app.css'
+import '../styles/app.css'
 
 const { REACT_APP_WEATHER_API_URI } = process.env
 
