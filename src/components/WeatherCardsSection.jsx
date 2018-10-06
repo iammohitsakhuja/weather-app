@@ -1,6 +1,5 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import { Col, Row } from 'antd'
 
 import WeatherCard from './WeatherCard'
 
@@ -12,20 +11,20 @@ const WeatherCardsSection = ({ locations }) => {
       <h3>Search for a location!</h3>
     ) : (
       locations.map(location => (
-        <Col key={location.locationId} span={18}>
+        <div key={location.id}>
           <WeatherCard location={location} />
-        </Col>
+        </div>
       ))
     )
 
-  return <Row className="weather-cards-section">{children}</Row>
+  return <div className="weather-cards-section">{children}</div>
 }
 
 // Type checking for received props.
 WeatherCardsSection.propTypes = {
   locations: propTypes.arrayOf(
     propTypes.shape({
-      locationId: propTypes.string.isRequired,
+      id: propTypes.string.isRequired,
       city: propTypes.string.isRequired,
       state: propTypes.string.isRequired,
       country: propTypes.string.isRequired,

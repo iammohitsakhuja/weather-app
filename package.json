@@ -20,8 +20,11 @@
     "prop-types": "^15.6.2",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
+    "react-redux": "^5.0.7",
     "react-responsive": "^5.0.0",
     "react-scripts": "1.1.5",
+    "redux": "^4.0.0",
+    "redux-logger": "^3.0.6",
     "webfontloader": "^1.6.28"
   },
   "devDependencies": {
@@ -34,9 +37,11 @@
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-prettier": "^2.6.2",
     "eslint-plugin-react": "^7.11.1",
-    "prettier": "^1.14.3"
+    "prettier": "^1.14.3",
+    "source-map-explorer": "^1.6.0"
   },
   "scripts": {
+    "analyze": "source-map-explorer build/static/js/main.*",
     "start": "HTTPS=true react-scripts start",
     "build": "react-scripts build",
     "eject": "react-scripts eject"

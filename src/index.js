@@ -1,14 +1,14 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import 'antd/dist/antd.css'
+import 'antd/dist/antd.min.css'
 
-import App from './App'
-import registerServiceWorker, { unregister } from './registerServiceWorker'
+import Root from './components/Root'
+import configureStore from './configureStore'
 
 import './fonts'
 import './styles/index.css'
 
-ReactDOM.render(<App />, document.getElementById('root'))
-if (process.env.NODE_ENV === 'production') registerServiceWorker()
-else unregister()
+const store = configureStore()
+
+ReactDOM.render(<Root store={store} />, document.getElementById('root'))
