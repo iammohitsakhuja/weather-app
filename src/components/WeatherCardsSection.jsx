@@ -1,7 +1,9 @@
 import React from 'react'
 import propTypes from 'prop-types'
+import { connect } from 'react-redux'
 
 import WeatherCard from './WeatherCard'
+import { getLocations } from '../reducers/locations'
 
 import '../styles/weather-card.css'
 
@@ -28,8 +30,8 @@ WeatherCardsSection.propTypes = {
       city: propTypes.string.isRequired,
       state: propTypes.string.isRequired,
       country: propTypes.string.isRequired,
-      lat: propTypes.number.isRequired,
-      lng: propTypes.number.isRequired,
+      latitude: propTypes.number.isRequired,
+      longitude: propTypes.number.isRequired,
       currently: propTypes.shape({
         time: propTypes.number.isRequired,
         summary: propTypes.string,
@@ -53,4 +55,8 @@ WeatherCardsSection.propTypes = {
   ).isRequired,
 }
 
-export default WeatherCardsSection
+const mapStateToProps = state => ({
+  locations: getLocations(state),
+})
+
+export default connect(mapStateToProps)(WeatherCardsSection)

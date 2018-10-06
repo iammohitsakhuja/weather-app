@@ -43,8 +43,8 @@ WeatherCard.propTypes = {
     city: propTypes.string.isRequired,
     state: propTypes.string.isRequired,
     country: propTypes.string.isRequired,
-    lat: propTypes.number.isRequired,
-    lng: propTypes.number.isRequired,
+    latitude: propTypes.number.isRequired,
+    longitude: propTypes.number.isRequired,
     currently: propTypes.shape({
       time: propTypes.number.isRequired,
       summary: propTypes.string,

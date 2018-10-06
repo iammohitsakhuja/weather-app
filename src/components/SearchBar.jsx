@@ -2,11 +2,14 @@ import React, { Component } from 'react'
 import { AutoComplete } from 'antd'
 import axios from 'axios'
 import propTypes from 'prop-types'
+import { connect } from 'react-redux'
+
+import addLocation from '../actions'
 
 const { Option } = AutoComplete
 
 // Get environment variables.
-const { REACT_APP_AUTOCOMPLETE_URI, REACT_APP_PLACE_DETAILS_URI } = process.env
+const { REACT_APP_AUTOCOMPLETE_URI } = process.env
 
 class SearchBar extends Component {
   state = {
@@ -49,18 +52,10 @@ class SearchBar extends Component {
     }
   }
 
-  /** Fetches the latitude and longitude (among other things) of the selected location, and hands it over to the App. */
-  handleSelect = async (locationId, suggestion) => {
-    try {
-      const response = await axios.get(REACT_APP_PLACE_DETAILS_URI, { params: { locationid: locationId } })
-      const { Latitude, Longitude } = response.data.Response.View[0].Result[0].Location.DisplayPosition
-
-      const { handleCitySelect } = this.props
-
-      handleCitySelect({ ...suggestion.props.data, locationId, lat: Latitude, lng: Longitude })
-    } catch (err) {
-      console.error(err)
-    }
+  /** Calls the action creator with an autocomplete suggestion is selected. */
+  handleSelect = (locationId, suggestion) => {
+    const { addLocation } = this.props
+    addLocation(locationId, suggestion.props.data)
   }
 
   render() {
@@ -81,7 +76,10 @@ class SearchBar extends Component {
 }
 
 SearchBar.propTypes = {
-  handleCitySelect: propTypes.func.isRequired,
+  addLocation: propTypes.func.isRequired,
 }
 
-export default SearchBar
+export default connect(
+  null,
+  { addLocation }
+)(SearchBar)
