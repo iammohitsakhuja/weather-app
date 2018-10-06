@@ -1,4 +1,5 @@
 import { createStore, applyMiddleware } from 'redux'
+import thunk from 'redux-thunk'
 import createLogger from 'redux-logger'
 
 import locations from './reducers/locations'
@@ -28,8 +29,8 @@ const persistedState = {
         windGust: 10.44,
         windSpeed: 2.29,
       },
-      lat: 30.70347,
-      lng: 76.69162,
+      latitude: 30.70347,
+      longitude: 76.69162,
       id: 'NT_slcvtDdQxNuhascaVc1.yD',
       state: 'PB',
     },
@@ -39,8 +40,8 @@ const persistedState = {
 
 const configureStore = () => {
   // Apply middlewares.
-  const middlewares = []
-  if (process.env.NODE_ENV === 'production') middlewares.push(createLogger)
+  const middlewares = [thunk]
+  if (process.env.NODE_ENV !== 'production') middlewares.push(createLogger)
 
   return createStore(locations, persistedState, applyMiddleware(...middlewares))
 }
