@@ -3,13 +3,23 @@ import { combineReducers } from 'redux'
 const ids = (state = [], action) => {
   switch (action.type) {
     case 'ADD_LOCATION':
-      return [...state, action.id]
+      return [...state, action.location.id]
     default:
       return state
   }
 }
 
-const locationsById = (state = {}, action) => state
+const locationsById = (state = {}, action) => {
+  switch (action.type) {
+    case 'ADD_LOCATION':
+      return {
+        ...state,
+        [action.location.id]: action.location,
+      }
+    default:
+      return state
+  }
+}
 
 const locations = combineReducers({
   locationsById,
