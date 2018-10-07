@@ -12,9 +12,7 @@ import '../styles/app.scss'
 const App = ({ cardState }) => (
   <div className="container">
     <header className="app-brand">Weather</header>
-    <div className="searchbar">
-      <SearchBar />
-    </div>
+    <SearchBar />
     {(cardState === 'STACKED' && <WeatherCardsSection />) || <ExpandedWeatherCard />}
     <div style={{ color: 'white' }}>cardState: {cardState}</div>
   </div>

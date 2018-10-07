@@ -1,50 +1,150 @@
-p {
-    margin: 0;
-}
+@import 'breakpoint';
+@import 'variables';
 
-.expanded-weather-card-container {
-    width: 90%;
-    margin: 1em auto;
+@mixin linear-gradient($deg, $primary-color, $secondary-color) {
+    background-image: linear-gradient($deg, $primary-color, $secondary-color);
+    background-image: -moz-linear-gradient($deg, $primary-color, $secondary-color);
+    background-image: -webkit-linear-gradient($deg, $primary-color, $secondary-color);
+    background-image: -o-linear-gradient($deg, $primary-color, $secondary-color);
 }
 
 .expanded-weather-card {
-    background-color: #2a2a2a;
-    color: #fff;
+    background-color: $expanded-card-bg-color-primary;
+    @include linear-gradient(150deg, $expanded-card-bg-color-primary 60%, $expanded-card-bg-color-secondary 40%);
+    color: $app-color;
+    width: 100%;
+    margin: 0.8rem 0;
+
+    .ant-card-body {
+        padding: 1rem;
+    }
 }
 
-.expanded-weather-card > .ant-card-body {
-    padding: 3em;
+.date-and-time {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1rem;
+
+    .date {
+        padding-bottom: 0.5rem;
+        border-bottom: 0.2rem solid $app-color;
+    }
+
+    .time {
+        font-size: 1.1rem;
+
+        .time-modifier {
+            font-size: 0.8rem;
+        }
+    }
 }
 
-.expanded-weather-card-grid {
+.hourly-forecast-section {
     display: grid;
-    grid-template-columns: 3fr 2fr;
-    grid-column-gap: 3em;
+    grid-row-gap: 1.6rem;
+    grid-template-areas:
+        "current-temperature location-and-forecast"
+        "hourly-forecast hourly-forecast";
+    margin: 1.6rem 0;
+
+    .current-temperature {
+        grid-area: current-temperature;
+        font-size: 4rem;
+        line-height: 1;
+    }
+
+    .location-and-forecast {
+        grid-area: location-and-forecast;
+        text-align: right;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+
+        .location {
+            font-size: 1rem;
+        }
+
+        .forecast {
+            font-size: 0.8rem;
+        }
+    }
+
+    .hourly-forecast {
+        grid-area: hourly-forecast;
+        display: flex;
+        justify-content: space-between;
+
+        .hourly-temperature-forecast {
+            text-align: center;
+            line-height: 1.2;
+
+            .time {
+                font-size: 0.8rem;
+            }
+
+            .temperature {
+                font-size: 1.8rem;
+            }
+
+            .precipitation {
+                font-size: 0.8rem;
+            }
+        }
+    }
 }
 
-.left-col {
+.summary {
+    width: 100%;
+    font-size: 1.2rem;
+    text-align: center;
+    margin: 0.5rem 0 1.2rem 0;
+}
+
+.weather-animation-frame {
+    display: table-cell;
+    width: 100vw;
+    height: 10rem;
+    background-color: lighten($expanded-card-bg-color-primary, 10%);
+    font-size: 1.2rem;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.daily-forecast-section {
     display: flex;
     flex-direction: column;
-}
+    margin-top: 1.5rem;
 
-.left-col > .hourly-temperature {
-    display: grid;
-    grid-template-columns: 2fr 3fr;
-}
+    .daily-forecast {
+        display: grid;
+        grid-template-columns: 1fr 2fr 1fr;
+        grid-template-areas: "icon-day . temperature-precipitation";
+        padding: 0.5rem 0;
+        border-top: 2px solid darken($app-color, 75%);
 
-.left-col > .hourly-temperature > .current-temperature {
-    font-size: 7em;
-    line-height: 1;
-}
+        .daily-forecast-icon-day {
+            grid-area: icon-day;
+            text-align: center;
 
-.left-col > .hourly-temperature > .hourly-temperature-section {
-    display: flex;
-    justify-content: space-around;
-    margin-top: auto;
-    margin-bottom: auto;
-}
+            .daily-forecast-icon {
+                font-size: 2em;
+            }
+        }
 
-.left-col > .summary {
-    text-align: center;
-    font-size: 1.8em;
+        .daily-forecast-temperature-precipitation {
+            grid-area: temperature-precipitation;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            text-align: right;
+
+            .daily-forecast-temperature {
+                font-size: 1.8em;
+            }
+
+            .daily-forecast-precipitation {
+                font-size: 1em;
+            }
+        }
+    }
 }

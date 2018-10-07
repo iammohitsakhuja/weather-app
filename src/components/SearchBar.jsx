@@ -6,10 +6,40 @@ import { connect } from 'react-redux'
 
 import { addLocation } from '../actions'
 
+import '../styles/searchbar.scss'
+
 const { Option } = AutoComplete
 
 // Get environment variables.
 const { REACT_APP_AUTOCOMPLETE_URI } = process.env
+
+const fetchAutoCompleteSuggestions = async value => {
+  // Fetch autocomplete suggestions for the given value.
+  const response = await axios.get(REACT_APP_AUTOCOMPLETE_URI, { params: { query: value } })
+  const { suggestions } = response.data
+
+  // Process received suggestions.
+  const locationSuggestions = suggestions.map(suggestion => {
+    const { address } = suggestion
+    const data = {
+      state: address.state,
+      country: address.country,
+    }
+
+    if (address.city !== undefined) data.city = address.city
+    else if (address.county !== undefined) data.city = address.county
+    else if (address.state !== undefined) data.city = address.state
+    else data.city = address.country
+
+    return (
+      <Option key={suggestion.locationId} value={suggestion.locationId} label="" data={data}>
+        {suggestion.label}
+      </Option>
+    )
+  })
+
+  return locationSuggestions
+}
 
 class SearchBar extends Component {
   state = {
@@ -19,34 +49,11 @@ class SearchBar extends Component {
   /** Gets prediction results when input is changed in the Search Bar. */
   handleSearch = async value => {
     try {
-      // Fetch data.
-      const response = await axios.get(REACT_APP_AUTOCOMPLETE_URI, { params: { query: value } })
-      const { suggestions } = response.data
+      // Fetch autocomplete suggestions.
+      const locationSuggestions = await fetchAutoCompleteSuggestions(value)
 
-      if (suggestions !== undefined) {
-        // Process received data.
-        const locationSuggestions = suggestions.map(suggestion => {
-          const { address } = suggestion
-          const data = {
-            state: address.state,
-            country: address.country,
-          }
-
-          if (address.city !== undefined) data.city = address.city
-          else if (address.county !== undefined) data.city = address.county
-          else if (address.state !== undefined) data.city = address.state
-          else data.city = address.country
-
-          return (
-            <Option key={suggestion.locationId} value={suggestion.locationId} label="" data={data}>
-              {suggestion.label}
-            </Option>
-          )
-        })
-
-        // Update state.
-        this.setState({ locationSuggestions })
-      }
+      // Update state.
+      this.setState({ locationSuggestions })
     } catch (err) {
       console.error(err)
     }
@@ -62,15 +69,17 @@ class SearchBar extends Component {
     const { locationSuggestions } = this.state
 
     return (
-      <AutoComplete
-        allowClear
-        autoFocus
-        dataSource={locationSuggestions}
-        onSearch={this.handleSearch}
-        onSelect={this.handleSelect}
-        optionLabelProp="label"
-        placeholder="City, state, country"
-      />
+      <div className="searchbar">
+        <AutoComplete
+          allowClear
+          autoFocus
+          dataSource={locationSuggestions}
+          onSearch={this.handleSearch}
+          onSelect={this.handleSelect}
+          optionLabelProp="label"
+          placeholder="City, state, country"
+        />
+      </div>
     )
   }
 }

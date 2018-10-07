@@ -1,15 +1,21 @@
+@import 'variables';
+
 * {
     font-family: 'Source Sans Pro', 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-    margin: 0;
-    padding: 0;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
         'Oxygen', 'Ubuntu', 'Cantarell', 'Droid Sans', 'Helvetica Neue',
         sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: #000;
-    color: #fff;
+    background-color: $app-bg-color;
+    color: $app-color;
+}
+
+#root {
+    height: 100%;
 }
