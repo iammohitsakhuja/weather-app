@@ -1,4 +1,4 @@
-import { createStore, applyMiddleware } from 'redux'
+import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
 import createLogger from 'redux-logger'
 
@@ -43,7 +43,18 @@ const configureStore = () => {
   const middlewares = [thunk]
   if (process.env.NODE_ENV !== 'production') middlewares.push(createLogger)
 
-  return createStore(locations, persistedState, applyMiddleware(...middlewares))
+  // Use Redux DevTools in development.
+  /* eslint-disable no-underscore-dangle */
+  const storeEnhancers =
+    process.env.NODE_ENV === 'production'
+      ? applyMiddleware(...middlewares)
+      : compose(
+          applyMiddleware(...middlewares),
+          window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+        )
+  /* eslint-enable */
+
+  return createStore(locations, persistedState, storeEnhancers)
 }
 
 export default configureStore

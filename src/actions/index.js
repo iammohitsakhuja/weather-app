@@ -38,4 +38,18 @@ const addLocation = (id, suggestionData) => async dispatch => {
   }
 }
 
-export default addLocation
+const expandCard = id => ({
+  type: 'CARD_EXPANDED',
+  id,
+})
+
+const shrinkCard = () => ({
+  type: 'CARD_SHRINKED',
+})
+
+const switchExpandedCard = id => ({
+  type: 'EXPANDED_CARD_SWITCHED',
+  id,
+})
+
+export { addLocation, expandCard, shrinkCard, switchExpandedCard }

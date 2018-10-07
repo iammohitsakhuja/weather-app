@@ -4,7 +4,7 @@ import axios from 'axios'
 import propTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import addLocation from '../actions'
+import { addLocation } from '../actions'
 
 const { Option } = AutoComplete
 
