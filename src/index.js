@@ -7,7 +7,7 @@ import Root from './components/Root'
 import configureStore from './configureStore'
 
 import './fonts'
-import './styles/index.css'
+import './styles/index.scss'
 
 const store = configureStore()
 

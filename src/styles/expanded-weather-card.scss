@@ -1,0 +1,50 @@
+p {
+    margin: 0;
+}
+
+.expanded-weather-card-container {
+    width: 90%;
+    margin: 1em auto;
+}
+
+.expanded-weather-card {
+    background-color: #2a2a2a;
+    color: #fff;
+}
+
+.expanded-weather-card > .ant-card-body {
+    padding: 3em;
+}
+
+.expanded-weather-card-grid {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    grid-column-gap: 3em;
+}
+
+.left-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.left-col > .hourly-temperature {
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+}
+
+.left-col > .hourly-temperature > .current-temperature {
+    font-size: 7em;
+    line-height: 1;
+}
+
+.left-col > .hourly-temperature > .hourly-temperature-section {
+    display: flex;
+    justify-content: space-around;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.left-col > .summary {
+    text-align: center;
+    font-size: 1.8em;
+}
