@@ -10,6 +10,7 @@ const addLocation = (id, suggestionData) => async dispatch => {
 
     // Get the weather data for the receive latitude and longitude.
     const requestURI = `${REACT_APP_WEATHER_API_URI}/${Latitude},${Longitude}?`
+    console.log(requestURI)
     response = await axios.get(requestURI, {
       params: {
         exclude: 'minutely,hourly,daily',

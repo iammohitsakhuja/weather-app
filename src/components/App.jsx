@@ -4,10 +4,10 @@ import propTypes from 'prop-types'
 
 import SearchBar from './SearchBar'
 import WeatherCardsSection from './WeatherCardsSection'
+import ExpandedWeatherCard from './ExpandedWeatherCard'
 import { getCardState } from '../reducers/locations'
 
-import '../styles/app.css'
-import ExpandedWeatherCard from './ExpandedWeatherCard'
+import '../styles/app.scss'
 
 const App = ({ cardState }) => (
   <div className="container">
@@ -16,7 +16,7 @@ const App = ({ cardState }) => (
       <SearchBar />
     </div>
     {(cardState === 'STACKED' && <WeatherCardsSection />) || <ExpandedWeatherCard />}
-    <div style={{ color: 'white' }}>{cardState}</div>
+    <div style={{ color: 'white' }}>cardState: {cardState}</div>
   </div>
 )
 

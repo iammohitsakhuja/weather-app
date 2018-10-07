@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import WeatherCard from './WeatherCard'
 import { getLocations } from '../reducers/locations'
 
-import '../styles/weather-card.css'
+import '../styles/weather-card.scss'
 
 const WeatherCardsSection = ({ locations }) => {
   const children =

@@ -36,6 +36,8 @@ const persistedState = {
     },
   },
   ids: ['NT_slcvtDdQxNuhascaVc1.yD'],
+  cardState: 'EXPANDED',
+  expandedCardId: 'random',
 }
 
 const configureStore = () => {
