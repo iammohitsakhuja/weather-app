@@ -4,51 +4,87 @@ import { Card } from 'antd'
 import '../styles/expanded-weather-card.scss'
 
 const ExpandedWeatherCard = () => (
-  <div className="expanded-weather-card-container">
-    <Card className="expanded-weather-card" bordered={false}>
-      <div className="expanded-weather-card-grid">
-        <div className="left-col">
-          <div className="hourly-temperature">
-            <div className="current-temperature">23&deg;</div>
-            <div className="hourly-temperature-section">
-              <div className="hourly-temperature-forecast">
-                <div className="time">7pm</div>
-                <div className="temperature">21&deg;</div>
-                <div className="precipitation">70%</div>
-              </div>
-              <div className="hourly-temperature-forecast">
-                <div className="time">7pm</div>
-                <div className="temperature">21&deg;</div>
-                <div className="precipitation">70%</div>
-              </div>
-              <div className="hourly-temperature-forecast">
-                <div className="time">7pm</div>
-                <div className="temperature">21&deg;</div>
-                <div className="precipitation">70%</div>
-              </div>
-              <div className="hourly-temperature-forecast">
-                <div className="time">7pm</div>
-                <div className="temperature">21&deg;</div>
-                <div className="precipitation">70%</div>
-              </div>
-              <div className="hourly-temperature-forecast">
-                <div className="time">7pm</div>
-                <div className="temperature">21&deg;</div>
-                <div className="precipitation">70%</div>
-              </div>
-            </div>
-          </div>
-          <div className="summary">Light rain stopping in 13 min.</div>
-          <p>This is an expanded weather card</p>
-          <p>This is an expanded weather card</p>
-          <p>This is an expanded weather card</p>
+  <Card className="expanded-weather-card" bordered={false}>
+    <section className="date-and-time">
+      <div className="date">December 31, 2018</div>
+      <div className="time">
+        11:11
+        <span className="time-modifier">PM</span>
+      </div>
+    </section>
+    <section className="hourly-forecast-section">
+      <div className="current-temperature">23&deg;</div>
+      <section className="location-and-forecast">
+        <div className="location">Manchester by the Sea</div>
+        <div className="forecast">Partly cloudy</div>
+      </section>
+      {/* eslint-disable jsx-a11y/accessible-emoji */}
+      <section className="hourly-forecast">
+        <div className="hourly-temperature-forecast">
+          <div className="time">7pm</div>
+          <div className="temperature">21&deg;</div>
+          <div className="precipitation">🌧 70%</div>
         </div>
-        <div className="right-col">
-          <p>Right col</p>
+        <div className="hourly-temperature-forecast">
+          <div className="time">11pm</div>
+          <div className="temperature">19&deg;</div>
+          <div className="precipitation">☔️ 75%</div>
+        </div>
+        <div className="hourly-temperature-forecast">
+          <div className="time">2am</div>
+          <div className="temperature">16&deg;</div>
+          <div className="precipitation">⚡️ 80%</div>
+        </div>
+        <div className="hourly-temperature-forecast">
+          <div className="time">5am</div>
+          <div className="temperature">15&deg;</div>
+          <div className="precipitation">⛅️ 60%</div>
+        </div>
+        <div className="hourly-temperature-forecast">
+          <div className="time">8am</div>
+          <div className="temperature">18&deg;</div>
+          <div className="precipitation">☀️ 45%</div>
+        </div>
+      </section>
+      {/* eslint-enable */}
+    </section>
+    <section className="summary">Drizzle starting in an hour.</section>
+    <section className="weather-animation-frame">Reserved for displaying weather animation frame.</section>
+    <section className="daily-forecast-section">
+      {/* eslint-disable jsx-a11y/accessible-emoji */}
+      <div className="daily-forecast">
+        <div className="daily-forecast-icon-day">
+          <div className="daily-forecast-icon">🌧</div>
+          <div className="daily-forecast-day">Today</div>
+        </div>
+        <div className="daily-forecast-temperature-precipitation">
+          <div className="daily-forecast-temperature">14&deg;-23&deg;</div>
+          <div className="daily-forecast-precipitation">Rain 70%</div>
         </div>
       </div>
-    </Card>
-  </div>
+      <div className="daily-forecast">
+        <div className="daily-forecast-icon-day">
+          <div className="daily-forecast-icon">☀️</div>
+          <div className="daily-forecast-day">Tomorrow</div>
+        </div>
+        <div className="daily-forecast-temperature-precipitation">
+          <div className="daily-forecast-temperature">17&deg;-25&deg;</div>
+          <div className="daily-forecast-precipitation">Rain 45%</div>
+        </div>
+      </div>
+      <div className="daily-forecast">
+        <div className="daily-forecast-icon-day">
+          <div className="daily-forecast-icon">🌥</div>
+          <div className="daily-forecast-day">Wednesday</div>
+        </div>
+        <div className="daily-forecast-temperature-precipitation">
+          <div className="daily-forecast-temperature">15&deg;-24&deg;</div>
+          <div className="daily-forecast-precipitation">Rain 60%</div>
+        </div>
+      </div>
+      {/* eslint-enable */}
+    </section>
+  </Card>
 )
 
 export default ExpandedWeatherCard
