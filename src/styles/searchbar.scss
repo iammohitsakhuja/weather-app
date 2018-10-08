@@ -9,12 +9,21 @@
         margin-bottom: 1.8rem;
     }
 
+    @include breakpoint(laptop) {
+        margin: 1rem 0 2rem 0;
+    }
+
     > * {
         width: 100%;
 
         @include breakpoint(tablet) {
             font-size: 1rem;
             width: 70%;
+        }
+
+        @include breakpoint(laptop) {
+            font-size: 1.1rem;
+            width: 50%;
         }
     }
 }

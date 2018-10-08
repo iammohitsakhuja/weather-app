@@ -10,6 +10,14 @@
         width: 80%;
     }
 
+    @include breakpoint(laptop) {
+        width: 75%;
+    }
+
+    @include breakpoint(desktop) {
+        width: 70%;
+    }
+
     header.app-brand {
         width: 100%;
         color: $app-color;
@@ -19,6 +27,10 @@
 
         @include breakpoint(tablet) {
             font-size: 3rem;
+        }
+
+        @include breakpoint(laptop) {
+            margin: 1rem;
         }
     }
 }
