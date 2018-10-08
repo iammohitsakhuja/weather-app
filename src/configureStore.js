@@ -51,8 +51,8 @@ const configureStore = () => {
     process.env.NODE_ENV === 'production'
       ? applyMiddleware(...middlewares)
       : compose(
-          applyMiddleware(...middlewares),
-          window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+          applyMiddleware(...middlewares)
+          // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
         )
   /* eslint-enable */
 

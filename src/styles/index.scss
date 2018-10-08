@@ -4,6 +4,7 @@
     font-family: 'Source Sans Pro', 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 body {
@@ -17,5 +18,5 @@ body {
 }
 
 #root {
-    height: 100%;
+    min-height: 100vh;
 }

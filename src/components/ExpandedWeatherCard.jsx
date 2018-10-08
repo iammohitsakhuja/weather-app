@@ -1,10 +1,9 @@
 import React from 'react'
-import { Card } from 'antd'
 
 import '../styles/expanded-weather-card.scss'
 
 const ExpandedWeatherCard = () => (
-  <Card className="expanded-weather-card" bordered={false}>
+  <div className="expanded-weather-card">
     <section className="date-and-time">
       <div className="date">December 31, 2018</div>
       <div className="time">
@@ -53,9 +52,11 @@ const ExpandedWeatherCard = () => (
     <section className="daily-forecast-section">
       {/* eslint-disable jsx-a11y/accessible-emoji */}
       <div className="daily-forecast">
-        <div className="daily-forecast-icon-day">
-          <div className="daily-forecast-icon">🌧</div>
-          <div className="daily-forecast-day">Today</div>
+        <div className="daily-forecast-icon-day-container">
+          <div className="daily-forecast-icon-day">
+            <div className="daily-forecast-icon">🌧</div>
+            <div className="daily-forecast-day">Today</div>
+          </div>
         </div>
         <div className="daily-forecast-temperature-precipitation">
           <div className="daily-forecast-temperature">14&deg;-23&deg;</div>
@@ -63,9 +64,11 @@ const ExpandedWeatherCard = () => (
         </div>
       </div>
       <div className="daily-forecast">
-        <div className="daily-forecast-icon-day">
-          <div className="daily-forecast-icon">☀️</div>
-          <div className="daily-forecast-day">Tomorrow</div>
+        <div className="daily-forecast-icon-day-container">
+          <div className="daily-forecast-icon-day">
+            <div className="daily-forecast-icon">☀️</div>
+            <div className="daily-forecast-day">Tomorrow</div>
+          </div>
         </div>
         <div className="daily-forecast-temperature-precipitation">
           <div className="daily-forecast-temperature">17&deg;-25&deg;</div>
@@ -73,9 +76,11 @@ const ExpandedWeatherCard = () => (
         </div>
       </div>
       <div className="daily-forecast">
-        <div className="daily-forecast-icon-day">
-          <div className="daily-forecast-icon">🌥</div>
-          <div className="daily-forecast-day">Wednesday</div>
+        <div className="daily-forecast-icon-day-container">
+          <div className="daily-forecast-icon-day">
+            <div className="daily-forecast-icon">🌥</div>
+            <div className="daily-forecast-day">Wednesday</div>
+          </div>
         </div>
         <div className="daily-forecast-temperature-precipitation">
           <div className="daily-forecast-temperature">15&deg;-24&deg;</div>
@@ -84,7 +89,7 @@ const ExpandedWeatherCard = () => (
       </div>
       {/* eslint-enable */}
     </section>
-  </Card>
+  </div>
 )
 
 export default ExpandedWeatherCard
