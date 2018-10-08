@@ -5,7 +5,16 @@
     display: flex;
     justify-content: center;
 
+    @include breakpoint(tablet) {
+        margin-bottom: 1.8rem;
+    }
+
     > * {
         width: 100%;
+
+        @include breakpoint(tablet) {
+            font-size: 1rem;
+            width: 70%;
+        }
     }
 }
