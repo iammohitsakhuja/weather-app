@@ -20,25 +20,19 @@ const getWeatherDataUtil = async id => {
   // Get the latitude and longitude of the given location (by using its location id).
   const { Latitude, Longitude } = await getLatitudeLongitude(id)
 
-  // Get the weather data for the received latitude and longitude.
-  const requestURI = `${weatherApiURI}/${Latitude},${Longitude}`
-  console.log(requestURI)
-
-  const response = await axios.get(requestURI, {
+  // Fetch and return the weather data for the received latitude and longitude.
+  return axios.get(`${weatherApiURI}/${Latitude},${Longitude}`, {
     params: {
       exclude: 'minutely,hourly,daily',
       units: 'ca',
     },
   })
-
-  return response
 }
 
 const getWeatherData = async (req, res, next) => {
   try {
-    const response = getWeatherDataUtil(req.params.locationId)
+    const response = await getWeatherDataUtil(req.query.locationId)
 
-    console.log(response.data)
     return res.send(response.data)
   } catch (err) {
     console.log(err)
