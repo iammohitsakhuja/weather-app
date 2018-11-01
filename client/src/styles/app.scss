@@ -11,11 +11,11 @@
     }
 
     @include breakpoint(laptop) {
-        width: 90%;
+        width: 85%;
     }
 
     @include breakpoint(desktop) {
-        width: 90%;
+        width: 70%;
     }
 
     header.app-brand {
