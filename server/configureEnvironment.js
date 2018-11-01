@@ -3,4 +3,8 @@
  */
 import dotenv from 'dotenv'
 
-dotenv.config({ path: './.env.development.local' })
+if (process.env.NODE_ENV === 'development') {
+  dotenv.config({ path: './.env.development.local' })
+} else {
+  dotenv.config({ path: './env.production.local' })
+}
