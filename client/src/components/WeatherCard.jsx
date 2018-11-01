@@ -1,9 +1,7 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import { Card, Row, Col } from 'antd'
-import moment from 'moment'
 
-import { SunnyDay } from '../icons'
+import '../styles/weather-card.scss'
 
 const WeatherCard = ({ location }) => {
   const { city, country, currently } = location
@@ -11,29 +9,22 @@ const WeatherCard = ({ location }) => {
   const time = Date.now()
 
   return (
-    <Card className="weather-card" bordered={false} style={{ backgroundColor: '#ffb100' }}>
-      <Row>
-        <Col span={20}>
-          <p className="weather-card-city">{city}</p>
-          <p className="weather-card-info">{country}</p>
-        </Col>
-        <Col span={4} align="middle">
-          <img className="weather-card-icon" alt="Weather icon" src={SunnyDay} />
-        </Col>
-      </Row>
+    <div className="weather-card">
+      {/* eslint-disable jsx-a11y/accessible-emoji */}
+      <section className="date-and-weather-icon">
+        <div className="date">December 31, 2018</div>
+        <div className="weather-icon">☀️</div>
+      </section>
 
-      <Row type="flex" justify="space-between">
-        <Col className="weather-card-temperature" span={6}>
-          {/* eslint-disable-next-line */}
-          {parseInt(temperature, 10)}
-          &#x2103;
-        </Col>
-        <Col span={6} className="weather-card-time">
-          <div className="weather-card-time-number">{moment(time).format('h:mm')}</div>
-          <div className="weather-card-time-ampm">{moment(time).format('A')}</div>
-        </Col>
-      </Row>
-    </Card>
+      <section className="current-forecast">
+        <div className="temperature">23&deg;</div>
+        <section className="location-and-info">
+          <div className="location">Manchester by the Sea</div>
+          <div className="info">Partly cloudy</div>
+        </section>
+      </section>
+      {/* eslint-enable */}
+    </div>
   )
 }
 
