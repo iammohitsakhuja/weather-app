@@ -10,15 +10,16 @@ import '../styles/searchbar.scss'
 
 const { Option } = AutoComplete
 
-// Get environment variables.
-const { REACT_APP_AUTOCOMPLETE_URI } = process.env
-
 const fetchAutoCompleteSuggestions = async value => {
+  if (value === '') return []
+
   // Fetch autocomplete suggestions for the given value.
-  const response = await axios.get(REACT_APP_AUTOCOMPLETE_URI, { params: { query: value } })
+  const response = await axios.get(`/autocomplete`, { params: { value } })
   const { suggestions } = response.data
 
   // Process received suggestions.
+  if (suggestions === undefined) return []
+
   const locationSuggestions = suggestions.map(suggestion => {
     const { address } = suggestion
     const data = {

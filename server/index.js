@@ -20,5 +20,5 @@ app.use((err, req, res, next) => res.status(err.status || 500).send(err.message 
 
 // Start the server.
 app.listen(PORT, () => {
-  console.log(`Express app listening on port: ${PORT}`)
+  console.log(`Weather app server listening on port: ${PORT}`)
 })

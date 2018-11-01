@@ -5,8 +5,8 @@ import getWeatherData from '../controllers/weatherController'
 
 const router = express.Router()
 
-router.get('/autocomplete/:query', getAutocompleteSuggestions)
+router.get('/autocomplete', getAutocompleteSuggestions)
 
-router.get('/weather/:locationId', getWeatherData)
+router.get('/weather', getWeatherData)
 
 export default router
