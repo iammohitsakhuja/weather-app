@@ -5,18 +5,14 @@ import { connect } from 'react-redux'
 import WeatherCard from './WeatherCard'
 import { getLocations } from '../reducers/locations'
 
-import '../styles/weather-card.scss'
+import '../styles/weather-cards-section.scss'
 
 const WeatherCardsSection = ({ locations }) => {
   const children =
     locations.length === 0 ? (
       <h3>Search for a location!</h3>
     ) : (
-      locations.map(location => (
-        <div key={location.id}>
-          <WeatherCard location={location} />
-        </div>
-      ))
+      locations.map(location => <WeatherCard key={location.id} location={location} />)
     )
 
   return <div className="weather-cards-section">{children}</div>
