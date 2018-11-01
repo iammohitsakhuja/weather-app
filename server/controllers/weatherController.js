@@ -1,4 +1,5 @@
 import axios from 'axios'
+import debug from 'debug'
 
 // Get the api keys and codes from the environment.
 const { DARKSKY_API_KEY, HERE_MAPS_API_ID, HERE_MAPS_APP_CODE } = process.env
@@ -29,13 +30,15 @@ const getWeatherDataUtil = async id => {
   })
 }
 
+const customLogger = debug('weather')
+
 const getWeatherData = async (req, res, next) => {
   try {
     const response = await getWeatherDataUtil(req.query.locationId)
 
     return res.send(response.data)
   } catch (err) {
-    console.log(err)
+    customLogger(err)
     return next(err)
   }
 }
