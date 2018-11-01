@@ -36,7 +36,7 @@ const persistedState = {
     },
   },
   ids: ['NT_slcvtDdQxNuhascaVc1.yD'],
-  cardState: 'STACKED',
+  cardState: 'EXPANDED',
   expandedCardId: 'random',
 }
 

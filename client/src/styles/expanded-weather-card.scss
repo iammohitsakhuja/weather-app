@@ -24,157 +24,98 @@
     border-radius: 0.4rem;
     @include box-shadow(0 0 45px -1px rgba(166, 163, 166, 1));
 
-    @include breakpoint(tablet) {
-        padding: 1.6rem;
+    display: grid;
+    grid-auto-columns: auto;
+    grid-auto-rows: auto;
+    grid-gap: 10px;
+    grid-template-areas: "date     time"
+                         "currtemp loc"
+                         "currtemp frcst"
+                         "hourly   hourly"
+                         "smry     smry"
+                         "frame    frame"
+                         "daily    daily";
+}
+
+.date {
+    grid-area: date;
+    font-size: 1rem;
+    
+    span {
+        border-bottom: 0.2rem solid $app-color;
     }
 }
 
-.date-and-time {
+.time {
+    grid-area: time;
+    font-size: 1.1rem;
+    justify-self: end;
+    
+    .time-modifier {
+        font-size: 0.8rem;
+    }
+}
+
+.current-temperature {
+    grid-area: currtemp;
+    font-size: 4rem;
+    align-self: center;
+}
+
+.location {
+    grid-area: loc;
+    justify-self: end;
+    align-self: end;
+    font-size: 1rem;
+}
+
+.forecast {
+    grid-area: frcst;
+    justify-self: end;
+    align-self: start;
+    font-size: 0.8rem;
+}
+
+.hourly-forecast {
+    grid-area: hourly;
     display: flex;
     justify-content: space-between;
 
-    .date {
-        font-size: 1rem;
-        padding-bottom: 0.5rem;
-        border-bottom: 0.2rem solid $app-color;
+    .hourly-temperature-forecast {
+        text-align: center;
 
-        @include breakpoint(tablet) {
-            font-size: 1.5rem;
-        }
-    }
-
-    .time {
-        font-size: 1.1rem;
-
-        @include breakpoint(tablet) {
-            font-size: 1.6rem;
-        }
-
-        .time-modifier {
+        .time {
             font-size: 0.8rem;
-
-            @include breakpoint(tablet) {
-                font-size: 1.1rem;
-            }
-        }
-    }
-}
-
-.hourly-forecast-section {
-    display: grid;
-    grid-row-gap: 1.6rem;
-    grid-template-areas:
-        "current-temperature location-and-forecast"
-        "hourly-forecast hourly-forecast";
-    margin: 1.6rem 0;
-
-    @include breakpoint(tablet) {
-        grid-row-gap: 2rem;
-        margin: 2rem 0;
-    }
-
-    .current-temperature {
-        grid-area: current-temperature;
-        font-size: 4rem;
-        line-height: 1;
-
-        @include breakpoint(tablet) {
-            font-size: 7rem;
-        }
-    }
-
-    .location-and-forecast {
-        grid-area: location-and-forecast;
-        text-align: right;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-end;
-
-        .location {
-            font-size: 1rem;
-
-            @include breakpoint(tablet) {
-                font-size: 1.5rem;
-            }
         }
 
-        .forecast {
+        .temperature {
+            font-size: 1.8rem;
+        }
+
+        .precipitation {
             font-size: 0.8rem;
-
-            @include breakpoint(tablet) {
-                font-size: 1.2rem;
-            }
-        }
-    }
-
-    .hourly-forecast {
-        grid-area: hourly-forecast;
-        display: flex;
-        justify-content: space-between;
-
-        .hourly-temperature-forecast {
-            text-align: center;
-            line-height: 1.2;
-
-            @include breakpoint(tablet) {
-                line-height: 1.25;
-            }
-
-            .time {
-                font-size: 0.8rem;
-                @include breakpoint(tablet) {
-                    font-size: 1.2rem;
-                }
-            }
-
-            .temperature {
-                font-size: 1.8rem;
-                @include breakpoint(tablet) {
-                    font-size: 2.7rem;
-                }
-            }
-
-            .precipitation {
-                font-size: 0.8rem;
-                @include breakpoint(tablet) {
-                    font-size: 1.2rem;
-                }
-            }
         }
     }
 }
 
 .summary {
-    width: 100%;
+    grid-area: smry;
     font-size: 1.2rem;
-    text-align: center;
-    margin: 0.5rem 0 1.2rem 0;
-
-    @include breakpoint(tablet) {
-        font-size: 1.8rem;
-        margin: 0.75rem 0 1.8rem 0;
-    }
+    justify-self: center;
 }
 
 .weather-animation-frame {
-    display: table-cell;
-    width: 100vw;
+    grid-area: frame;
     height: 10rem;
-    background-color: lighten($expanded-card-bg-color-primary, 10%);
-    font-size: 1.2rem;
     text-align: center;
-    vertical-align: middle;
-
-    @include breakpoint(tablet) {
-        height: 15rem;
-        font-size: 1.8rem;
-    }
+    font-size: 1.2rem;
+    background-color: lighten($expanded-card-bg-color-primary, 10%);
 }
 
 .daily-forecast-section {
+    grid-area: daily;
     display: flex;
     flex-direction: column;
-    margin-top: 1.5rem;
 
     .daily-forecast {
         display: grid;
@@ -183,10 +124,6 @@
         padding: 0.5rem 0;
         border-top: 2px solid darken($app-color, 90%);
 
-        @include breakpoint(tablet) {
-            grid-template-columns: 2fr 3fr 2fr;
-        }
-
         .daily-forecast-icon-day-container {
             grid-area: icon-day;
             display: flex;
@@ -194,22 +131,13 @@
             .daily-forecast-icon-day {
                 min-width: 4rem;
                 text-align: center;
-                @include breakpoint(tablet) {
-                    min-width: 7rem;
-                }
 
                 .daily-forecast-icon {
                     font-size: 1.8rem;
-                    @include breakpoint(tablet) {
-                        font-size: 2.4rem;
-                    }
                 }
 
                 .daily-forecast-day {
                     font-size: 0.8rem;
-                    @include breakpoint(tablet) {
-                        font-size: 1.2rem;
-                    }
                 }
             }
         }
@@ -223,16 +151,10 @@
 
             .daily-forecast-temperature {
                 font-size: 1.6rem;
-                @include breakpoint(tablet) {
-                    font-size: 2.4rem;
-                }
             }
 
             .daily-forecast-precipitation {
                 font-size: 0.8rem;
-                @include breakpoint(tablet) {
-                    font-size: 1.2rem;
-                }
             }
         }
     }
