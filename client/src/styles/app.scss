@@ -1,0 +1,36 @@
+@import 'breakpoint';
+@import 'variables';
+
+.container {
+    height: 100%;
+    width: 90%;
+    margin: auto;
+
+    @include breakpoint(tablet) {
+        width: 80%;
+    }
+
+    @include breakpoint(laptop) {
+        width: 75%;
+    }
+
+    @include breakpoint(desktop) {
+        width: 70%;
+    }
+
+    header.app-brand {
+        width: 100%;
+        color: $app-color;
+        font-family: 'Cookie', 'Satisfy', 'Ubuntu', 'Roboto', sans-serif;
+        font-size: 2rem;
+        text-align: center;
+
+        @include breakpoint(tablet) {
+            font-size: 3rem;
+        }
+
+        @include breakpoint(laptop) {
+            margin: 1rem;
+        }
+    }
+}

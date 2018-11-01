@@ -1,44 +1,31 @@
 {
+  "private": true,
+  "workspaces": [
+    "server",
+    "client"
+  ],
   "name": "weather-app",
   "description": "An app to display weather info",
   "version": "0.1.0",
-  "main": "index.js",
   "author": "Mohit Sakhuja <sakhuja.mohit@gmail.com>",
   "repository": {
     "url": "https://github.com/mohitsakhuja/weather-app",
     "type": "git"
   },
   "license": "MIT",
-  "private": true,
   "engines": {
-    "node": "10.10.0"
-  },
-  "dependencies": {
-    "antd": "^3.9.2",
-    "axios": "^0.18.0",
-    "moment": "^2.22.2",
-    "prop-types": "^15.6.2",
-    "react": "^16.5.2",
-    "react-dom": "^16.5.2",
-    "react-responsive": "^5.0.0",
-    "react-scripts": "1.1.5",
-    "webfontloader": "^1.6.28"
+    "node": "10.10.0",
+    "yarn": "1.12.1"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.1.0",
-    "babel-eslint": "^9.0.0",
-    "eslint": "^5.6.0",
-    "eslint-config-airbnb": "^17.1.0",
-    "eslint-config-prettier": "^3.0.1",
-    "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-jsx-a11y": "^6.1.1",
-    "eslint-plugin-prettier": "^2.6.2",
-    "eslint-plugin-react": "^7.11.1",
-    "prettier": "^1.14.3"
+    "concurrently": "^4.0.1"
   },
   "scripts": {
-    "start": "HTTPS=true react-scripts start",
-    "build": "react-scripts build",
-    "eject": "react-scripts eject"
+    "build-client": "cd client && yarn build",
+    "start-server": "cd server && yarn start",
+    "start": "yarn build-client && yarn start-server",
+    "start-client:dev": "cd client && yarn start",
+    "start-server:dev": "cd server && yarn start:dev",
+    "start:dev": "concurrently \"yarn start-client:dev\" \"yarn start-server:dev\""
   }
 }

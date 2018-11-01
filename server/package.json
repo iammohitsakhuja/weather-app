@@ -1,0 +1,25 @@
+{
+  "name": "@weather-app/server",
+  "description": "Server side for weather-app",
+  "version": "0.0.1",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "morgan": "^1.9.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.1.2",
+    "@babel/core": "^7.1.2",
+    "@babel/node": "^7.0.0",
+    "@babel/preset-env": "^7.1.0",
+    "nodemon": "^1.18.5"
+  },
+  "scripts": {
+    "clean": "rm -rf build && mkdir build",
+    "build": "yarn clean && babel . --source-maps --out-dir ./build",
+    "start": "yarn build && node ./build/index.js",
+    "start:dev": "nodemon index.js --exec babel-node"
+  }
+}

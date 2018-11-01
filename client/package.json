@@ -1,0 +1,48 @@
+{
+  "name": "@weather-app/client",
+  "description": "Client side for weather-app",
+  "version": "0.2.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "antd": "^3.9.2",
+    "axios": "^0.18.0",
+    "moment": "^2.22.2",
+    "node-sass": "^4.9.3",
+    "prop-types": "^15.6.2",
+    "react": "^16.5.2",
+    "react-dom": "^16.5.2",
+    "react-redux": "^5.0.7",
+    "react-responsive": "^5.0.0",
+    "react-scripts": "2.0.3",
+    "redux": "^4.0.0",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.3.0",
+    "webfontloader": "^1.6.28"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.1.0",
+    "babel-eslint": "^9.0.0",
+    "eslint": "5.6.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^3.0.1",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.1",
+    "eslint-plugin-prettier": "^2.6.2",
+    "eslint-plugin-react": "^7.11.1",
+    "prettier": "^1.14.3",
+    "source-map-explorer": "^1.6.0"
+  },
+  "scripts": {
+    "analyze": "source-map-explorer build/static/js/main.*",
+    "start": "HTTPS=true react-scripts start",
+    "build": "react-scripts build",
+    "eject": "react-scripts eject"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
