@@ -1,61 +1,64 @@
 @import 'variables';
 
 @mixin spin($time) {
-    -webkit-animation:spin $time linear infinite;
-    -moz-animation:spin $time linear infinite;
-    animation:spin $time linear infinite;
+  -webkit-animation: spin $time linear infinite;
+  -moz-animation: spin $time linear infinite;
+  animation: spin $time linear infinite;
 
-    @-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
-    @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
-    @keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+  @-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+
+  @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+
+  @keyframes spin { 100% { transform: rotate(360deg); } }
 }
 
 .weather-card {
-    background-color: $weather-card-bg-color-primary;
-    color: $app-color;
-    width: 100%;
-    border-radius: 0.4rem;
-    margin: 1rem 0;
-    padding: 1rem;
+  background-color: $weather-card-bg-color-primary;
+  color: $app-color;
+  width: 100%;
+  border-radius: 0.4rem;
+  margin: 1rem 0;
+  padding: 1rem;
 }
 
 .date-and-weather-icon {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 
-    .date {
-        font-size: 1rem;
-        border-bottom: 0.2rem solid $app-color;
-    }
+  .date {
+    font-size: 1rem;
+    border-bottom: 0.2rem solid $app-color;
+  }
 
-    .weather-icon {
-        font-size: 1.5rem;
-        @include spin(6s);
-    }
+  .weather-icon {
+    font-size: 1.5rem;
+
+    @include spin(6s);
+  }
 }
 
 .current-forecast {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.6rem;
+
+  .temperature {
+    font-size: 4rem;
+    line-height: 1;
+  }
+
+  .location-and-info {
+    text-align: right;
     display: flex;
-    justify-content: space-between;
-    margin-top: 1.6rem;
+    flex-direction: column;
+    justify-content: flex-end;
 
-    .temperature {
-        font-size: 4rem;
-        line-height: 1;
+    .location {
+      font-size: 1rem;
     }
 
-    .location-and-info {
-        text-align: right;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-end;
-
-        .location {
-            font-size: 1rem;
-        }
-
-        .info {
-            font-size: 0.8rem;
-        }
+    .info {
+      font-size: 0.8rem;
     }
+  }
 }
