@@ -2,247 +2,254 @@
 @import 'variables';
 
 @mixin linear-gradient($deg, $primary-color, $secondary-color) {
-    background-image: linear-gradient($deg, $primary-color, $secondary-color);
-    background-image: -moz-linear-gradient($deg, $primary-color, $secondary-color);
-    background-image: -webkit-linear-gradient($deg, $primary-color, $secondary-color);
-    background-image: -o-linear-gradient($deg, $primary-color, $secondary-color);
+  background-image: linear-gradient($deg, $primary-color, $secondary-color);
+  background-image: -moz-linear-gradient($deg, $primary-color, $secondary-color);
+  background-image: -webkit-linear-gradient($deg, $primary-color, $secondary-color);
+  background-image: -o-linear-gradient($deg, $primary-color, $secondary-color);
 }
 
 @mixin box-shadow($args...) {
-    box-shadow: $args;
-    -webkit-box-shadow: $args;
-    -moz-box-shadow: $args;
+  box-shadow: $args;
+  -webkit-box-shadow: $args;
+  -moz-box-shadow: $args;
 }
 
 .expanded-weather-card {
-    background-color: $expanded-card-bg-color-primary;
-    @include linear-gradient(150deg, $expanded-card-bg-color-primary 60%, $expanded-card-bg-color-secondary 40%);
-    color: $app-color;
-    width: 100%;
-    margin: 1.4rem 0;
-    padding: 1rem;
-    border-radius: 0.4rem;
-    @include box-shadow(0 0 45px -1px rgba(166, 163, 166, 1));
+  background-color: $expanded-card-bg-color-primary;
 
-    display: grid;
-    grid-auto-columns: auto;
-    grid-auto-rows: auto;
-    grid-gap: 10px;
-    grid-template-areas: "date     time"
-                         "currtemp loc"
-                         "currtemp frcst"
-                         "hourly   hourly"
-                         "smry     smry"
-                         "frame    frame"
-                         "daily    daily";
+  @include linear-gradient(150deg, $expanded-card-bg-color-primary 60%, $expanded-card-bg-color-secondary 40%);
 
-    @include breakpoint(laptop) {
-        @include linear-gradient(150deg, $expanded-card-bg-color-primary 50%, $expanded-card-bg-color-secondary 50%);
-        grid-gap: 0;
-        grid-template-columns: 0.6fr 2fr 1fr;
-        grid-template-areas: "currtemp hourly date"
-                             "smry smry time"
-                             "frame frame loc"
-                             "daily daily frcst"
-    }
+  color: $app-color;
+  width: 100%;
+  margin: 1.4rem 0;
+  padding: 1rem;
+  border-radius: 0.4rem;
 
-    @include breakpoint(desktop) {
-        padding: 2rem 5rem 0rem 5rem;
-    }
+  @include box-shadow(0 0 45px -1px rgba(166, 163, 166, 1));
+
+  display: grid;
+  grid-auto-columns: auto;
+  grid-auto-rows: auto;
+  grid-gap: 10px;
+  grid-template-areas:
+    "date     time"
+    "currtemp loc"
+    "currtemp frcst"
+    "hourly   hourly"
+    "smry     smry"
+    "frame    frame"
+    "daily    daily";
+
+  @include breakpoint(laptop) {
+    @include linear-gradient(150deg, $expanded-card-bg-color-primary 50%, $expanded-card-bg-color-secondary 50%);
+
+    grid-gap: 0;
+    grid-template-columns: 0.6fr 2fr 1fr;
+    grid-template-areas:
+      "currtemp hourly date"
+      "smry smry time"
+      "frame frame loc"
+      "daily daily frcst";
+  }
+
+  @include breakpoint(desktop) {
+    padding: 2rem 5rem 0 5rem;
+  }
 }
 
 .date {
-    grid-area: date;
-    font-size: 1rem;
-    
-    span {
-        border-bottom: 0.2rem solid $app-color;
-        @include breakpoint(laptop) {
-            border-bottom: 0;
-        }
-    }
+  grid-area: date;
+  font-size: 1rem;
+
+  span {
+    border-bottom: 0.2rem solid $app-color;
 
     @include breakpoint(laptop) {
-        justify-self: end;
-        grid-row-start: 1;
-        grid-row-end: 5;
+      border-bottom: 0;
     }
+  }
+
+  @include breakpoint(laptop) {
+    justify-self: end;
+    grid-row-start: 1;
+    grid-row-end: 5;
+  }
 }
 
 .time {
-    grid-area: time;
-    font-size: 1.1rem;
-    justify-self: end;
-    
-    .time-modifier {
-        font-size: 0.8rem;
-        @include breakpoint(laptop) {
-            font-size: 1.1rem;
-        }
-    }
+  grid-area: time;
+  font-size: 1.1rem;
+  justify-self: end;
 
-    @include breakpoint(laptop) {
-        font-size: 3rem;
-        grid-row-start: 1;
-        padding-top: 2rem;
-    }
-
-
-}
-
-.current-temperature {
-    grid-area: currtemp;
-    font-size: 4rem;
-    align-self: center;
-
-    @include breakpoint(laptop) {
-        font-size: 5.5rem;
-    }
-}
-
-.location {
-    grid-area: loc;
-    justify-self: end;
-    align-self: end;
-    font-size: 1rem;
-
-    @include breakpoint(laptop) {
-        align-self: start;
-        grid-row-start: 1;
-        padding-top: 10rem;
-    }
-}
-
-.forecast {
-    grid-area: frcst;
-    justify-self: end;
-    align-self: start;
+  .time-modifier {
     font-size: 0.8rem;
 
     @include breakpoint(laptop) {
-        grid-row-start: 1;
-        padding-top: 12rem;
+      font-size: 1.1rem;
     }
+  }
+
+  @include breakpoint(laptop) {
+    font-size: 3rem;
+    grid-row-start: 1;
+    padding-top: 2rem;
+  }
+}
+
+.current-temperature {
+  grid-area: currtemp;
+  font-size: 4rem;
+  align-self: center;
+
+  @include breakpoint(laptop) {
+    font-size: 5.5rem;
+  }
+}
+
+.location {
+  grid-area: loc;
+  justify-self: end;
+  align-self: end;
+  font-size: 1rem;
+
+  @include breakpoint(laptop) {
+    align-self: start;
+    grid-row-start: 1;
+    padding-top: 10rem;
+  }
+}
+
+.forecast {
+  grid-area: frcst;
+  justify-self: end;
+  align-self: start;
+  font-size: 0.8rem;
+
+  @include breakpoint(laptop) {
+    grid-row-start: 1;
+    padding-top: 12rem;
+  }
 }
 
 .hourly-forecast {
-    grid-area: hourly;
-    display: flex;
-    justify-content: space-between;
+  grid-area: hourly;
+  display: flex;
+  justify-content: space-between;
 
-    @include breakpoint(laptop) {
-        justify-content: space-evenly;
-        
-        @each $key, $value in $opacity-values {
-            div:nth-child(#{$key}) {
-                opacity: #{$value};
-            }
-        }
+  @include breakpoint(laptop) {
+    justify-content: space-evenly;
+
+    @each $key, $value in $opacity-values {
+      div:nth-child(#{$key}) {
+        opacity: #{$value};
+      }
+    }
+  }
+
+  .hourly-temperature-forecast {
+    text-align: center;
+
+    .time {
+      font-size: 0.8rem;
     }
 
-    .hourly-temperature-forecast {
-        text-align: center;
-
-        .time {
-            font-size: 0.8rem;
-        }
-
-        .temperature {
-            font-size: 1.8rem;
-        }
-
-        .precipitation {
-            font-size: 0.8rem;
-        }
+    .temperature {
+      font-size: 1.8rem;
     }
+
+    .precipitation {
+      font-size: 0.8rem;
+    }
+  }
 }
 
 .summary {
-    grid-area: smry;
-    font-size: 1.2rem;
-    justify-self: center;
+  grid-area: smry;
+  font-size: 1.2rem;
+  justify-self: center;
 
-    @include breakpoint(laptop) {
-        padding: 2rem 0 2rem 0;
-    }
+  @include breakpoint(laptop) {
+    padding: 2rem 0 2rem 0;
+  }
 }
 
 .weather-animation-frame {
-    grid-area: frame;
-    height: 10rem;
-    text-align: center;
-    font-size: 1.2rem;
-    background-color: lighten($expanded-card-bg-color-primary, 10%);
-    border-radius: 10px;
+  grid-area: frame;
+  height: 10rem;
+  text-align: center;
+  font-size: 1.2rem;
+  background-color: lighten($expanded-card-bg-color-primary, 10%);
+  border-radius: 10px;
 }
 
 .daily-forecast-section {
-    grid-area: daily;
-    display: flex;
-    flex-direction: column;
+  grid-area: daily;
+  display: flex;
+  flex-direction: column;
+
+  @include breakpoint(laptop) {
+    padding-top: 1rem;
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+
+  .daily-forecast {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-areas: "icon-day . temperature-precipitation";
+    padding: 0.5rem 0;
+    border-top: 2px solid darken($app-color, 90%);
 
     @include breakpoint(laptop) {
-        padding-top: 1rem;
-        flex-direction: row;
-        justify-content: space-evenly;
+      border: none;
+      grid-template-columns: none;
+      grid-auto-rows: auto;
+      grid-template-areas:
+        "icon-day"
+        "temperature-precipitation";
     }
 
-    .daily-forecast {
-        display: grid;
-        grid-template-columns: 1fr 2fr 1fr;
-        grid-template-areas: "icon-day . temperature-precipitation";
-        padding: 0.5rem 0;
-        border-top: 2px solid darken($app-color, 90%);
+    .daily-forecast-icon-day-container {
+      grid-area: icon-day;
+      display: flex;
+
+      .daily-forecast-icon-day {
+        min-width: 4rem;
+        text-align: center;
+
+        .daily-forecast-icon {
+          font-size: 1.8rem;
+        }
+
+        .daily-forecast-day {
+          font-size: 0.8rem;
+        }
+      }
+    }
+
+    .daily-forecast-temperature-precipitation {
+      grid-area: temperature-precipitation;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      text-align: right;
+
+      @include breakpoint(laptop) {
+        text-align: center;
+        padding-top: 4px;
+      }
+
+      .daily-forecast-temperature {
+        font-size: 1.6rem;
 
         @include breakpoint(laptop) {
-            border: none;
-            grid-template-columns: none;
-            grid-auto-rows: auto;
-            grid-template-areas: "icon-day"
-                                 "temperature-precipitation";
+          font-size: 0.8rem;
         }
+      }
 
-        .daily-forecast-icon-day-container {
-            grid-area: icon-day;
-            display: flex;
-
-            .daily-forecast-icon-day {
-                min-width: 4rem;
-                text-align: center;
-
-                .daily-forecast-icon {
-                    font-size: 1.8rem;
-                }
-
-                .daily-forecast-day {
-                    font-size: 0.8rem;
-                }
-            }
-        }
-
-        .daily-forecast-temperature-precipitation {
-            grid-area: temperature-precipitation;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-evenly;
-            text-align: right;
-
-            @include breakpoint(laptop) {
-                text-align: center;
-                padding-top: 4px;
-            }
-
-            .daily-forecast-temperature {
-                font-size: 1.6rem;
-
-                @include breakpoint(laptop) {
-                    font-size: 0.8rem;
-                }
-            }
-
-            .daily-forecast-precipitation {
-                font-size: 0.8rem;
-            }
-        }
+      .daily-forecast-precipitation {
+        font-size: 0.8rem;
+      }
     }
+  }
 }
