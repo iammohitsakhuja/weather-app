@@ -7,11 +7,11 @@
   margin: auto;
 
   @include breakpoint(tablet) {
-    width: 80%;
+    width: 90%;
   }
 
   @include breakpoint(laptop) {
-    width: 75%;
+    width: 85%;
   }
 
   @include breakpoint(desktop) {
