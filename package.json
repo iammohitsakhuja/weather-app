@@ -18,7 +18,11 @@
     "yarn": "1.12.1"
   },
   "devDependencies": {
-    "concurrently": "^4.0.1"
+    "concurrently": "^4.0.1",
+    "stylelint": "^9.7.1",
+    "stylelint-config-recommended-scss": "^3.2.0",
+    "stylelint-config-standard": "^18.2.0",
+    "stylelint-scss": "^3.3.2"
   },
   "scripts": {
     "build-client": "cd client && yarn build",
@@ -26,6 +30,6 @@
     "start": "yarn build-client && yarn start-server",
     "start-client:dev": "cd client && yarn start",
     "start-server:dev": "cd server && yarn start:dev",
-    "start:dev": "concurrently \"yarn start-client:dev\" \"yarn start-server:dev\""
+    "start:dev": "NODE_ENV=development concurrently \"yarn start-client:dev\" \"yarn start-server:dev\""
   }
 }
