@@ -1,6 +1,7 @@
 import React from 'react'
 
 import Icons from '../icons'
+import AnimatedWeatherIconsReact from './AnimatedWeatherIconsReact'
 
 import '../styles/expanded-weather-card.scss'
 
@@ -27,31 +28,48 @@ const ExpandedWeatherCard = () => (
       <div className="hourly-temperature-forecast">
         <div className="time">7pm</div>
         <div className="temperature">21&deg;</div>
-        <div className="precipitation">🌧 70%</div>
+        <div className="precipitation">
+          <AnimatedWeatherIconsReact icon="RAIN" size={12} />
+          70%
+        </div>
       </div>
       <div className="hourly-temperature-forecast">
         <div className="time">11pm</div>
         <div className="temperature">19&deg;</div>
-        <div className="precipitation">☔️ 75%</div>
+        <div className="precipitation">
+          <AnimatedWeatherIconsReact icon="RAIN" size={12} />
+          75%
+        </div>
       </div>
       <div className="hourly-temperature-forecast">
         <div className="time">2am</div>
         <div className="temperature">16&deg;</div>
-        <div className="precipitation">⚡️ 80%</div>
+        <div className="precipitation">
+          <AnimatedWeatherIconsReact icon="RAIN" size={12} />
+          80%
+        </div>
       </div>
       <div className="hourly-temperature-forecast">
         <div className="time">5am</div>
         <div className="temperature">15&deg;</div>
-        <div className="precipitation">⛅️ 60%</div>
+        <div className="precipitation">
+          <AnimatedWeatherIconsReact icon="RAIN" size={12} />
+          60%
+        </div>
       </div>
       <div className="hourly-temperature-forecast">
         <div className="time">8am</div>
         <div className="temperature">18&deg;</div>
-        <div className="precipitation">☀️ 45%</div>
+        <div className="precipitation">
+          <AnimatedWeatherIconsReact icon="RAIN" size={12} />
+          45%
+        </div>
       </div>
     </section>
 
-    <section className="animated-weather-icon">☀️</section>
+    <section className="animated-weather-icon">
+      <AnimatedWeatherIconsReact icon="CLEAR_DAY" size={48} />
+    </section>
     {/* eslint-enable */}
 
     <section className="summary">Drizzle starting in an hour.</section>
@@ -63,7 +81,9 @@ const ExpandedWeatherCard = () => (
       <div className="daily-forecast">
         <div className="daily-forecast-icon-day-container">
           <div className="daily-forecast-icon-day">
-            <div className="daily-forecast-icon">🌧</div>
+            <div className="daily-forecast-icon">
+              <AnimatedWeatherIconsReact icon="CLEAR_NIGHT" size={30} />
+            </div>
             <div className="daily-forecast-day">Today</div>
           </div>
         </div>
@@ -75,7 +95,9 @@ const ExpandedWeatherCard = () => (
       <div className="daily-forecast">
         <div className="daily-forecast-icon-day-container">
           <div className="daily-forecast-icon-day">
-            <div className="daily-forecast-icon">☀️</div>
+            <div className="daily-forecast-icon">
+              <AnimatedWeatherIconsReact icon="WIND" size={30} />
+            </div>
             <div className="daily-forecast-day">Tomorrow</div>
           </div>
         </div>
@@ -87,7 +109,9 @@ const ExpandedWeatherCard = () => (
       <div className="daily-forecast">
         <div className="daily-forecast-icon-day-container">
           <div className="daily-forecast-icon-day">
-            <div className="daily-forecast-icon">🌥</div>
+            <div className="daily-forecast-icon">
+              <AnimatedWeatherIconsReact icon="SLEET" size={30} />
+            </div>
             <div className="daily-forecast-day">Wednesday</div>
           </div>
         </div>
@@ -99,7 +123,9 @@ const ExpandedWeatherCard = () => (
       <div className="daily-forecast">
         <div className="daily-forecast-icon-day-container">
           <div className="daily-forecast-icon-day">
-            <div className="daily-forecast-icon">⚡️</div>
+            <div className="daily-forecast-icon">
+              <AnimatedWeatherIconsReact icon="PARTLY_CLOUDY_DAY" size={30} />
+            </div>
             <div className="daily-forecast-day">Thursday</div>
           </div>
         </div>
@@ -111,7 +137,9 @@ const ExpandedWeatherCard = () => (
       <div className="daily-forecast">
         <div className="daily-forecast-icon-day-container">
           <div className="daily-forecast-icon-day">
-            <div className="daily-forecast-icon">🌧</div>
+            <div className="daily-forecast-icon">
+              <AnimatedWeatherIconsReact icon="CLOUDY" size={30} />
+            </div>
             <div className="daily-forecast-day">Friday</div>
           </div>
         </div>

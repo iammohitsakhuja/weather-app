@@ -1,5 +1,5 @@
 import React from 'react'
-import propTypes from 'prop-types'
+import PropTypes from 'prop-types'
 
 import '../styles/weather-card.scss'
 
@@ -29,31 +29,31 @@ const WeatherCard = ({ location }) => {
 }
 
 WeatherCard.propTypes = {
-  location: propTypes.shape({
-    id: propTypes.string.isRequired,
-    city: propTypes.string.isRequired,
-    state: propTypes.string.isRequired,
-    country: propTypes.string.isRequired,
-    latitude: propTypes.number.isRequired,
-    longitude: propTypes.number.isRequired,
-    currently: propTypes.shape({
-      time: propTypes.number.isRequired,
-      summary: propTypes.string,
-      icon: propTypes.string.isRequired,
-      precipIntensity: propTypes.number,
-      precipType: propTypes.string,
-      temperature: propTypes.number.isRequired,
-      apparentTemperature: propTypes.number.isRequired,
-      dewPoint: propTypes.number,
-      humidity: propTypes.number.isRequired,
-      pressure: propTypes.number.isRequired,
-      windSpeed: propTypes.number.isRequired,
-      windGust: propTypes.number,
-      windBearing: propTypes.number,
-      cloudCover: propTypes.number,
-      uvIndex: propTypes.number,
-      visibility: propTypes.number,
-      ozone: propTypes.number,
+  location: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    city: PropTypes.string.isRequired,
+    state: PropTypes.string.isRequired,
+    country: PropTypes.string.isRequired,
+    latitude: PropTypes.number.isRequired,
+    longitude: PropTypes.number.isRequired,
+    currently: PropTypes.shape({
+      time: PropTypes.number.isRequired,
+      summary: PropTypes.string,
+      icon: PropTypes.string.isRequired,
+      precipIntensity: PropTypes.number,
+      precipType: PropTypes.string,
+      temperature: PropTypes.number.isRequired,
+      apparentTemperature: PropTypes.number.isRequired,
+      dewPoint: PropTypes.number,
+      humidity: PropTypes.number.isRequired,
+      pressure: PropTypes.number.isRequired,
+      windSpeed: PropTypes.number.isRequired,
+      windGust: PropTypes.number,
+      windBearing: PropTypes.number,
+      cloudCover: PropTypes.number,
+      uvIndex: PropTypes.number,
+      visibility: PropTypes.number,
+      ozone: PropTypes.number,
     }).isRequired,
   }).isRequired,
 }

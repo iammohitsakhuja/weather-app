@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { AutoComplete } from 'antd'
 import axios from 'axios'
-import propTypes from 'prop-types'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import { addLocation } from '../actions'
@@ -86,7 +86,7 @@ class SearchBar extends Component {
 }
 
 SearchBar.propTypes = {
-  addLocation: propTypes.func.isRequired,
+  addLocation: PropTypes.func.isRequired,
 }
 
 export default connect(

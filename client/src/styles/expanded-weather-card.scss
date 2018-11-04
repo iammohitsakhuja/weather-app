@@ -34,7 +34,7 @@
   border-radius: 0.4rem;
 
   @include linear-gradient(300deg, $expanded-card-bg-color-primary 50%, $expanded-card-bg-color-secondary 50%);
-  @include box-shadow(0 0 45px -1px rgba(166, 163, 166, 1));
+  @include box-shadow(0 3px 20px -1px rgba(156, 153, 156, 1));
 
   @include breakpoint(tablet) {
     padding: 1.6rem;
@@ -244,6 +244,10 @@
     align-self: center;
     font-size: 2.6rem;
 
+    canvas {
+      margin-top: 1rem;
+    }
+
     @include breakpoint(laptop) {
       display: unset;
     }
@@ -291,7 +295,7 @@
       grid-template-columns: 2fr 3fr 2fr;
       grid-template-areas: "icon-day . temperature-precipitation";
       padding: 0.5rem 0;
-      border-top: 2px solid darken($app-color, 90%);
+      border-top: 2px solid darken($app-color, 75%);
 
       .daily-forecast-icon-day-container {
         grid-area: icon-day;
