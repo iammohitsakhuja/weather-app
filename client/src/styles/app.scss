@@ -15,7 +15,8 @@
   }
 
   @include breakpoint(desktop) {
-    width: 70%;
+    width: 80%;
+    max-width: 1200px;
   }
 
   header.app-brand {
@@ -30,7 +31,7 @@
     }
 
     @include breakpoint(laptop) {
-      margin: 1rem;
+      margin-top: 0.2rem;
     }
   }
 }
