@@ -1,5 +1,7 @@
 import React from 'react'
 
+import Icons from '../icons'
+
 import '../styles/expanded-weather-card.scss'
 
 const ExpandedWeatherCard = () => (
@@ -124,29 +126,39 @@ const ExpandedWeatherCard = () => (
     <section className="weather-attributes">
       {/* eslint-disable jsx-a11y/accessible-emoji */}
       <div className="weather-attribute-container">
-        <div className="attribute-icon">💧</div>
+        <div className="attribute-icon">
+          <img src={Icons.Rain} alt="Precipitation" />
+        </div>
         <div className="attribute-name">Precipitation</div>
         <div className="attribute-value">50-60%</div>
       </div>
       <div className="weather-attribute-container">
-        <div className="attribute-icon">🔥</div>
+        <div className="attribute-icon">
+          <img src={Icons.TemperatureHot} alt="Temperature" />
+        </div>
         <div className="attribute-name">Temperature</div>
         <div className="attribute-value">24-28&deg;</div>
       </div>
       <div className="weather-attribute-container">
-        <div className="attribute-icon">💦</div>
+        <div className="attribute-icon">
+          <img src={Icons.Humidity} alt="Humidity" />
+        </div>
         <div className="attribute-name">Humidity</div>
         <div className="attribute-value">10-20%</div>
       </div>
       <div className="weather-attribute-container">
-        <div className="attribute-icon">🌪</div>
+        <div className="attribute-icon">
+          <img src={Icons.Wind} alt="Wind Speed" />
+        </div>
         <div className="attribute-name">Wind speed</div>
         <div className="attribute-value">100km/h</div>
       </div>
       <div className="weather-attribute-container">
-        <div className="attribute-icon">👀</div>
-        <div className="attribute-name">Visibility</div>
-        <div className="attribute-value">95%</div>
+        <div className="attribute-icon">
+          <img src={Icons.FullMoon} alt="Moon Phase" />
+        </div>
+        <div className="attribute-name">Moon Phase</div>
+        <div className="attribute-value">Full Moon</div>
       </div>
       {/* eslint-enable */}
     </section>
