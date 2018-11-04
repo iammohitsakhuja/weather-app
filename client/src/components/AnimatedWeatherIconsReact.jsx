@@ -8,7 +8,7 @@ class AnimatedWeatherIconsReact extends Component {
   static playing = false
 
   // Contains all icons being displayed.
-  static allIcons = new Skycons({ color: 'white' })
+  static allIcons = new Skycons({ color: 'hotpink' })
 
   // Toggles animation on and off for the icons.
   static togglePlay = () => {

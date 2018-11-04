@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import propTypes from 'prop-types'
+import PropTypes from 'prop-types'
 
 import SearchBar from './SearchBar'
 import WeatherCardsSection from './WeatherCardsSection'
@@ -19,7 +19,7 @@ const App = ({ cardState }) => (
 )
 
 App.propTypes = {
-  cardState: propTypes.string.isRequired,
+  cardState: PropTypes.string.isRequired,
 }
 
 const mapStateToProps = state => ({
