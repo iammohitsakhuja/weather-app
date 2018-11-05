@@ -1,64 +1,58 @@
+@import 'breakpoint';
 @import 'variables';
-
-@mixin spin($time) {
-  -webkit-animation: spin $time linear infinite;
-  -moz-animation: spin $time linear infinite;
-  animation: spin $time linear infinite;
-
-  @-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
-
-  @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
-
-  @keyframes spin { 100% { transform: rotate(360deg); } }
-}
 
 .weather-card {
   background-color: $weather-card-bg-color-primary;
   color: $app-color;
+  max-width: 32rem;
   width: 100%;
   border-radius: 0.4rem;
-  margin: 1rem 0;
+  border: solid $weather-card-border-color;
+  margin: 1rem auto;
   padding: 1rem;
-}
 
-.date-and-weather-icon {
-  display: flex;
-  justify-content: space-between;
-
-  .date {
-    font-size: 1rem;
-    border-bottom: 0.2rem solid $app-color;
+  @include breakpoint(phablet) {
+    width: 80%;
   }
 
-  .weather-icon {
-    font-size: 1.5rem;
-
-    @include spin(6s);
-  }
-}
-
-.current-forecast {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 1.6rem;
-
-  .temperature {
-    font-size: 4rem;
-    line-height: 1;
+  @include breakpoint(tablet) {
+    width: 70%;
   }
 
-  .location-and-info {
-    text-align: right;
+  .date-and-weather-icon {
     display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
+    justify-content: space-between;
+    line-height: 1;
 
-    .location {
+    .date {
       font-size: 1rem;
+      border-bottom: 0.2rem solid $app-color;
+    }
+  }
+
+  .current-forecast {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.6rem;
+
+    .temperature {
+      font-size: 4rem;
+      line-height: 1;
     }
 
-    .info {
-      font-size: 0.8rem;
+    .location-and-info {
+      text-align: right;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+
+      .location {
+        font-size: 1rem;
+      }
+
+      .info {
+        font-size: 0.8rem;
+      }
     }
   }
 }

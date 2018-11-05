@@ -1,6 +1,6 @@
 // Skycons by DarkSky, taken from: https://github.com/darkskyapp/skycons/
-
 const Skycons = (function(global) {
+  // eslint-disable-next-line
   "use strict";
 
   /* Set up a RequestAnimationFrame shim so we can animate efficiently FOR
@@ -697,6 +697,7 @@ const Skycons = (function(global) {
       var canvas = obj.context.canvas;
 
       if(this.resizeClear)
+        // eslint-disable-next-line
         canvas.width = canvas.width;
 
       else

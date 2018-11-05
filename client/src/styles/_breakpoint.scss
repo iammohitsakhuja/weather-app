@@ -11,7 +11,11 @@
     @media only screen and (min-width: 740px) { @content ; }
   }
 
+  @else if $point == phablet {
+    @media only screen and (min-width: 560px) { @content ; }
+  }
+
   @else if $point == mobileonly {
-    @media only screen and (max-width: 560px) { @content ; }
+    @media only screen and (max-width: 559px) { @content ; }
   }
 }
