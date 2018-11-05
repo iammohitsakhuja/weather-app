@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import AnimatedWeatherIconsReact from './AnimatedWeatherIconsReact'
+
 import '../styles/weather-card.scss'
 
 const WeatherCard = ({ location }) => {
@@ -13,7 +15,9 @@ const WeatherCard = ({ location }) => {
       {/* eslint-disable jsx-a11y/accessible-emoji */}
       <section className="date-and-weather-icon">
         <div className="date">December 31, 2018</div>
-        <div className="weather-icon">☀️</div>
+        <div className="weather-icon">
+          <AnimatedWeatherIconsReact icon="RAIN" size={28} />
+        </div>
       </section>
 
       <section className="current-forecast">

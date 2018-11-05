@@ -14,7 +14,12 @@
   }
 
   > * {
+    max-width: 32rem;
     width: 100%;
+
+    @include breakpoint(phablet) {
+      width: 80%;
+    }
 
     @include breakpoint(tablet) {
       font-size: 1rem;

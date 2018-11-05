@@ -32,9 +32,9 @@
   margin: 1.4rem 0;
   padding: 1rem;
   border-radius: 0.4rem;
+  border: solid $weather-card-border-color;
 
   @include linear-gradient(300deg, $expanded-card-bg-color-primary 50%, $expanded-card-bg-color-secondary 50%);
-  @include box-shadow(0 3px 20px -1px rgba(156, 153, 156, 1));
 
   @include breakpoint(tablet) {
     padding: 1.6rem;
