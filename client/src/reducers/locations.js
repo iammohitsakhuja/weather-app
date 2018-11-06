@@ -55,4 +55,4 @@ export default locations
 
 export const getLocations = state => state.ids.map(id => state.locationsById[id])
 export const getCardState = state => state.cardState
-export const getExpandedCard = state => state.locationsById[state.expandedCardId]
+export const getLocationData = state => state.locationsById[state.expandedCardId]
