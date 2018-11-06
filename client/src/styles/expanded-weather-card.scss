@@ -22,7 +22,7 @@
   grid-template-areas:
     "date                                       time"
     "current-temperature       location-and-forecast"
-    "hourly-forecast                 hourly-forecast"
+    "hourly-forecast-section hourly-forecast-section"
     "summary                                 summary"
     "weather-animation-frame weather-animation-frame"
     "daily-forecast-section   daily-forecast-section";
@@ -50,7 +50,7 @@
     grid-template-rows: 0.25fr 1fr 0.75fr 2fr 1fr;
     grid-template-areas:
       ".                          .                          . date                   time"
-      "current-temperature        hourly-forecast            . location-and-forecast  animated-weather-icon"
+      "current-temperature        hourly-forecast-section    . location-and-forecast  animated-weather-icon"
       "summary                    summary                    . daily-forecast-section daily-forecast-section"
       "weather-animation-frame    weather-animation-frame    . daily-forecast-section daily-forecast-section"
       "weather-attributes-section weather-attributes-section . daily-forecast-section daily-forecast-section";
@@ -170,8 +170,8 @@
     }
   }
 
-  .hourly-forecast {
-    grid-area: hourly-forecast;
+  .hourly-forecast-section {
+    grid-area: hourly-forecast-section;
     display: flex;
     justify-content: space-between;
 
@@ -186,7 +186,7 @@
       }
     }
 
-    .hourly-temperature-forecast {
+    .hourly-forecast {
       text-align: center;
       line-height: 1.2;
 
@@ -232,6 +232,18 @@
 
         @include breakpoint(laptop) {
           font-size: 0.8rem;
+        }
+
+        img {
+          max-width: 0.93rem;
+
+          @include breakpoint(tablet) {
+            max-width: 1.2rem;
+          }
+
+          @include breakpoint(laptop) {
+            max-width: 0.93rem;
+          }
         }
       }
     }
