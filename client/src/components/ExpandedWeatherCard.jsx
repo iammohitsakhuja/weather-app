@@ -3,9 +3,9 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import moment from 'moment'
 
-import Icons from '../icons'
 import AnimatedWeatherIconsReact from './AnimatedWeatherIconsReact'
 import DailyForecastSection from './DailyForecastSection'
+import WeatherAttributesSection from './WeatherAttributesSection'
 import { getLocationData } from '../reducers/locations'
 
 import '../styles/expanded-weather-card.scss'
@@ -98,45 +98,7 @@ const ExpandedWeatherCard = ({ location }) => {
 
       <DailyForecastSection data={daily.data} />
 
-      <section className="weather-attributes">
-        {/* eslint-disable jsx-a11y/accessible-emoji */}
-        <div className="weather-attribute-container">
-          <div className="attribute-icon">
-            <img src={Icons.Rain} alt="Precipitation" />
-          </div>
-          <div className="attribute-name">Precipitation</div>
-          <div className="attribute-value">50-60%</div>
-        </div>
-        <div className="weather-attribute-container">
-          <div className="attribute-icon">
-            <img src={Icons.TemperatureHot} alt="Temperature" />
-          </div>
-          <div className="attribute-name">Temperature</div>
-          <div className="attribute-value">24-28&deg;</div>
-        </div>
-        <div className="weather-attribute-container">
-          <div className="attribute-icon">
-            <img src={Icons.Humidity} alt="Humidity" />
-          </div>
-          <div className="attribute-name">Humidity</div>
-          <div className="attribute-value">10-20%</div>
-        </div>
-        <div className="weather-attribute-container">
-          <div className="attribute-icon">
-            <img src={Icons.Wind} alt="Wind Speed" />
-          </div>
-          <div className="attribute-name">Wind speed</div>
-          <div className="attribute-value">100km/h</div>
-        </div>
-        <div className="weather-attribute-container">
-          <div className="attribute-icon">
-            <img src={Icons.FullMoon} alt="Moon Phase" />
-          </div>
-          <div className="attribute-name">Moon Phase</div>
-          <div className="attribute-value">Full Moon</div>
-        </div>
-        {/* eslint-enable */}
-      </section>
+      <WeatherAttributesSection todaysData={daily.data[0]} />
     </div>
   )
 }

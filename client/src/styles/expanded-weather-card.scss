@@ -25,7 +25,7 @@
     "hourly-forecast                 hourly-forecast"
     "summary                                 summary"
     "weather-animation-frame weather-animation-frame"
-    "daily-forecast-section  daily-forecast-section";
+    "daily-forecast-section   daily-forecast-section";
   background-color: $expanded-card-bg-color-primary;
   color: $app-color;
   width: 100%;
@@ -49,11 +49,11 @@
     grid-template-columns: 3fr 7fr 3fr 3.5fr 3.5fr;
     grid-template-rows: 0.25fr 1fr 0.75fr 2fr 1fr;
     grid-template-areas:
-      ".                       .                       . date                   time"
-      "current-temperature     hourly-forecast         . location-and-forecast  animated-weather-icon"
-      "summary                 summary                 . daily-forecast-section daily-forecast-section"
-      "weather-animation-frame weather-animation-frame . daily-forecast-section daily-forecast-section"
-      "weather-attributes      weather-attributes      . daily-forecast-section daily-forecast-section";
+      ".                          .                          . date                   time"
+      "current-temperature        hourly-forecast            . location-and-forecast  animated-weather-icon"
+      "summary                    summary                    . daily-forecast-section daily-forecast-section"
+      "weather-animation-frame    weather-animation-frame    . daily-forecast-section daily-forecast-section"
+      "weather-attributes-section weather-attributes-section . daily-forecast-section daily-forecast-section";
     margin: 2.4rem 0;
     padding: 3rem;
   }
@@ -374,9 +374,9 @@
     }
   }
 
-  .weather-attributes {
+  .weather-attributes-section {
     display: none;
-    grid-area: weather-attributes;
+    grid-area: weather-attributes-section;
 
     @include breakpoint(laptop) {
       display: flex;
@@ -384,7 +384,7 @@
       align-self: center;
     }
 
-    .weather-attribute-container {
+    .weather-attribute {
       text-align: center;
       line-height: 1.5;
 
