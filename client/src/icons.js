@@ -16,7 +16,7 @@ import TemperatureCold from './assets/icons/temperature-cold.svg'
 import TemperatureHot from './assets/icons/temperature-hot.svg'
 import Wind from './assets/icons/wind.svg'
 
-export default {
+export {
   Humidity,
   NewMoon,
   WaxingCrescent,
