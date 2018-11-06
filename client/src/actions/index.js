@@ -7,6 +7,9 @@ const addLocation = (id, suggestionData) => async dispatch => {
 
     const { latitude, longitude, currently, hourly, daily } = response.data
 
+    // Make sure to store day-wise data for a max of 5 days only.
+    if (daily.data.length > 5) daily.data.length = 5
+
     // Dispatch an action with the received data.
     dispatch({
       type: 'ADD_LOCATION',
