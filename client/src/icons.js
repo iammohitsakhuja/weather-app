@@ -11,6 +11,7 @@ import FullMoon from './assets/icons/moon-3.svg'
 import WaningGibbous from './assets/icons/moon-4.svg'
 import WaningCrescent from './assets/icons/moon-5.svg'
 import Rain from './assets/icons/rain.svg'
+import RainHourly from './assets/icons/rain-hourly.svg'
 import TemperatureCold from './assets/icons/temperature-cold.svg'
 import TemperatureHot from './assets/icons/temperature-hot.svg'
 import Wind from './assets/icons/wind.svg'
@@ -24,6 +25,7 @@ export default {
   WaningGibbous,
   WaningCrescent,
   Rain,
+  RainHourly,
   TemperatureCold,
   TemperatureHot,
   Wind,

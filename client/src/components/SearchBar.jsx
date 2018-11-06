@@ -23,14 +23,10 @@ const fetchAutoCompleteSuggestions = async value => {
   const locationSuggestions = suggestions.map(suggestion => {
     const { address } = suggestion
     const data = {
-      state: address.state,
+      city: address.city || address.county || address.state || address.country,
+      state: address.state || address.country,
       country: address.country,
     }
-
-    if (address.city !== undefined) data.city = address.city
-    else if (address.county !== undefined) data.city = address.county
-    else if (address.state !== undefined) data.city = address.state
-    else data.city = address.country
 
     return (
       <Option key={suggestion.locationId} value={suggestion.locationId} label="" data={data}>

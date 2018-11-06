@@ -1,33 +1,40 @@
 import React from 'react'
+import moment from 'moment'
 import PropTypes from 'prop-types'
 
 import AnimatedWeatherIconsReact from './AnimatedWeatherIconsReact'
 
 import '../styles/weather-card.scss'
 
+const getTemperature = temperature => parseInt(temperature)
+const getIconName = iconName => iconName.toUpperCase().replace(/-/g, '_')
+const getFormattedDate = time => moment(time * 1000).format('MMMM Do, YYYY')
+
 const WeatherCard = ({ location }) => {
   const { city, country, currently } = location
-  const { temperature } = currently
-  const time = Date.now()
+  const { time, summary, icon, apparentTemperature } = currently
 
   return (
     <div className="weather-card">
-      {/* eslint-disable jsx-a11y/accessible-emoji */}
       <section className="date-and-weather-icon">
-        <div className="date">December 31, 2018</div>
+        <div className="date">{getFormattedDate(time)}</div>
         <div className="weather-icon">
-          <AnimatedWeatherIconsReact icon="RAIN" size={28} />
+          <AnimatedWeatherIconsReact icon={getIconName(icon)} size={28} />
         </div>
       </section>
 
       <section className="current-forecast">
-        <div className="temperature">23&deg;</div>
+        <div className="temperature">
+          {getTemperature(apparentTemperature)}
+          &deg;
+        </div>
         <section className="location-and-info">
-          <div className="location">Manchester by the Sea</div>
-          <div className="info">Partly cloudy</div>
+          <div className="location">
+            {city}, {country}
+          </div>
+          <div className="info">{summary}</div>
         </section>
       </section>
-      {/* eslint-enable */}
     </div>
   )
 }
@@ -38,26 +45,14 @@ WeatherCard.propTypes = {
     city: PropTypes.string.isRequired,
     state: PropTypes.string.isRequired,
     country: PropTypes.string.isRequired,
-    latitude: PropTypes.number.isRequired,
-    longitude: PropTypes.number.isRequired,
     currently: PropTypes.shape({
       time: PropTypes.number.isRequired,
-      summary: PropTypes.string,
+      summary: PropTypes.string.isRequired,
       icon: PropTypes.string.isRequired,
-      precipIntensity: PropTypes.number,
+      precipProbability: PropTypes.number.isRequired,
       precipType: PropTypes.string,
       temperature: PropTypes.number.isRequired,
       apparentTemperature: PropTypes.number.isRequired,
-      dewPoint: PropTypes.number,
-      humidity: PropTypes.number.isRequired,
-      pressure: PropTypes.number.isRequired,
-      windSpeed: PropTypes.number.isRequired,
-      windGust: PropTypes.number,
-      windBearing: PropTypes.number,
-      cloudCover: PropTypes.number,
-      uvIndex: PropTypes.number,
-      visibility: PropTypes.number,
-      ozone: PropTypes.number,
     }).isRequired,
   }).isRequired,
 }
