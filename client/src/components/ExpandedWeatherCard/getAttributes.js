@@ -10,11 +10,8 @@ import {
   TemperatureCold,
   TemperatureHot,
   Wind,
-} from '../icons'
-
-const getTemperature = temperature => Math.round(temperature)
-const getHumidity = humidity => Math.round(humidity * 100)
-const getWindSpeed = windSpeed => Math.round(windSpeed)
+} from '../../icons'
+import { getTemperature, getHumidity, getWindSpeed } from '../../utils'
 
 const getTemperatureAttributes = (apparentTemperatureLow, apparentTemperatureHigh) => {
   const temperatureAttributes = {

@@ -1,14 +1,10 @@
 import React from 'react'
-import moment from 'moment'
 import PropTypes from 'prop-types'
 
 import AnimatedWeatherIconsReact from './AnimatedWeatherIconsReact'
+import { getTemperature, getIconName, getFormattedDate } from '../utils'
 
 import '../styles/weather-card.scss'
-
-const getTemperature = temperature => parseInt(temperature)
-const getIconName = iconName => iconName.toUpperCase().replace(/-/g, '_')
-const getFormattedDate = time => moment(time * 1000).format('MMMM Do, YYYY')
 
 const WeatherCard = ({ location }) => {
   const { city, country, currently } = location

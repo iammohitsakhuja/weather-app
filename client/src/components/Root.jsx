@@ -11,8 +11,7 @@ const Root = ({ store }) => (
 )
 
 Root.propTypes = {
-  // eslint-disable-next-line
-  store: PropTypes.object.isRequired,
+  store: PropTypes.objectOf(PropTypes.any).isRequired,
 }
 
 export default Root

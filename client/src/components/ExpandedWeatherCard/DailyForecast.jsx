@@ -1,23 +1,8 @@
 import React from 'react'
-import moment from 'moment'
 import PropTypes from 'prop-types'
 
-import AnimatedWeatherIconsReact from './AnimatedWeatherIconsReact'
-
-const getTemperature = temperature => Math.round(temperature)
-const getIconName = iconName => iconName.toUpperCase().replace(/-/g, '_')
-
-const isToday = time => moment.unix(time).isSame(Date.now(), 'day')
-const isTomorrow = time => moment.unix(time).isSame(moment().add(1, 'days'), 'day')
-const getWeekDay = time => moment.unix(time).format('dddd')
-
-const getDayOfWeek = time => {
-  if (isToday(time)) return 'Today'
-  if (isTomorrow(time)) return 'Tomorrow'
-  return getWeekDay(time)
-}
-
-const getPrecipProbability = precipProbability => Math.round(precipProbability * 100)
+import AnimatedWeatherIconsReact from '../AnimatedWeatherIconsReact'
+import { getIconName, getDayOfWeek, getTemperature, getPrecipProbability } from '../../utils'
 
 const DailyForecast = ({ icon, time, temperatureHigh, temperatureLow, precipProbability }) => (
   <div className="daily-forecast">

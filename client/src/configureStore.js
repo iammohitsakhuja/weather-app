@@ -594,7 +594,7 @@ const persistedState = {
   },
   ids: ['NT_slcvtDdQxNuhascaVc1.yD'],
   cardState: 'STACKED',
-  expandedCardId: 'NT_slcvtDdQxNuhascaVc1.yD',
+  expandedCardId: null,
 }
 
 const configureStore = () => {

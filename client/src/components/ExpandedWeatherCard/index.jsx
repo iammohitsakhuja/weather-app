@@ -1,19 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import moment from 'moment'
 
-import AnimatedWeatherIconsReact from './AnimatedWeatherIconsReact'
+import AnimatedWeatherIconsReact from '../AnimatedWeatherIconsReact'
 import HourlyForecastSection from './HourlyForecastSection'
 import DailyForecastSection from './DailyForecastSection'
 import WeatherAttributesSection from './WeatherAttributesSection'
-import { getLocationData } from '../reducers/locations'
+import { getLocationData } from '../../reducers/locations'
+import { getTemperature, getIconName, getFormattedTime, getFormattedModifier, getFormattedDate } from '../../utils'
 
-import '../styles/expanded-weather-card.scss'
-
-const getTemperature = temperature => parseInt(temperature)
-const getIconName = iconName => iconName.toUpperCase().replace(/-/g, '_')
-const getFormattedDate = time => moment.unix(time).format('MMMM Do, YYYY')
+import '../../styles/expanded-weather-card.scss'
 
 const getHourlyData = (hourlyData, lastRefreshTime, gap = 3, maxItems = 5) => {
   let currentGap = gap
@@ -46,8 +42,8 @@ const ExpandedWeatherCard = ({ location }) => {
 
       {/* Time */}
       <section className="time">
-        {moment.unix(time).format('hh:mm')}
-        <span className="time-modifier">{moment.unix(time).format('A')}</span>
+        {getFormattedTime(time)}
+        <span className="time-modifier">{getFormattedModifier(time)}</span>
       </section>
 
       {/* Current temperature */}
