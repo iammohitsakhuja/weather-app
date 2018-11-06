@@ -3,6 +3,7 @@ import { combineReducers } from 'redux'
 const ids = (state = [], action) => {
   switch (action.type) {
     case 'ADD_LOCATION':
+      if (state.includes(action.location.id)) return [...state]
       return [...state, action.location.id]
     default:
       return state
