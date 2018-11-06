@@ -10,8 +10,8 @@ const DailyForecastSection = ({ data }) => (
         key={dayData.time}
         icon={dayData.icon}
         time={dayData.time}
-        apparentTemperatureLow={dayData.apparentTemperatureLow}
-        apparentTemperatureHigh={dayData.apparentTemperatureHigh}
+        temperatureHigh={dayData.apparentTemperatureHigh || dayData.temperatureHigh}
+        temperatureLow={dayData.apparentTemperatureLow || dayData.temperatureLow}
         precipProbability={dayData.precipProbability}
       />
     ))}
@@ -21,10 +21,12 @@ const DailyForecastSection = ({ data }) => (
 DailyForecastSection.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
-      icon: PropTypes.string.isRequired,
       time: PropTypes.number.isRequired,
-      apparentTemperatureLow: PropTypes.number.isRequired,
+      icon: PropTypes.string.isRequired,
+      temperatureHigh: PropTypes.number.isRequired,
+      temperatureLow: PropTypes.number.isRequired,
       apparentTemperatureHigh: PropTypes.number.isRequired,
+      apparentTemperatureLow: PropTypes.number.isRequired,
       precipProbability: PropTypes.number.isRequired,
     })
   ).isRequired,

@@ -24,7 +24,7 @@ const getWeatherDataUtil = async id => {
   // Fetch and return the weather data for the received latitude and longitude.
   return axios.get(`${weatherApiURI}/${Latitude},${Longitude}`, {
     params: {
-      exclude: 'minutely',
+      exclude: 'minutely,flags',
       units: 'ca',
     },
   })

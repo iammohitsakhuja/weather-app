@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 import AnimatedWeatherIconsReact from './AnimatedWeatherIconsReact'
 
-const getTemperature = temperature => parseInt(temperature)
+const getTemperature = temperature => Math.round(temperature)
 const getIconName = iconName => iconName.toUpperCase().replace(/-/g, '_')
 
 const isToday = time => moment.unix(time).isSame(Date.now(), 'day')
@@ -17,9 +17,9 @@ const getDayOfWeek = time => {
   return getWeekDay(time)
 }
 
-const getPrecipProbability = precipProbability => parseInt(precipProbability * 100)
+const getPrecipProbability = precipProbability => Math.round(precipProbability * 100)
 
-const DailyForecast = ({ icon, time, apparentTemperatureLow, apparentTemperatureHigh, precipProbability }) => (
+const DailyForecast = ({ icon, time, temperatureHigh, temperatureLow, precipProbability }) => (
   <div className="daily-forecast">
     <div className="daily-forecast-icon-day-container">
       <div className="daily-forecast-icon-day">
@@ -31,9 +31,9 @@ const DailyForecast = ({ icon, time, apparentTemperatureLow, apparentTemperature
     </div>
     <div className="daily-forecast-temperature-precipitation">
       <div className="daily-forecast-temperature">
-        {getTemperature(apparentTemperatureLow)}
+        {getTemperature(temperatureLow)}
         &deg;-
-        {getTemperature(apparentTemperatureHigh)}
+        {getTemperature(temperatureHigh)}
         &deg;
       </div>
       <div className="daily-forecast-precipitation">Rain {getPrecipProbability(precipProbability)}%</div>
@@ -42,10 +42,10 @@ const DailyForecast = ({ icon, time, apparentTemperatureLow, apparentTemperature
 )
 
 DailyForecast.propTypes = {
-  icon: PropTypes.string.isRequired,
   time: PropTypes.number.isRequired,
-  apparentTemperatureLow: PropTypes.number.isRequired,
-  apparentTemperatureHigh: PropTypes.number.isRequired,
+  icon: PropTypes.string.isRequired,
+  temperatureHigh: PropTypes.number.isRequired,
+  temperatureLow: PropTypes.number.isRequired,
   precipProbability: PropTypes.number.isRequired,
 }
 
