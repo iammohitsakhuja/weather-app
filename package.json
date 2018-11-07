@@ -6,7 +6,7 @@
   ],
   "name": "weather-app",
   "description": "An app to display weather info",
-  "version": "0.1.0",
+  "version": "0.5.0",
   "author": "Mohit Sakhuja <sakhuja.mohit@gmail.com>",
   "repository": {
     "url": "https://github.com/mohitsakhuja/weather-app",
@@ -25,9 +25,10 @@
     "stylelint-scss": "^3.3.2"
   },
   "scripts": {
-    "build-client": "cd client && yarn build",
+    "build-server": "cd server && yarn build",
+    "build-client": "cd client && yarn build && mv build ../server/build/client-build",
     "start-server": "cd server && yarn start",
-    "start": "yarn build-client && yarn start-server",
+    "start": "yarn build-server && yarn build-client && yarn start-server",
     "start-client:dev": "cd client && yarn start",
     "start-server:dev": "cd server && yarn start:dev",
     "start:dev": "NODE_ENV=development concurrently \"yarn start-client:dev\" \"yarn start-server:dev\""

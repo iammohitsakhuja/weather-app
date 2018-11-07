@@ -3,7 +3,7 @@ import axios from 'axios'
 const addLocation = (id, suggestionData) => async dispatch => {
   try {
     // Get the weather data for the given location id.
-    const response = await axios.get(`/weather`, { params: { locationId: id } })
+    const response = await axios.get(`/api/weather`, { params: { locationId: id } })
 
     const { latitude, longitude, currently, hourly, daily } = response.data
 
