@@ -14,7 +14,7 @@ const fetchAutoCompleteSuggestions = async value => {
   if (value === '') return []
 
   // Fetch autocomplete suggestions for the given value.
-  const response = await axios.get(`/autocomplete`, { params: { value } })
+  const response = await axios.get(`/api/autocomplete`, { params: { value } })
   const { suggestions } = response.data
 
   // Process received suggestions.
