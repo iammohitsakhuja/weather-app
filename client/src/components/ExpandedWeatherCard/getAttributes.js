@@ -11,11 +11,11 @@ import {
   TemperatureHot,
   Wind,
 } from '../../icons'
-import { getTemperature, getHumidity, getWindSpeed } from '../../utils'
+import { formatTemperature, getPrecipProbability, getHumidity, getWindSpeed } from '../../utils'
 
 const getTemperatureAttributes = (apparentTemperatureLow, apparentTemperatureHigh) => {
   const temperatureAttributes = {
-    attributeValue: `${getTemperature(apparentTemperatureLow)}-${getTemperature(apparentTemperatureHigh)}°`,
+    attributeValue: `${formatTemperature(apparentTemperatureLow)}° ${formatTemperature(apparentTemperatureHigh)}°`,
   }
 
   const meanTemperature = (apparentTemperatureLow + apparentTemperatureHigh) / 2
@@ -42,7 +42,7 @@ const getAttributes = (attributeType, attributePayload) => {
         icon: Rain,
         imgAlt: 'Precipitation',
         attributeName: 'Precipitation',
-        attributeValue: `${precipProbability}%`,
+        attributeValue: `${getPrecipProbability(precipProbability)}%`,
       }
     }
     case 'TEMPERATURE': {

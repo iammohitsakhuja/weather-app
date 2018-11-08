@@ -225,9 +225,11 @@
 
       .precipitation {
         font-size: 0.8rem;
+        min-width: 2rem;
 
         @include breakpoint(tablet) {
           font-size: 1rem;
+          min-width: 3rem;
         }
 
         @include breakpoint(laptop) {
@@ -270,6 +272,7 @@
     font-size: 1.2rem;
     justify-self: center;
     margin: 0.6rem 0;
+    text-align: center;
 
     @include breakpoint(tablet) {
       font-size: 1.8rem;
@@ -304,7 +307,7 @@
 
     .daily-forecast {
       display: grid;
-      grid-template-columns: 2fr 3fr 2fr;
+      grid-template-columns: 2fr 3fr 3fr;
       grid-template-areas: "icon-day . temperature-precipitation";
       padding: 0.5rem 0;
       border-top: 2px solid darken($app-color, 75%);

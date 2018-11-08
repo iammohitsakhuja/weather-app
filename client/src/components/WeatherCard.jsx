@@ -1,17 +1,19 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
 import AnimatedWeatherIconsReact from './AnimatedWeatherIconsReact'
 import { getTemperature, getIconName, getFormattedDate } from '../utils'
+import { expandCard } from '../actions'
 
 import '../styles/weather-card.scss'
 
-const WeatherCard = ({ location }) => {
-  const { city, country, currently } = location
-  const { time, summary, icon, apparentTemperature } = currently
+const WeatherCard = ({ location, handleClick }) => {
+  const { id, city, country, currently } = location
+  const { time, summary, icon, apparentTemperature, temperature } = currently
 
   return (
-    <div className="weather-card">
+    <div className="weather-card" onClick={() => handleClick(id)}>
       <section className="date-and-weather-icon">
         <div className="date">{getFormattedDate(time)}</div>
         <div className="weather-icon">
@@ -21,7 +23,7 @@ const WeatherCard = ({ location }) => {
 
       <section className="current-forecast">
         <div className="temperature">
-          {getTemperature(apparentTemperature)}
+          {getTemperature(apparentTemperature || temperature)}
           &deg;
         </div>
         <section className="location-and-info">
@@ -51,6 +53,16 @@ WeatherCard.propTypes = {
       apparentTemperature: PropTypes.number.isRequired,
     }).isRequired,
   }).isRequired,
+  handleClick: PropTypes.func.isRequired,
 }
 
-export default WeatherCard
+const mapDispatchToProps = dispatch => ({
+  handleClick: id => {
+    dispatch(expandCard(id))
+  },
+})
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(WeatherCard)
