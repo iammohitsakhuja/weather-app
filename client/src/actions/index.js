@@ -5,7 +5,7 @@ const addLocation = (id, suggestionData) => async dispatch => {
     // Get the weather data for the given location id.
     const response = await axios.get(`/api/weather`, { params: { locationId: id } })
 
-    const { latitude, longitude, currently, hourly, daily } = response.data
+    const { latitude, longitude, currently, hourly, daily, fact } = response.data
 
     // Make sure to store day-wise data for a max of 5 days only.
     if (daily.data.length > 5) daily.data.length = 5
@@ -21,6 +21,7 @@ const addLocation = (id, suggestionData) => async dispatch => {
         currently,
         hourly,
         daily,
+        fact,
       },
     })
   } catch (err) {
