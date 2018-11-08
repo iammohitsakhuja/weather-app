@@ -597,7 +597,7 @@ const persistedState =
           },
         },
         ids: ['NT_slcvtDdQxNuhascaVc1.yD'],
-        cardState: 'EXPANDED',
+        cardState: 'STACKED',
         expandedCardId: 'NT_slcvtDdQxNuhascaVc1.yD',
       }
 
