@@ -288,14 +288,14 @@
 
   .weather-animation-frame {
     grid-area: weather-animation-frame;
-    height: 10rem;
+    font-family: 'Poor Story', cursive;
+    font-size: 1.45rem;
+    min-height: 10rem;
     text-align: center;
-    font-size: 1.2rem;
-    background-color: lighten($expanded-card-bg-color-primary, 10%);
+    align-self: end;
 
     @include breakpoint(laptop) {
       min-height: 90%;
-      align-self: center;
     }
   }
 
