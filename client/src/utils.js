@@ -1,8 +1,12 @@
 import moment from 'moment'
 
+// Helper functions.
+const toTitleCase = str => str.replace(/\w\S*/g, word => word.charAt(0).toUpperCase() + word.substr(1).toLowerCase())
+
 // Weather functions.
 const getTemperature = temperature => Math.round(temperature) // 18.49 -> 18, 18.50 -> 19.
 const getPrecipProbability = precipProbability => Math.round(precipProbability * 100) // 0.5323 -> 53.
+const getPrecipType = precipType => toTitleCase(precipType) // rain -> Rain.
 const getHumidity = humidity => Math.round(humidity * 100) // 0.7561 -> 76.
 const getWindSpeed = windSpeed => Math.round(windSpeed) // 10.23 -> 10.
 const formatTemperature = temperature =>
@@ -32,8 +36,10 @@ const getDayOfWeek = time => {
 }
 
 export {
+  toTitleCase,
   getTemperature,
   getPrecipProbability,
+  getPrecipType,
   getHumidity,
   getWindSpeed,
   formatTemperature,

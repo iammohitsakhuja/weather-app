@@ -13,6 +13,7 @@ const DailyForecastSection = ({ data }) => (
         temperatureHigh={dayData.apparentTemperatureHigh || dayData.temperatureHigh}
         temperatureLow={dayData.apparentTemperatureLow || dayData.temperatureLow}
         precipProbability={dayData.precipProbability}
+        precipType={dayData.precipType}
       />
     ))}
   </section>
@@ -28,6 +29,7 @@ DailyForecastSection.propTypes = {
       apparentTemperatureHigh: PropTypes.number.isRequired,
       apparentTemperatureLow: PropTypes.number.isRequired,
       precipProbability: PropTypes.number.isRequired,
+      precipType: PropTypes.string,
     })
   ).isRequired,
 }
