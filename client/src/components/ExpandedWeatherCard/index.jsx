@@ -8,6 +8,7 @@ import DailyForecastSection from './DailyForecastSection'
 import WeatherAttributesSection from './WeatherAttributesSection'
 import { getLocationData } from '../../reducers/locations'
 import { getTemperature, getIconName, getFormattedTime, getFormattedModifier, getFormattedDate } from '../../utils'
+import { shrinkCard } from '../../actions'
 
 import '../../styles/expanded-weather-card.scss'
 
@@ -29,12 +30,12 @@ const getHourlyData = (hourlyData, lastRefreshTime, gap = 3, maxItems = 5) => {
   }, [])
 }
 
-const ExpandedWeatherCard = ({ location }) => {
-  const { city, country, currently, hourly, daily } = location
+const ExpandedWeatherCard = ({ location, handleClick }) => {
+  const { id, city, country, currently, hourly, daily } = location
   const { time, icon, apparentTemperature, temperature } = currently
 
   return (
-    <div className="expanded-weather-card">
+    <div className="expanded-weather-card" onClick={() => handleClick(id)}>
       {/* Date */}
       <section className="date">
         <span>{getFormattedDate(time)}</span>
@@ -118,10 +119,18 @@ ExpandedWeatherCard.propTypes = {
       ).isRequired,
     }).isRequired,
   }).isRequired,
+  handleClick: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
   location: getLocationData(state),
 })
 
-export default connect(mapStateToProps)(ExpandedWeatherCard)
+const mapDispatchToProps = dispatch => ({
+  handleClick: id => dispatch(shrinkCard(id)),
+})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ExpandedWeatherCard)

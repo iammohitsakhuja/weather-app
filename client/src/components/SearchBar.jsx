@@ -60,6 +60,9 @@ class SearchBar extends Component {
   handleSelect = (locationId, suggestion) => {
     const { addLocation } = this.props
     addLocation(locationId, suggestion.props.data)
+
+    // Reset the state, else autocompletions appear on clicking again even if the input is empty.
+    this.setState({ locationSuggestions: [] })
   }
 
   render() {

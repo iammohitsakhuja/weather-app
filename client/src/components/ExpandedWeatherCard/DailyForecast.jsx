@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import AnimatedWeatherIconsReact from '../AnimatedWeatherIconsReact'
-import { getIconName, getDayOfWeek, getTemperature, getPrecipProbability } from '../../utils'
+import { getPrecipProbability, formatTemperature, getIconName, getDayOfWeek } from '../../utils'
 
 const DailyForecast = ({ icon, time, temperatureHigh, temperatureLow, precipProbability }) => (
   <div className="daily-forecast">
@@ -16,9 +16,8 @@ const DailyForecast = ({ icon, time, temperatureHigh, temperatureLow, precipProb
     </div>
     <div className="daily-forecast-temperature-precipitation">
       <div className="daily-forecast-temperature">
-        {getTemperature(temperatureLow)}
-        &deg;-
-        {getTemperature(temperatureHigh)}
+        {formatTemperature(temperatureLow)}
+        &deg; {formatTemperature(temperatureHigh)}
         &deg;
       </div>
       <div className="daily-forecast-precipitation">Rain {getPrecipProbability(precipProbability)}%</div>

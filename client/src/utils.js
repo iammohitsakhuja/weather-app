@@ -5,6 +5,10 @@ const getTemperature = temperature => Math.round(temperature) // 18.49 -> 18, 18
 const getPrecipProbability = precipProbability => Math.round(precipProbability * 100) // 0.5323 -> 53.
 const getHumidity = humidity => Math.round(humidity * 100) // 0.7561 -> 76.
 const getWindSpeed = windSpeed => Math.round(windSpeed) // 10.23 -> 10.
+const formatTemperature = temperature =>
+  getTemperature(temperature)
+    .toString()
+    .padStart(3, ' ')
 
 // Gets the icon name for Skycons.
 const getIconName = iconName => iconName.toUpperCase().replace(/-/g, '_') // partly-cloudy-day -> PARTLY_CLOUDY_DAY.
@@ -32,6 +36,7 @@ export {
   getPrecipProbability,
   getHumidity,
   getWindSpeed,
+  formatTemperature,
   getIconName,
   getFormattedTimeWithModifier,
   getFormattedTime,
