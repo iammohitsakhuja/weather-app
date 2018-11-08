@@ -3,6 +3,7 @@
  * To ensure consistency, import icons from this file only.
  */
 
+import HeartSolid from './assets/icons/heart-solid.svg'
 import Humidity from './assets/icons/humidity.svg'
 import NewMoon from './assets/icons/moon-0.svg'
 import WaxingCrescent from './assets/icons/moon-1.svg'
@@ -17,6 +18,7 @@ import TemperatureHot from './assets/icons/temperature-hot.svg'
 import Wind from './assets/icons/wind.svg'
 
 export {
+  HeartSolid,
   Humidity,
   NewMoon,
   WaxingCrescent,

@@ -115,6 +115,7 @@ ExpandedWeatherCard.propTypes = {
           apparentTemperatureHigh: PropTypes.number.isRequired,
           apparentTemperatureLow: PropTypes.number.isRequired,
           precipProbability: PropTypes.number.isRequired,
+          precipType: PropTypes.string,
         })
       ).isRequired,
     }).isRequired,
