@@ -10,7 +10,7 @@ import '../styles/weather-cards-section.scss'
 const WeatherCardsSection = ({ locations }) => {
   const children =
     locations.length === 0 ? (
-      <h3>Search for a location!</h3>
+      <h3 className="no-weather-cards">Search for a city, state or country!</h3>
     ) : (
       locations.map(location => <WeatherCard key={location.id} location={location} />)
     )

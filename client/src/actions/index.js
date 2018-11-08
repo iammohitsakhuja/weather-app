@@ -32,18 +32,24 @@ const addLocation = (id, suggestionData) => async dispatch => {
   }
 }
 
-const expandCard = id => ({
-  type: 'CARD_EXPANDED',
-  id,
-})
+const expandCard = id => dispatch => {
+  dispatch({
+    type: 'CARD_EXPANDED',
+    id,
+  })
+}
 
-const shrinkCard = () => ({
-  type: 'CARD_SHRINKED',
-})
+const shrinkCard = () => dispatch => {
+  dispatch({
+    type: 'CARD_SHRINKED',
+  })
+}
 
-const switchExpandedCard = id => ({
-  type: 'EXPANDED_CARD_SWITCHED',
-  id,
-})
+const deleteCard = id => dispatch => {
+  dispatch({
+    type: 'CARD_DELETED',
+    id,
+  })
+}
 
-export { addLocation, expandCard, shrinkCard, switchExpandedCard }
+export { addLocation, expandCard, shrinkCard, deleteCard }

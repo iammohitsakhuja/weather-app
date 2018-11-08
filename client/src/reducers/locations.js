@@ -1,10 +1,14 @@
 import { combineReducers } from 'redux'
 
+import { pick } from '../utils'
+
 const ids = (state = [], action) => {
   switch (action.type) {
     case 'ADD_LOCATION':
       if (state.includes(action.location.id)) return [...state]
       return [...state, action.location.id]
+    case 'CARD_DELETED':
+      return state.filter(id => id !== action.id)
     default:
       return state
   }
@@ -17,6 +21,8 @@ const locationsById = (state = {}, action) => {
         ...state,
         [action.location.id]: action.location,
       }
+    case 'CARD_DELETED':
+      return pick(state, Object.keys(state).filter(id => id !== action.id))
     default:
       return state
   }
@@ -27,6 +33,7 @@ const cardState = (state = 'STACKED', action) => {
     case 'CARD_EXPANDED':
       return 'EXPANDED'
     case 'CARD_SHRINKED':
+    case 'CARD_DELETED':
       return 'STACKED'
     default:
       return state
@@ -39,6 +46,7 @@ const expandedCardId = (state = null, action) => {
     case 'EXPANDED_CARD_SWITCHED':
       return action.id
     case 'CARD_SHRINKED':
+    case 'CARD_DELETED':
       return null
     default:
       return state
