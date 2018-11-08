@@ -2,6 +2,11 @@ import moment from 'moment'
 
 // Helper functions.
 const toTitleCase = str => str.replace(/\w\S*/g, word => word.charAt(0).toUpperCase() + word.substr(1).toLowerCase())
+const pick = (object, keys) =>
+  keys.reduce((newObject, key) => {
+    newObject[key] = object[key]
+    return newObject
+  }, {})
 
 // Weather functions.
 const getTemperature = temperature => Math.round(temperature) // 18.49 -> 18, 18.50 -> 19.
@@ -37,6 +42,7 @@ const getDayOfWeek = time => {
 
 export {
   toTitleCase,
+  pick,
   getTemperature,
   getPrecipProbability,
   getPrecipType,
