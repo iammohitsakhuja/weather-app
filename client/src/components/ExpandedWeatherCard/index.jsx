@@ -73,7 +73,13 @@ const ExpandedWeatherCard = ({ location, handleClick }) => {
       <section className="summary">{hourly.summary}</section>
 
       {/* Weather animation frame */}
-      <section className="weather-animation-frame">{fact}</section>
+      <section className="weather-animation-frame">
+        <hr className="top" />
+        <blockquote>
+          <p>{fact}</p>
+        </blockquote>
+        <hr className="bottom" />
+      </section>
 
       {/* Daily forecast section */}
       <DailyForecastSection data={daily.data} />
