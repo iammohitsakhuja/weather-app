@@ -1,11 +1,22 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import pose from 'react-pose'
 
 import WeatherCard from './WeatherCard'
 import { getLocations } from '../reducers/locations'
 
 import '../styles/weather-cards-section.scss'
+
+const DivSection = pose.div({
+  open: {
+    staggerChildren: 50,
+    delayChildren: 200,
+  },
+  closed: {
+    delay: 300,
+  },
+})
 
 const WeatherCardsSection = ({ locations }) => {
   const children =
@@ -15,7 +26,11 @@ const WeatherCardsSection = ({ locations }) => {
       locations.map(location => <WeatherCard key={location.id} {...location} />)
     )
 
-  return <div className="weather-cards-section">{children}</div>
+  return (
+    <DivSection className="weather-cards-section" initialPose="closed" pose="open">
+      {children}
+    </DivSection>
+  )
 }
 
 // Type checking for received props.

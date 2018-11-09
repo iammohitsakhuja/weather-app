@@ -2,6 +2,7 @@ import React from 'react'
 import { Card } from 'antd'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import pose from 'react-pose'
 
 import AnimatedWeatherIconsReact from './AnimatedWeatherIconsReact'
 import FetchingError from './FetchingError'
@@ -9,6 +10,11 @@ import { getTemperature, getIconName, getFormattedDate } from '../utils'
 import { expandCard, fetchLocationData } from '../actions'
 
 import '../styles/weather-card.scss'
+
+const Div = pose.div({
+  closed: { y: '30px', opacity: 0 },
+  open: { y: '0', opacity: 1 },
+})
 
 const WeatherCard = props => {
   const { id, city, country, errorMessage, isFetching, currently, expandCard, fetchLocationData } = props
@@ -23,7 +29,7 @@ const WeatherCard = props => {
   /* eslint-disable jsx-a11y/click-events-have-key-events */
   /* eslint-disable jsx-a11y/no-static-element-interactions */
   return (
-    <div className="weather-card" onClick={() => expandCard(id)}>
+    <Div className="weather-card" onClick={() => expandCard(id)} initialPose="closed" pose="open">
       <section className="date-and-weather-icon">
         <div className="date">{getFormattedDate(time)}</div>
         <div className="weather-icon">
@@ -43,7 +49,7 @@ const WeatherCard = props => {
           <div className="info">{summary}</div>
         </section>
       </section>
-    </div>
+    </Div>
   )
   /* eslint-enable */
 }
