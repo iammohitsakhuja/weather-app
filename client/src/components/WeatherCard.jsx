@@ -8,12 +8,12 @@ import { expandCard } from '../actions'
 
 import '../styles/weather-card.scss'
 
-const WeatherCard = ({ location, handleClick }) => {
+const WeatherCard = ({ location, expandCard }) => {
   const { id, city, country, currently } = location
   const { time, summary, icon, apparentTemperature, temperature } = currently
 
   return (
-    <div className="weather-card" onClick={() => handleClick(id)}>
+    <div className="weather-card" onClick={() => expandCard(id)}>
       <section className="date-and-weather-icon">
         <div className="date">{getFormattedDate(time)}</div>
         <div className="weather-icon">
@@ -53,16 +53,10 @@ WeatherCard.propTypes = {
       apparentTemperature: PropTypes.number.isRequired,
     }).isRequired,
   }).isRequired,
-  handleClick: PropTypes.func.isRequired,
+  expandCard: PropTypes.func.isRequired,
 }
-
-const mapDispatchToProps = dispatch => ({
-  handleClick: id => {
-    dispatch(expandCard(id))
-  },
-})
 
 export default connect(
   null,
-  mapDispatchToProps
+  { expandCard }
 )(WeatherCard)

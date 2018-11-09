@@ -20,7 +20,8 @@
   grid-auto-columns: auto;
   grid-row-gap: 0.6rem;
   grid-template-areas:
-    "date                                       time"
+    "time                                delete-card"
+    "date                                delete-card"
     "current-temperature       location-and-forecast"
     "hourly-forecast-section hourly-forecast-section"
     "summary                                 summary"
@@ -49,13 +50,40 @@
     grid-template-columns: 3fr 7fr 3fr 3.5fr 3.5fr;
     grid-template-rows: 0.25fr 1fr 0.75fr 2fr 1fr;
     grid-template-areas:
-      ".                          .                          . date                   time"
+      "delete-card                delete-card                . date                   time"
       "current-temperature        hourly-forecast-section    . location-and-forecast  animated-weather-icon"
       "summary                    summary                    . daily-forecast-section daily-forecast-section"
       "weather-animation-frame    weather-animation-frame    . daily-forecast-section daily-forecast-section"
       "weather-attributes-section weather-attributes-section . daily-forecast-section daily-forecast-section";
     margin: 2.4rem 0;
     padding: 3rem;
+  }
+
+  .delete-card {
+    grid-area: delete-card;
+    color: $app-color;
+    justify-self: end;
+
+    button {
+      background-color: $app-bg-color;
+      padding: 0.2rem 1rem;
+      border: 1px solid darken($app-color, 10%);
+      border-radius: 35px;
+
+      @include breakpoint(phablet) {
+        border: 1.5px solid darken($app-color, 10%);
+      }
+
+      @include breakpoint(tablet) {
+        font-size: 1rem;
+        padding: 0.3rem 1.1rem;
+      }
+
+      @include breakpoint(laptop) {
+        font-size: 0.8rem;
+        padding: 0.2rem 1rem;
+      }
+    }
   }
 
   .date {
@@ -81,13 +109,14 @@
   .time {
     grid-area: time;
     font-size: 1.1rem;
-    justify-self: end;
+    justify-self: start;
 
     @include breakpoint(tablet) {
       font-size: 1.6rem;
     }
 
     @include breakpoint(laptop) {
+      justify-self: end;
       font-size: 1rem;
       grid-row: 1;
     }

@@ -3,12 +3,13 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import AnimatedWeatherIconsReact from '../AnimatedWeatherIconsReact'
+import DeleteCard from './DeleteCard'
 import HourlyForecastSection from './HourlyForecastSection'
 import DailyForecastSection from './DailyForecastSection'
 import WeatherAttributesSection from './WeatherAttributesSection'
 import { getLocationData } from '../../reducers/locations'
 import { getTemperature, getIconName, getFormattedTime, getFormattedModifier, getFormattedDate } from '../../utils'
-import { shrinkCard } from '../../actions'
+import { shrinkCard, deleteCard } from '../../actions'
 
 import '../../styles/expanded-weather-card.scss'
 
@@ -30,12 +31,20 @@ const getHourlyData = (hourlyData, lastRefreshTime, gap = 3, maxItems = 5) => {
   }, [])
 }
 
-const ExpandedWeatherCard = ({ location, handleClick }) => {
+const ExpandedWeatherCard = ({ location, shrinkCard, deleteCard }) => {
   const { id, city, country, currently, hourly, daily, fact } = location
   const { time, icon, apparentTemperature, temperature } = currently
 
   return (
-    <div className="expanded-weather-card" onClick={() => handleClick(id)}>
+    <div className="expanded-weather-card" onClick={() => shrinkCard(id)}>
+      {/* Delete card */}
+      <DeleteCard
+        handleClick={e => {
+          e.stopPropagation()
+          deleteCard(id)
+        }}
+      />
+
       {/* Date */}
       <section className="date">
         <span>{getFormattedDate(time)}</span>
@@ -126,16 +135,18 @@ ExpandedWeatherCard.propTypes = {
       ).isRequired,
     }).isRequired,
   }).isRequired,
-  handleClick: PropTypes.func.isRequired,
+  shrinkCard: PropTypes.func.isRequired,
+  deleteCard: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
   location: getLocationData(state),
 })
 
-const mapDispatchToProps = dispatch => ({
-  handleClick: id => dispatch(shrinkCard(id)),
-})
+const mapDispatchToProps = {
+  shrinkCard,
+  deleteCard,
+}
 
 export default connect(
   mapStateToProps,

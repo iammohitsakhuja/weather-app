@@ -5,4 +5,11 @@
   color: $app-color;
   width: 100%;
   margin: 1.4rem 0;
+
+  h3.no-weather-cards {
+    color: $app-color;
+    text-align: center;
+    font-family: 'Satisfy', 'Cookie', 'Ubuntu', 'Roboto', sans-serif;
+    font-size: 1.5rem;
+  }
 }
