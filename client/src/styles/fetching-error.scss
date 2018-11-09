@@ -1,0 +1,42 @@
+@import 'variables';
+@import 'breakpoint';
+
+.fetching-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  background-color: $weather-card-bg-color-primary;
+  color: $app-color;
+  min-height: 9rem;
+  max-width: 32rem;
+  width: 100%;
+  border-radius: 0.4rem;
+  border: solid $weather-card-border-color;
+  margin: 1rem auto;
+  padding: 1.4rem;
+  font-size: 1rem;
+
+  @include breakpoint(phablet) {
+    width: 80%;
+  }
+
+  @include breakpoint(tablet) {
+    width: 70%;
+  }
+
+  .error-message {
+    margin-bottom: 1rem;
+  }
+
+  .retry-button {
+    font-size: 1rem;
+    margin-bottom: 0.2rem;
+
+    &:hover,
+    &:focus {
+      color: $text-highlighted !important;
+      border-color: $text-highlighted !important;
+    }
+  }
+}

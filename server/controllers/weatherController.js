@@ -5,6 +5,7 @@ import debug from 'debug'
 const { DARKSKY_API_KEY, HERE_MAPS_API_ID, HERE_MAPS_APP_CODE } = process.env
 
 // Array about weather facts
+/* eslint-disable max-len */
 const facts = [
   'About 2,000 thunderstorms rain down on Earth every minute.',
   'For each minute of the day, 1 billion tonnes of rain falls on the Earth.',
@@ -18,6 +19,7 @@ const facts = [
   "In just ten minutes a hurricane can unleash more energy than all the world's nuclear weapons combined.",
   'The heaviest hailstone in history weighed one kilogram.',
 ]
+/* eslint-enable */
 
 /* eslint-disable max-len */
 // Generate URIs using the various API keys and app codes.

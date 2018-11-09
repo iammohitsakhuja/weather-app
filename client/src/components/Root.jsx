@@ -1,17 +1,20 @@
 import React from 'react'
 import { Provider } from 'react-redux'
-import PropTypes from 'prop-types'
+import { PersistGate } from 'redux-persist/integration/react'
 
+import configureStore from '../configureStore'
 import App from './App'
 
-const Root = ({ store }) => (
-  <Provider store={store}>
-    <App />
-  </Provider>
-)
+const Root = () => {
+  const { store, persistor } = configureStore()
 
-Root.propTypes = {
-  store: PropTypes.objectOf(PropTypes.any).isRequired,
+  return (
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <App />
+      </PersistGate>
+    </Provider>
+  )
 }
 
 export default Root
