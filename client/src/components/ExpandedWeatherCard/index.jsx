@@ -32,7 +32,7 @@ const getHourlyData = (hourlyData, lastRefreshTime, gap = 3, maxItems = 5) => {
 }
 
 const ExpandedWeatherCard = ({ location, shrinkCard, deleteCard }) => {
-  const { id, city, country, currently, hourly, daily } = location
+  const { id, city, country, currently, hourly, daily, fact } = location
   const { time, icon, apparentTemperature, temperature } = currently
 
   return (
@@ -82,7 +82,13 @@ const ExpandedWeatherCard = ({ location, shrinkCard, deleteCard }) => {
       <section className="summary">{hourly.summary}</section>
 
       {/* Weather animation frame */}
-      <section className="weather-animation-frame">Reserved for displaying weather animation frame.</section>
+      <section className="weather-animation-frame">
+        <hr className="top" />
+        <blockquote>
+          <p>{fact}</p>
+        </blockquote>
+        <hr className="bottom" />
+      </section>
 
       {/* Daily forecast section */}
       <DailyForecastSection data={daily.data} />

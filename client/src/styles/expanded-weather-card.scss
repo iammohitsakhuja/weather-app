@@ -317,14 +317,49 @@
 
   .weather-animation-frame {
     grid-area: weather-animation-frame;
-    height: 10rem;
-    text-align: center;
-    font-size: 1.2rem;
-    background-color: lighten($expanded-card-bg-color-primary, 10%);
+
+    hr {
+      border-radius: 30px;
+      height: 30px;
+    }
+
+    .top {
+      border-width: 1px 0 0 0;
+
+      &::before {
+        content: '\201C';
+        font-family: 'Cookie', monospace;
+        font-size: 8rem;
+        line-height: 0.8;
+        opacity: 0.5;
+      }
+    }
+
+    .bottom {
+      border-width: 0 0 1px 0;
+
+      &::before {
+        content: '\201D';
+        font-family: 'Cookie', monospace;
+        font-size: 8rem;
+        line-height: 0.6;
+        float: right;
+        opacity: 0.5;
+      }
+    }
+
+    blockquote {
+      p {
+        font-size: 1.45rem;
+        font-family: 'Poor Story', monospace;
+        font-style: italic;
+        text-align: center;
+      }
+    }
 
     @include breakpoint(laptop) {
+      margin-top: 1rem;
       min-height: 90%;
-      align-self: center;
     }
   }
 
