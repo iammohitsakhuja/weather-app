@@ -16,6 +16,9 @@ const persistedState =
             country: 'India',
             latitude: 30.70347,
             longitude: 76.69162,
+            fact: 'In 525 BC a sandstorm buried hundreds of soldiers in an Egyptian desert.',
+            errorMessage: null,
+            isFetching: false,
             currently: {
               time: 1541516400,
               summary: 'Clear',

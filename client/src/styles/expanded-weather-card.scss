@@ -25,7 +25,7 @@
     "current-temperature       location-and-forecast"
     "hourly-forecast-section hourly-forecast-section"
     "summary                                 summary"
-    "weather-animation-frame weather-animation-frame"
+    "random-fact                         random-fact"
     "daily-forecast-section   daily-forecast-section";
   background-color: $expanded-card-bg-color-primary;
   color: $app-color;
@@ -48,12 +48,12 @@
     grid-auto-rows: unset;
     grid-auto-columns: unset;
     grid-template-columns: 3fr 7fr 3fr 3.5fr 3.5fr;
-    grid-template-rows: 0.25fr 1fr 0.75fr 2fr 1fr;
+    grid-template-rows: 0.3fr 1.2fr 0.85fr 2fr 1.5fr;
     grid-template-areas:
       "delete-card                delete-card                . date                   time"
       "current-temperature        hourly-forecast-section    . location-and-forecast  animated-weather-icon"
       "summary                    summary                    . daily-forecast-section daily-forecast-section"
-      "weather-animation-frame    weather-animation-frame    . daily-forecast-section daily-forecast-section"
+      "random-fact                random-fact                . daily-forecast-section daily-forecast-section"
       "weather-attributes-section weather-attributes-section . daily-forecast-section daily-forecast-section";
     margin: 2.4rem 0;
     padding: 3rem;
@@ -315,51 +315,38 @@
     }
   }
 
-  .weather-animation-frame {
-    grid-area: weather-animation-frame;
+  .random-fact {
+    grid-area: random-fact;
+    color: darken($app-color, 10%);
+    margin: -0.4rem 0.8rem 0;
+    font-size: 1rem;
+    font-family: 'Courgette', 'Lato', 'Open Sans', 'Ubuntu', 'Roboto', sans-serif;
+    text-align: justify;
 
-    hr {
-      border-radius: 30px;
-      height: 30px;
-    }
-
-    .top {
-      border-width: 1px 0 0 0;
-
-      &::before {
-        content: '\201C';
-        font-family: 'Cookie', monospace;
-        font-size: 8rem;
-        line-height: 0.8;
-        opacity: 0.5;
-      }
-    }
-
-    .bottom {
-      border-width: 0 0 1px 0;
-
-      &::before {
-        content: '\201D';
-        font-family: 'Cookie', monospace;
-        font-size: 8rem;
-        line-height: 0.6;
-        float: right;
-        opacity: 0.5;
-      }
-    }
-
-    blockquote {
-      p {
-        font-size: 1.45rem;
-        font-family: 'Poor Story', monospace;
-        font-style: italic;
-        text-align: center;
-      }
+    @include breakpoint(tablet) {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
     }
 
     @include breakpoint(laptop) {
-      margin-top: 1rem;
-      min-height: 90%;
+      font-size: 1rem;
+      margin: 0 1.5rem;
+      align-self: center;
+      text-align: center;
+    }
+
+    .quote {
+      font-size: 1.2rem;
+      opacity: 0.5;
+      font-style: italic;
+
+      @include breakpoint(tablet) {
+        font-size: 1.6rem;
+      }
+
+      @include breakpoint(laptop) {
+        font-size: 1.4rem;
+      }
     }
   }
 
@@ -368,6 +355,10 @@
     display: flex;
     flex-direction: column;
     margin-top: 0.8rem;
+
+    @include breakpoint(laptop) {
+      margin-top: 0;
+    }
 
     .daily-forecast {
       display: grid;

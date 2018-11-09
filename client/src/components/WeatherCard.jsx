@@ -1,17 +1,27 @@
 import React from 'react'
+import { Card } from 'antd'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import AnimatedWeatherIconsReact from './AnimatedWeatherIconsReact'
+import FetchingError from './FetchingError'
 import { getTemperature, getIconName, getFormattedDate } from '../utils'
-import { expandCard } from '../actions'
+import { expandCard, fetchLocationData } from '../actions'
 
 import '../styles/weather-card.scss'
 
-const WeatherCard = ({ location, expandCard }) => {
-  const { id, city, country, currently } = location
+const WeatherCard = props => {
+  const { id, city, country, errorMessage, isFetching, currently, expandCard, fetchLocationData } = props
+
+  if (isFetching && currently === undefined) return <Card loading className="weather-card" />
+
+  if (errorMessage !== null)
+    return <FetchingError errorMessage={errorMessage} handleClick={() => fetchLocationData(id)} />
+
   const { time, summary, icon, apparentTemperature, temperature } = currently
 
+  /* eslint-disable jsx-a11y/click-events-have-key-events */
+  /* eslint-disable jsx-a11y/no-static-element-interactions */
   return (
     <div className="weather-card" onClick={() => expandCard(id)}>
       <section className="date-and-weather-icon">
@@ -35,28 +45,36 @@ const WeatherCard = ({ location, expandCard }) => {
       </section>
     </div>
   )
+  /* eslint-enable */
 }
 
 WeatherCard.propTypes = {
-  location: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    city: PropTypes.string.isRequired,
-    state: PropTypes.string.isRequired,
-    country: PropTypes.string.isRequired,
-    currently: PropTypes.shape({
-      time: PropTypes.number.isRequired,
-      summary: PropTypes.string.isRequired,
-      icon: PropTypes.string.isRequired,
-      precipProbability: PropTypes.number.isRequired,
-      precipType: PropTypes.string,
-      temperature: PropTypes.number.isRequired,
-      apparentTemperature: PropTypes.number.isRequired,
-    }).isRequired,
-  }).isRequired,
+  id: PropTypes.string.isRequired,
+  city: PropTypes.string,
+  country: PropTypes.string,
+  errorMessage: PropTypes.string,
+  isFetching: PropTypes.bool.isRequired,
+  currently: PropTypes.shape({
+    time: PropTypes.number.isRequired,
+    summary: PropTypes.string.isRequired,
+    icon: PropTypes.string.isRequired,
+    precipProbability: PropTypes.number.isRequired,
+    precipType: PropTypes.string,
+    temperature: PropTypes.number.isRequired,
+    apparentTemperature: PropTypes.number,
+  }),
   expandCard: PropTypes.func.isRequired,
+  fetchLocationData: PropTypes.func.isRequired,
+}
+
+WeatherCard.defaultProps = {
+  city: undefined,
+  country: undefined,
+  errorMessage: null,
+  currently: undefined,
 }
 
 export default connect(
   null,
-  { expandCard }
+  { expandCard, fetchLocationData }
 )(WeatherCard)

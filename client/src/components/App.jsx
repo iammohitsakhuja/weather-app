@@ -16,7 +16,7 @@ class App extends Component {
     const { fetchAllLocationsData } = this.props
 
     // Rehydrate the store once the app has loaded.
-    fetchAllLocationsData()
+    // fetchAllLocationsData()
   }
 
   render() {

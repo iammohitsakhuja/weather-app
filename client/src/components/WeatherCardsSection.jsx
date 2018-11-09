@@ -12,7 +12,7 @@ const WeatherCardsSection = ({ locations }) => {
     locations.length === 0 ? (
       <h3 className="no-weather-cards">Search for a city, state or country!</h3>
     ) : (
-      locations.map(location => <WeatherCard key={location.id} location={location} />)
+      locations.map(location => <WeatherCard key={location.id} {...location} />)
     )
 
   return <div className="weather-cards-section">{children}</div>
@@ -23,9 +23,10 @@ WeatherCardsSection.propTypes = {
   locations: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
-      city: PropTypes.string.isRequired,
-      state: PropTypes.string.isRequired,
-      country: PropTypes.string.isRequired,
+      city: PropTypes.string,
+      country: PropTypes.string,
+      errorMessage: PropTypes.string,
+      isFetching: PropTypes.bool.isRequired,
       currently: PropTypes.shape({
         time: PropTypes.number.isRequired,
         summary: PropTypes.string.isRequired,
@@ -33,8 +34,8 @@ WeatherCardsSection.propTypes = {
         precipProbability: PropTypes.number.isRequired,
         precipType: PropTypes.string,
         temperature: PropTypes.number.isRequired,
-        apparentTemperature: PropTypes.number.isRequired,
-      }).isRequired,
+        apparentTemperature: PropTypes.number,
+      }),
     })
   ).isRequired,
 }

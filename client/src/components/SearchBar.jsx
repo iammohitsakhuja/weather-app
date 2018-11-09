@@ -4,7 +4,7 @@ import axios from 'axios'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { addLocation } from '../actions'
+import { fetchLocationData } from '../actions'
 
 import '../styles/searchbar.scss'
 
@@ -58,8 +58,8 @@ class SearchBar extends Component {
 
   /** Calls the action creator with an autocomplete suggestion is selected. */
   handleSelect = (locationId, suggestion) => {
-    const { addLocation } = this.props
-    addLocation(locationId, suggestion.props.data)
+    const { fetchLocationData } = this.props
+    fetchLocationData(locationId, suggestion.props.data)
 
     // Reset the state, else autocompletions appear on clicking again even if the input is empty.
     this.setState({ locationSuggestions: [] })
@@ -85,10 +85,10 @@ class SearchBar extends Component {
 }
 
 SearchBar.propTypes = {
-  addLocation: PropTypes.func.isRequired,
+  fetchLocationData: PropTypes.func.isRequired,
 }
 
 export default connect(
   null,
-  { addLocation }
+  { fetchLocationData }
 )(SearchBar)
