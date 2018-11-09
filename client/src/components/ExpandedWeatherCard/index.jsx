@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import pose from 'react-pose'
 
 import AnimatedWeatherIconsReact from '../AnimatedWeatherIconsReact'
 import DeleteCard from './DeleteCard'
@@ -31,12 +32,17 @@ const getHourlyData = (hourlyData, lastRefreshTime, gap = 3, maxItems = 5) => {
   }, [])
 }
 
+const Div = pose.div({
+  open: { opacity: 1, y: '0' },
+  closed: { opacity: 0, y: '20px' },
+})
+
 const ExpandedWeatherCard = ({ location, shrinkCard, deleteCard }) => {
   const { id, city, country, currently, hourly, daily, fact } = location
   const { time, icon, apparentTemperature, temperature } = currently
 
   return (
-    <div className="expanded-weather-card" onClick={() => shrinkCard(id)}>
+    <Div className="expanded-weather-card" initialPose="closed" pose="open" onClick={() => shrinkCard(id)}>
       {/* Delete card */}
       <DeleteCard
         handleClick={e => {
@@ -95,7 +101,7 @@ const ExpandedWeatherCard = ({ location, shrinkCard, deleteCard }) => {
 
       {/* Weather attributes section */}
       <WeatherAttributesSection todaysData={daily.data[0] || {}} />
-    </div>
+    </Div>
   )
 }
 
