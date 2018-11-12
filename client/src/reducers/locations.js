@@ -8,6 +8,7 @@ import {
   FETCH_LOCATION_DATA_REQUEST,
   FETCH_LOCATION_DATA_SUCCESS,
   FETCH_LOCATION_DATA_FAILURE,
+  APP_DATA_PURGED,
 } from '../actions/action-types'
 
 const ids = (state = [], action) => {
@@ -17,6 +18,8 @@ const ids = (state = [], action) => {
       return state
     case CARD_DELETED:
       return state.filter(id => id !== action.id)
+    case APP_DATA_PURGED:
+      return []
     default:
       return state
   }
@@ -47,6 +50,8 @@ const locationsById = (state = {}, action) => {
       }
     case CARD_DELETED:
       return pick(state, Object.keys(state).filter(id => id !== action.id))
+    case APP_DATA_PURGED:
+      return {}
     default:
       return state
   }
@@ -58,6 +63,7 @@ const cardState = (state = 'STACKED', action) => {
       return 'EXPANDED'
     case CARD_SHRINKED:
     case CARD_DELETED:
+    case APP_DATA_PURGED:
       return 'STACKED'
     default:
       return state
@@ -70,6 +76,7 @@ const expandedCardId = (state = null, action) => {
       return action.id
     case CARD_SHRINKED:
     case CARD_DELETED:
+    case APP_DATA_PURGED:
       return null
     default:
       return state

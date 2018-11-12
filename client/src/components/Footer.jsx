@@ -1,11 +1,18 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart } from '@fortawesome/free-solid-svg-icons'
 
+import { purgeAppData } from '../actions'
+
 import '../styles/footer.scss'
 
-const Footer = () => (
+const Footer = ({ purgeAppData }) => (
   <footer>
+    <button type="button" onClick={purgeAppData}>
+      Reset app data
+    </button>
     <div className="api-credits">
       <a href="https://darksky.net/poweredby/">Powered by Dark Sky</a>
     </div>
@@ -22,4 +29,11 @@ const Footer = () => (
   </footer>
 )
 
-export default Footer
+Footer.propTypes = {
+  purgeAppData: PropTypes.func.isRequired,
+}
+
+export default connect(
+  null,
+  { purgeAppData }
+)(Footer)

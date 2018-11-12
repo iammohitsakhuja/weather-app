@@ -13,7 +13,19 @@ footer {
     text-decoration: none;
   }
 
-  a:hover {
+  a:hover,
+  a:focus {
+    color: $text-highlighted;
+  }
+
+  button {
+    color: $text-faded;
+    background-color: $app-bg-color;
+    border: none;
+  }
+
+  button:hover,
+  button:focus {
     color: $text-highlighted;
   }
 
