@@ -6,7 +6,7 @@
   ],
   "name": "weather-app",
   "description": "An app to display weather info",
-  "version": "0.5.0",
+  "version": "1.0.0",
   "author": "Mohit Sakhuja <sakhuja.mohit@gmail.com>",
   "repository": {
     "url": "https://github.com/mohitsakhuja/weather-app",
