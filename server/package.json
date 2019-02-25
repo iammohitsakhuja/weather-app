@@ -6,6 +6,10 @@
   "license": "MIT",
   "dependencies": {
     "axios": "^0.18.0",
+    "@babel/cli": "^7.1.2",
+    "@babel/core": "^7.1.2",
+    "@babel/node": "^7.0.0",
+    "@babel/preset-env": "^7.1.0",
     "body-parser": "^1.18.3",
     "compression": "^1.7.3",
     "debug": "^4.1.0",
@@ -15,10 +19,6 @@
     "morgan": "^1.9.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.1.2",
-    "@babel/core": "^7.1.2",
-    "@babel/node": "^7.0.0",
-    "@babel/preset-env": "^7.1.0",
     "nodemon": "^1.18.5"
   },
   "scripts": {

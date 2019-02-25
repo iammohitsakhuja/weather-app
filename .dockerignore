@@ -1,0 +1,13 @@
+.git/
+.github/
+.vscode/
+.dockerignore
+.eslintignore
+.eslintrc.json
+.gitignore
+.stylelintrc
+Dockerfile
+LICENSE
+README.md
+node_modules/
+build/
