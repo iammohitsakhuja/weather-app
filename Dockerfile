@@ -20,10 +20,11 @@ COPY client/package.json ./client/
 COPY server/package.json ./server/
 
 # Install app dependencies.
-RUN yarn install --prod
+RUN yarn install --prod && yarn cache clean
 
-# Bundle app source with the container.
+# Bundle app source with the container, and generate a production build.
 COPY . .
+RUN yarn build
 
 EXPOSE 3001
 CMD [ "yarn", "start" ]

@@ -27,8 +27,9 @@
   "scripts": {
     "build-server": "cd server && yarn build",
     "build-client": "cd client && yarn build && mv build ../server/build/client-build",
+    "build": "yarn build-server && yarn build-client",
     "start-server": "cd server && yarn start",
-    "start": "yarn build-server && yarn build-client && yarn start-server",
+    "start": "yarn start-server",
     "start-client:dev": "cd client && yarn start",
     "start-server:dev": "cd server && yarn start:dev",
     "start:dev": "NODE_ENV=development concurrently \"yarn start-client:dev\" \"yarn start-server:dev\""
