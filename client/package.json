@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "homepage": "http://mohitsakhuja.io/weather-app",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.8",
     "@fortawesome/free-solid-svg-icons": "^5.5.0",

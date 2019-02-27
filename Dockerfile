@@ -1,7 +1,10 @@
 # Dockerfile for production.
-FROM node:10.10.0
+FROM node:10.10.0-alpine
 
 ENV YARN_VERSION 1.12.1
+
+# Download and install curl.
+RUN apk --no-cache add curl
 
 # Download and install Yarn.
 RUN curl -fSLO --compressed "https://yarnpkg.com/downloads/$YARN_VERSION/yarn-v$YARN_VERSION.tar.gz" \
@@ -26,5 +29,4 @@ RUN yarn install --prod && yarn cache clean
 COPY . .
 RUN yarn build
 
-EXPOSE 3001
 CMD [ "yarn", "start" ]

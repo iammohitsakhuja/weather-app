@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import { fetchLocationData } from '../actions'
+import uriConfig from '../configureUri'
 
 import '../styles/searchbar.scss'
 
@@ -14,7 +15,7 @@ const fetchAutoCompleteSuggestions = async value => {
   if (value === '') return []
 
   // Fetch autocomplete suggestions for the given value.
-  const response = await axios.get(`/api/autocomplete`, { params: { value } })
+  const response = await axios.get(uriConfig.autocompleteUri, { params: { value } })
   const { suggestions } = response.data
 
   // Process received suggestions.

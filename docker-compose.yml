@@ -1,0 +1,8 @@
+version: "3"
+
+services:
+  weather-app:
+    build: .
+    restart: always
+    expose:
+      - "3001"

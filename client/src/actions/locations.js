@@ -1,11 +1,12 @@
 import axios from 'axios'
 
 import { FETCH_LOCATION_DATA_REQUEST, FETCH_LOCATION_DATA_SUCCESS, FETCH_LOCATION_DATA_FAILURE } from './action-types'
+import uriConfig from '../configureUri'
 
 // Helper function to fetch location data for a location with the given id.
 const fetchDataFromApi = async id => {
   // Get the weather data for the given location id.
-  const response = await axios.get('/api/weather', { params: { locationId: id } })
+  const response = await axios.get(uriConfig.weatherUri, { params: { locationId: id } })
 
   const { latitude, longitude, currently, hourly, daily, fact } = response.data
 
