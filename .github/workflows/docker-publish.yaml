@@ -1,6 +1,17 @@
 name: Docker
 
-on: [push]
+on:
+  push:
+    # Only consider push for a commit on `master` branch.
+    branches:
+      - master
+
+    # Also, consider any release tags like `v1.2.3`.
+    tags:
+      - v*
+
+  # Also, run the workflow for any PRs.
+  pull_request:
 
 env:
   CI_IMAGE_REPOSITORY: docker.pkg.github.com/${{ github.repository }}
