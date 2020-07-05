@@ -21,7 +21,10 @@ jobs:
 
       - name: Build image.
         run: |
-          docker pull ${CI_IMAGE_REPOSITORY}/node:${CI_COMMIT_REF_NAME} || docker pull ${CI_IMAGE_REPOSITORY}/node:latest || true
+          # Strip git ref prefix from version.
+          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+
+          docker pull ${CI_IMAGE_REPOSITORY}/node:${VERSION} || docker pull ${CI_IMAGE_REPOSITORY}/node:latest | true
           docker build --pull --cache-from "${CI_IMAGE_REPOSITORY}/node:${CI_COMMIT_REF_NAME},${CI_IMAGE_REPOSITORY}/node:latest" -t ${CI_IMAGE_REPOSITORY}/node:${CI_COMMIT_SHA} -t ${CI_IMAGE_REPOSITORY}/node:latest -f Dockerfile .
           docker push ${CI_IMAGE_REPOSITORY}/node:${CI_COMMIT_SHA}
 
@@ -44,24 +47,22 @@ jobs:
 
       - name: Tag and Push image.
         run: |
-          # IMAGE_ID=${CI_IMAGE_REPOSITORY}/node
+          IMAGE_ID=${CI_IMAGE_REPOSITORY}/node
 
           # Change all uppercase to lowercase.
-          # IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
 
           # Strip git ref prefix from version.
-          # VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
 
           # Strip "v" prefix from tag name.
-          # [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
 
           # Use Docker `latest` tag convention.
-          # [ "$VERSION" == "master" ] && VERSION=latest
+          [ "$VERSION" == "master" ] && VERSION=latest
 
-          # echo IMAGE_ID=$IMAGE_ID
-          # echo VERSION=$VERSION
+          echo IMAGE_ID=$IMAGE_ID
+          echo VERSION=$VERSION
 
-          # docker tag ${CI_IMAGE_REPOSITORY}/node:${CI_COMMIT_SHA} $IMAGE_ID:$VERSION
-          # docker push $IMAGE_ID:$VERSION
-          docker tag ${CI_IMAGE_REPOSITORY}/node:${CI_COMMIT_SHA} ${CI_IMAGE_REPOSITORY}/node:${CI_COMMIT_REF_NAME}
-          docker push ${CI_IMAGE_REPOSITORY}/node:${CI_COMMIT_REF_NAME}
+          docker tag ${CI_IMAGE_REPOSITORY}/node:${CI_COMMIT_SHA} $IMAGE_ID:$VERSION
+          docker push $IMAGE_ID:$VERSION
