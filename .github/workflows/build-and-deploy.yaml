@@ -1,17 +1,8 @@
 name: Build & Deploy
 
-on:
-  push:
-    # Only consider push for a commit on `master` branch.
-    branches:
-      - master
-
-    # Also, consider any release tags like `v1.2.3`.
-    tags:
-      - v*
-
-  # Also, run the workflow for any PRs.
-  pull_request:
+# Allow building on each push as opposed to push on master and PRs for other branches as GitHub provides a "merge" git
+# ref for PR of any branch. This corrupts the Docker repository.
+on: [push]
 
 env:
   CI_IMAGE_REPOSITORY: docker.pkg.github.com/${{ github.repository }}
@@ -35,12 +26,16 @@ jobs:
           VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
 
           docker pull ${CI_IMAGE_REPOSITORY}/node:${VERSION} || docker pull ${CI_IMAGE_REPOSITORY}/node:latest | true
-          docker build --pull --cache-from "${CI_IMAGE_REPOSITORY}/node:${VERSION},${CI_IMAGE_REPOSITORY}/node:latest" -t ${CI_IMAGE_REPOSITORY}/node:${CI_COMMIT_SHA} -t ${CI_IMAGE_REPOSITORY}/node:latest -f Dockerfile .
+          docker build --pull \
+            --cache-from "${CI_IMAGE_REPOSITORY}/node:${VERSION},${CI_IMAGE_REPOSITORY}/node:latest" \
+            -t ${CI_IMAGE_REPOSITORY}/node:${CI_COMMIT_SHA} -t ${CI_IMAGE_REPOSITORY}/node:latest \
+            -f Dockerfile .
           docker push ${CI_IMAGE_REPOSITORY}/node:${CI_COMMIT_SHA}
 
   # Push image to GitHub Packages.
   # See also https://docs.docker.com/docker-hub/builds/
   push:
+    name: Push
     # Ensure build job passes before pushing image.
     needs: build
 

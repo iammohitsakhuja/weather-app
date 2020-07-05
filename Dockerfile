@@ -29,4 +29,4 @@ RUN yarn install --prod && yarn cache clean
 COPY . .
 RUN yarn build
 
-CMD ["yarn", "start"]
+CMD [ "yarn", "start" ]
