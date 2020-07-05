@@ -27,6 +27,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Log into registry.
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+
       - name: Build image.
         run: |
           docker pull ${CI_IMAGE_REPOSITORY}/node:${CI_COMMIT_REF_NAME} || docker pull ${CI_IMAGE_REPOSITORY}/node:latest || true
