@@ -4,7 +4,6 @@ on: [push]
 
 env:
   CI_IMAGE_REPOSITORY: docker.pkg.github.com/${{ github.repository }}
-  CI_COMMIT_REF_NAME: ${{ github.ref }}
   CI_COMMIT_SHA: ${{ github.sha }}
 
 jobs:
@@ -25,7 +24,7 @@ jobs:
           VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
 
           docker pull ${CI_IMAGE_REPOSITORY}/node:${VERSION} || docker pull ${CI_IMAGE_REPOSITORY}/node:latest | true
-          docker build --pull --cache-from "${CI_IMAGE_REPOSITORY}/node:${CI_COMMIT_REF_NAME},${CI_IMAGE_REPOSITORY}/node:latest" -t ${CI_IMAGE_REPOSITORY}/node:${CI_COMMIT_SHA} -t ${CI_IMAGE_REPOSITORY}/node:latest -f Dockerfile .
+          docker build --pull --cache-from "${CI_IMAGE_REPOSITORY}/node:${VERSION},${CI_IMAGE_REPOSITORY}/node:latest" -t ${CI_IMAGE_REPOSITORY}/node:${CI_COMMIT_SHA} -t ${CI_IMAGE_REPOSITORY}/node:latest -f Dockerfile .
           docker push ${CI_IMAGE_REPOSITORY}/node:${CI_COMMIT_SHA}
 
   # Push image to GitHub Packages.
