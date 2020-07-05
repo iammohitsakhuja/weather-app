@@ -1,9 +1,0 @@
-version: "3.1"
-
-services:
-  weather-app:
-    container_name: "weather-app"
-    build: .
-    restart: always
-    expose:
-      - "3001"
