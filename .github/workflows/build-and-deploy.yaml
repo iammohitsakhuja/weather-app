@@ -71,3 +71,14 @@ jobs:
 
           docker tag ${CI_IMAGE_REPOSITORY}/node:${CI_COMMIT_SHA} $IMAGE_ID:$VERSION
           docker push $IMAGE_ID:$VERSION
+
+  deploy:
+    name: Deploy
+    needs: push
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Verify Kubernetes and Helm.
+        run: |
+          which kubectl
+          which helm
