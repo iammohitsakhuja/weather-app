@@ -1,7 +1,5 @@
 name: Build & Deploy
 
-# Allow building on each push as opposed to push on master and PRs for other branches as GitHub provides a "merge" git
-# ref for PR of any branch. This corrupts the Docker repository.
 on:
   push:
   workflow_dispatch:
