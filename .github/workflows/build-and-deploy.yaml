@@ -1,0 +1,64 @@
+name: Build & Deploy
+
+on:
+  push:
+  workflow_dispatch:
+
+env:
+  CI_IMAGE_REGISTRY: docker.pkg.github.com
+  CI_IMAGE_REPOSITORY: ${{ github.repository }}
+  RELEASE_NAME: weather-app
+
+jobs:
+  # Build and push the image.
+  build-and-push:
+    name: Build and Push
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.build-and-push.outputs.tag }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build and push.
+        uses: elgohr/Publish-Docker-Github-Action@master
+        id: build-and-push
+        with:
+          name: ${{ env.CI_IMAGE_REPOSITORY }}/node
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          registry: ${{ env.CI_IMAGE_REGISTRY }}
+          dockerfile: ops/docker/node/Dockerfile
+          context: .
+          cache: ${{ github.event_name != 'schedule' }}
+
+  # Deploy the image.
+  deploy:
+    name: Deploy
+    needs: build-and-push
+    if: ${{ github.event_name == 'workflow_dispatch' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Log into Docker registry.
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ env.CI_IMAGE_REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+      - run: doctl kubernetes cluster kubeconfig save ${{ secrets.KUBERNETES_CLUSTER_NAME }}
+      - run: helm dependency build ops/k8s/weather-app
+      - run: helm upgrade
+            --install
+            --atomic
+            --namespace ${RELEASE_NAME}
+            --set web.node.image.repository=${CI_IMAGE_REGISTRY}/${CI_IMAGE_REPOSITORY}/node
+            --set web.node.image.tag=${{ needs.build-and-push.outputs.tag }}
+            --set app.config.autocomplete.apiId=${{ secrets.HERE_MAPS_API_ID }}
+            --set app.config.autocomplete.appCode=${{ secrets.HERE_MAPS_APP_CODE }}
+            --set app.config.weather.apiKey=${{ secrets.DARKSKY_API_KEY }}
+            ${RELEASE_NAME} ops/k8s/weather-app

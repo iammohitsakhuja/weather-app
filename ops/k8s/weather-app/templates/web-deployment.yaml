@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: {{ template "web.nodename" . }}
+    labels:
+        app: {{ template "app.name" . }}
+        chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+        release: {{ .Release.Name }}
+        heritage: {{ .Release.Service }}
+        type: web
+spec:
+    strategy:
+        rollingUpdate:
+            maxSurge: 1
+            maxUnavailable: 0
+        type: RollingUpdate
+    selector:
+        matchLabels:
+            app: {{ template "app.name" . }}
+            release: {{ .Release.Name }}
+            type: web
+    replicas: {{ .Values.web.replicaCount }}
+    template:
+        metadata:
+            labels:
+                app: {{ template "app.name" . }}
+                release: {{ .Release.Name }}
+                type: web
+        spec:
+            imagePullSecrets:
+                -   name: github-registry-secret
+            containers:
+                -   name: node
+                    image: '{{ .Values.web.node.image.repository }}:{{ .Values.web.node.image.tag }}'
+                    imagePullPolicy: {{ .Values.web.node.image.pullPolicy }}
+                    ports:
+                        -   name: http
+                            containerPort: {{ .Values.web.service.containerPort }}
+                    resources:
+{{ toYaml .Values.web.node.resources | indent 24 }}
+                    readinessProbe:
+                        httpGet:
+                            path: {{ .Values.web.node.healthCheck.path }}
+                            port: {{ .Values.web.service.containerPort }}
+                    livenessProbe:
+                        httpGet:
+                            path: {{ .Values.web.node.healthCheck.path }}
+                            port: {{ .Values.web.service.containerPort }}
+                    envFrom:
+                        -   secretRef:
+                                name: {{ .Release.Name }}-secrets

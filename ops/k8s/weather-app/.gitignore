@@ -1,0 +1,5 @@
+# Don't check in helm dependencies.
+/charts/*
+
+# Don't check in manual values.
+values-manual.yaml

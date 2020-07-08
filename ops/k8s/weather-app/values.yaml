@@ -1,0 +1,38 @@
+# Default values for all services in the app.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+app:
+    # Config should contain default values for hidden variables
+    # i.e. `secrets` like `username` & `password`.
+    config:
+        autocomplete:
+            apiId:
+            appCode:
+        weather:
+            apiKey:
+    environment: 'production'
+    name: 'weather-app'
+    logLevel: info
+
+web:
+    replicaCount: 1
+    service:
+        type: NodePort
+        containerPort: 3001
+        clusterPort: 80
+        nodePort:
+    node:
+        image:
+            # this is never used in CI. In CI the image is always passed via --set.
+            repository: docker.pkg.github.com/mohitsakhuja/weather-app/node
+            tag: latest
+            pullPolicy: IfNotPresent
+        resources:
+            requests:
+                cpu: 128m
+                memory: 256Mi
+            limits:
+                cpu: 256m
+                memory: 512Mi
+        healthCheck:
+            path: /ping

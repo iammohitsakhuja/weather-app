@@ -1,0 +1,4 @@
+apiVersion: v1
+description: Weather App
+name: weather-app
+version: 0.0.1
