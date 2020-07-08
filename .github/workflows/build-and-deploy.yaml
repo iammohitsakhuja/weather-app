@@ -15,8 +15,9 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - name: Build and push
-        uses: actions/checkout@v2
+        uses: docker/build-push-action@v1
         with:
           repository: ${{ github.repository }}/node
           username: ${{ github.actor }}
