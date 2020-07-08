@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Service
+metadata:
+    name: {{ template "web.nodename" . }}
+    labels:
+        app: {{ template "app.name" . }}
+        chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+        release: {{ .Release.Name }}
+        heritage: {{ .Release.Service }}
+spec:
+    type: {{ .Values.web.service.type }}
+    ports:
+        -   name: {{ .Values.web.service.name }}
+            protocol: TCP
+            port: {{ .Values.web.service.clusterPort }}
+            targetPort: {{ .Values.web.service.containerPort }}
+            {{- if eq .Values.web.service.type "NodePort" }}{{- if .Values.web.service.nodePort }}
+            nodePort: {{ .Values.web.service.nodePort }}
+            {{- end }}{{- end }}
+    selector:
+        app: {{ template "app.name" . }}
+        release: {{ .Release.Name }}
+        type: web

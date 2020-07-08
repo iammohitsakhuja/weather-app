@@ -7,6 +7,7 @@ on: [push]
 env:
   CI_IMAGE_REPOSITORY: docker.pkg.github.com/${{ github.repository }}
   CI_COMMIT_SHA: ${{ github.sha }}
+  RELEASE_NAME: weather-app
 
 jobs:
   # Build the image.
@@ -82,3 +83,35 @@ jobs:
         run: |
           which kubectl
           which helm
+      - name: Deploy
+        run: |
+          IMAGE_ID=${CI_IMAGE_REPOSITORY}/node
+
+          # Change all uppercase to lowercase.
+          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+
+          # Strip git ref prefix from version.
+          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+
+          # Strip "v" prefix from tag name.
+          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+
+          # Use Docker `latest` tag convention.
+          [ "$VERSION" == "master" ] && VERSION=latest
+
+          doctl auth --access-token ${{ secrets.DEPLOYMENT_TOKEN }}
+          doctl kubernetes cluster kubeconfig save ${{ secrets.KUBERNETES_CLUSTER_NAME }}
+
+          # Deploy.
+          # cd ops/k8s/
+          # helm dependency build ./weather-app
+          # helm upgrade \
+          #   --install \
+          #   --atomic \
+          #   --namespace ${RELEASE_NAME} \
+          #   --set web.node.image.repository=${IMAGE_ID} \
+          #   --set web.node.image.tag=${VERSION} \
+          #   --set app.config.autocomplete.apiId=${{ secrets.HERE_MAPS_API_ID }} \
+          #   --set app.config.autocomplete.appCode=${{ secrets.HERE_MAPS_APP_CODE }} \
+          #   --set app.config.weather.apiKey=${{ secrets.DARKSKY_API_KEY }} \
+          #   ${RELEASE_NAME} ./weather-app
