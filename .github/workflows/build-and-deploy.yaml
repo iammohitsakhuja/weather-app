@@ -29,7 +29,7 @@ jobs:
           docker build --pull \
             --cache-from "${CI_IMAGE_REPOSITORY}/node:${VERSION},${CI_IMAGE_REPOSITORY}/node:latest" \
             -t ${CI_IMAGE_REPOSITORY}/node:${CI_COMMIT_SHA} -t ${CI_IMAGE_REPOSITORY}/node:latest \
-            -f Dockerfile .
+            -f ops/docker/node/Dockerfile .
           docker push ${CI_IMAGE_REPOSITORY}/node:${CI_COMMIT_SHA}
 
   # Push image to GitHub Packages.
