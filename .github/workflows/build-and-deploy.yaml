@@ -10,79 +10,89 @@ env:
   RELEASE_NAME: weather-app
 
 jobs:
-  # Build the image.
-  build:
-    name: Build
+  # Build and push the image.
+  build-and-push:
+    name: Build and Push
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Log into Docker registry.
-        uses: azure/docker-login@v1
+        # - name: Log into Docker registry.
+        #   uses: azure/docker-login@v1
+        #   with:
+        #     login-server: docker.pkg.github.com
+        #     username: ${{ github.actor }}
+        #     password: ${{ secrets.GITHUB_TOKEN }}
+        #     # run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+      - name: Build and push.
+        uses: elgohr/Publish-Docker-Github-Action@master
         with:
-          login-server: docker.pkg.github.com
+          name: ${{ github.repository }}/node
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-          # run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
-      - name: Build image.
-        run: |
-          # Strip git ref prefix from version.
-          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+          registry: docker.pkg.github.com
+          dockerfile: ops/docker/node/Dockerfile
+          context: .
+          cache: ${{ github.event_name != 'schedule' }}
+          # - name: Build image.
+          #   run: |
+          #     # Strip git ref prefix from version.
+          #     VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
 
-          docker pull ${CI_IMAGE_REPOSITORY}/node:${VERSION} || docker pull ${CI_IMAGE_REPOSITORY}/node:latest || true
-          docker build --pull \
-            --cache-from "${CI_IMAGE_REPOSITORY}/node:${VERSION},${CI_IMAGE_REPOSITORY}/node:latest" \
-            -t ${CI_IMAGE_REPOSITORY}/node:${CI_COMMIT_SHA} \
-            -t ${CI_IMAGE_REPOSITORY}/node:latest \
-            -f ops/docker/node/Dockerfile .
-          docker push ${CI_IMAGE_REPOSITORY}/node:${CI_COMMIT_SHA}
+          #     docker pull ${CI_IMAGE_REPOSITORY}/node:${VERSION} || docker pull ${CI_IMAGE_REPOSITORY}/node:latest || true
+          #     docker build --pull \
+          #       --cache-from "${CI_IMAGE_REPOSITORY}/node:${VERSION},${CI_IMAGE_REPOSITORY}/node:latest" \
+          #       -t ${CI_IMAGE_REPOSITORY}/node:${CI_COMMIT_SHA} \
+          #       -t ${CI_IMAGE_REPOSITORY}/node:latest \
+          #       -f ops/docker/node/Dockerfile .
+          #     docker push ${CI_IMAGE_REPOSITORY}/node:${CI_COMMIT_SHA}
 
   # Push image to GitHub Packages.
   # See also https://docs.docker.com/docker-hub/builds/
-  push:
-    name: Push
-    # Ensure build job passes before pushing image.
-    needs: build
+  # push:
+  #   name: Push
+  #   # Ensure build job passes before pushing image.
+  #   needs: build
 
-    runs-on: ubuntu-latest
+  #   runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Log into Docker registry.
-        uses: azure/docker-login@v1
-        with:
-          login-server: docker.pkg.github.com
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Pull image.
-        run: docker pull ${CI_IMAGE_REPOSITORY}/node:${CI_COMMIT_SHA}
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v2
+  #     - name: Log into Docker registry.
+  #       uses: azure/docker-login@v1
+  #       with:
+  #         login-server: docker.pkg.github.com
+  #         username: ${{ github.actor }}
+  #         password: ${{ secrets.GITHUB_TOKEN }}
+  #     - name: Pull image.
+  #       run: docker pull ${CI_IMAGE_REPOSITORY}/node:${CI_COMMIT_SHA}
 
-      - name: Tag and Push image.
-        run: |
-          IMAGE_ID=${CI_IMAGE_REPOSITORY}/node
+  #     - name: Tag and Push image.
+  #       run: |
+  #         IMAGE_ID=${CI_IMAGE_REPOSITORY}/node
 
-          # Change all uppercase to lowercase.
-          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+  #         # Change all uppercase to lowercase.
+  #         IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
 
-          # Strip git ref prefix from version.
-          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+  #         # Strip git ref prefix from version.
+  #         VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
 
-          # Strip "v" prefix from tag name.
-          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+  #         # Strip "v" prefix from tag name.
+  #         [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
 
-          # Use Docker `latest` tag convention.
-          [ "$VERSION" == "master" ] && VERSION=latest
+  #         # Use Docker `latest` tag convention.
+  #         [ "$VERSION" == "master" ] && VERSION=latest
 
-          echo IMAGE_ID=$IMAGE_ID
-          echo VERSION=$VERSION
+  #         echo IMAGE_ID=$IMAGE_ID
+  #         echo VERSION=$VERSION
 
-          docker tag ${CI_IMAGE_REPOSITORY}/node:${CI_COMMIT_SHA} $IMAGE_ID:$VERSION
-          docker push $IMAGE_ID:$VERSION
+  #         docker tag ${CI_IMAGE_REPOSITORY}/node:${CI_COMMIT_SHA} $IMAGE_ID:$VERSION
+  #         docker push $IMAGE_ID:$VERSION
 
   deploy:
     name: Deploy
-    needs: push
+    needs: build-and-push
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -122,8 +132,8 @@ jobs:
             --install \
             --atomic \
             --namespace ${RELEASE_NAME} \
-            --set web.node.image.repository=${IMAGE_ID} \
-            --set web.node.image.tag=${VERSION} \
+            --set web.node.image.repository=${CI_IMAGE_REPOSITORY}/node \
+            --set web.node.image.tag=${{ needs.build-and-push.outputs.tag }} \
             --set app.config.autocomplete.apiId=${{ secrets.HERE_MAPS_API_ID }} \
             --set app.config.autocomplete.appCode=${{ secrets.HERE_MAPS_APP_CODE }} \
             --set app.config.weather.apiKey=${{ secrets.DARKSKY_API_KEY }} \
