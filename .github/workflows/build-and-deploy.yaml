@@ -5,8 +5,8 @@ name: Build & Deploy
 on: [push]
 
 env:
-  CI_IMAGE_REPOSITORY: docker.pkg.github.com/${{ github.repository }}
-  CI_COMMIT_SHA: ${{ github.sha }}
+  CI_IMAGE_REGISTRY: docker.pkg.github.com
+  CI_IMAGE_REPOSITORY: ${{ github.repository }}
   RELEASE_NAME: weather-app
 
 jobs:
@@ -19,80 +19,19 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-        # - name: Log into Docker registry.
-        #   uses: azure/docker-login@v1
-        #   with:
-        #     login-server: docker.pkg.github.com
-        #     username: ${{ github.actor }}
-        #     password: ${{ secrets.GITHUB_TOKEN }}
-        #     # run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
       - id: build-and-push
         name: Build and push.
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
-          name: ${{ github.repository }}/node
+          name: ${CI_IMAGE_REPOSITORY}/node
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-          registry: docker.pkg.github.com
+          registry: ${CI_IMAGE_REGISTRY}
           dockerfile: ops/docker/node/Dockerfile
           context: .
           cache: ${{ github.event_name != 'schedule' }}
-          # - name: Build image.
-          #   run: |
-          #     # Strip git ref prefix from version.
-          #     VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
 
-          #     docker pull ${CI_IMAGE_REPOSITORY}/node:${VERSION} || docker pull ${CI_IMAGE_REPOSITORY}/node:latest || true
-          #     docker build --pull \
-          #       --cache-from "${CI_IMAGE_REPOSITORY}/node:${VERSION},${CI_IMAGE_REPOSITORY}/node:latest" \
-          #       -t ${CI_IMAGE_REPOSITORY}/node:${CI_COMMIT_SHA} \
-          #       -t ${CI_IMAGE_REPOSITORY}/node:latest \
-          #       -f ops/docker/node/Dockerfile .
-          #     docker push ${CI_IMAGE_REPOSITORY}/node:${CI_COMMIT_SHA}
-
-  # Push image to GitHub Packages.
-  # See also https://docs.docker.com/docker-hub/builds/
-  # push:
-  #   name: Push
-  #   # Ensure build job passes before pushing image.
-  #   needs: build
-
-  #   runs-on: ubuntu-latest
-
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v2
-  #     - name: Log into Docker registry.
-  #       uses: azure/docker-login@v1
-  #       with:
-  #         login-server: docker.pkg.github.com
-  #         username: ${{ github.actor }}
-  #         password: ${{ secrets.GITHUB_TOKEN }}
-  #     - name: Pull image.
-  #       run: docker pull ${CI_IMAGE_REPOSITORY}/node:${CI_COMMIT_SHA}
-
-  #     - name: Tag and Push image.
-  #       run: |
-  #         IMAGE_ID=${CI_IMAGE_REPOSITORY}/node
-
-  #         # Change all uppercase to lowercase.
-  #         IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
-
-  #         # Strip git ref prefix from version.
-  #         VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-
-  #         # Strip "v" prefix from tag name.
-  #         [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
-
-  #         # Use Docker `latest` tag convention.
-  #         [ "$VERSION" == "master" ] && VERSION=latest
-
-  #         echo IMAGE_ID=$IMAGE_ID
-  #         echo VERSION=$VERSION
-
-  #         docker tag ${CI_IMAGE_REPOSITORY}/node:${CI_COMMIT_SHA} $IMAGE_ID:$VERSION
-  #         docker push $IMAGE_ID:$VERSION
-
+  # Deploy the image.
   deploy:
     name: Deploy
     needs: build-and-push
@@ -103,7 +42,7 @@ jobs:
       - name: Log into Docker registry.
         uses: azure/docker-login@v1
         with:
-          login-server: docker.pkg.github.com
+          login-server: ${CI_IMAGE_REGISTRY}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Install doctl
@@ -114,30 +53,13 @@ jobs:
         run: doctl kubernetes cluster kubeconfig save ${{ secrets.KUBERNETES_CLUSTER_NAME }}
       - name: Deploy to k8s
         run: |
-          IMAGE_ID=${CI_IMAGE_REPOSITORY}/node
-
-          # Change all uppercase to lowercase.
-          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
-
-          # Strip git ref prefix from version.
-          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-
-          # Strip "v" prefix from tag name.
-          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
-
-          # Use Docker `latest` tag convention.
-          [ "$VERSION" == "master" ] && VERSION=latest
-
-          echo "Tag: ${{ needs.build-and-push.outputs.tag }}"
-
-          # Deploy.
           cd ops/k8s/
           helm dependency build ./weather-app
           helm upgrade \
             --install \
             --atomic \
             --namespace ${RELEASE_NAME} \
-            --set web.node.image.repository=${CI_IMAGE_REPOSITORY}/node \
+            --set web.node.image.repository=${CI_IMAGE_REGISTRY}/${CI_IMAGE_REPOSITORY}/node \
             --set web.node.image.tag=${{ needs.build-and-push.outputs.tag }} \
             --set app.config.autocomplete.apiId=${{ secrets.HERE_MAPS_API_ID }} \
             --set app.config.autocomplete.appCode=${{ secrets.HERE_MAPS_APP_CODE }} \
