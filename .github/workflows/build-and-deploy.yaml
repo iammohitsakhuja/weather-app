@@ -79,10 +79,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Log into registry.
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
       - name: Verify Kubernetes and Helm.
         run: |
           which kubectl
           which helm
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DEPLOYMENT_TOKEN }}
       - name: Deploy
         run: |
           IMAGE_ID=${CI_IMAGE_REPOSITORY}/node
@@ -99,7 +105,6 @@ jobs:
           # Use Docker `latest` tag convention.
           [ "$VERSION" == "master" ] && VERSION=latest
 
-          doctl auth --access-token ${{ secrets.DEPLOYMENT_TOKEN }}
           doctl kubernetes cluster kubeconfig save ${{ secrets.KUBERNETES_CLUSTER_NAME }}
 
           # Deploy.
