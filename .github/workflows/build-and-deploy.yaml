@@ -10,124 +10,126 @@ env:
   RELEASE_NAME: weather-app
 
 jobs:
-  # Build and push the image.
-  build-and-push:
+  # Build the image.
+  build:
     name: Build
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2
-      - name: Build and push
-        uses: docker/build-push-action@v1
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Log into Docker registry.
+        uses: azure/docker-login@v1
         with:
-          repository: ${{ github.repository }}/node
+          login-server: docker.pkg.github.com
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-          registry: docker.pkg.github.com
-          tag_with_ref: true
-          dockerfile: ops/docker/node/Dockerfile
-          # This is a limitation of using this action. We cannot pull the cache for the current branch first as we do
-          # not have access to the tag name generated for that branch.
-          cache_froms: ${{ github.repository }}/node:latest
-          push: true
-      # - name: Log into registry.
-      #   run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+          # run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
 
-      # - name: Build image.
-      #   run: |
-      #     # Strip git ref prefix from version.
-      #     VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+      - name: Build image.
+        run: |
+          # Strip git ref prefix from version.
+          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
 
-      #     docker pull ${CI_IMAGE_REPOSITORY}/node:${VERSION} || docker pull ${CI_IMAGE_REPOSITORY}/node:latest | true
-      #     docker build --pull \
-      #       --cache-from "${CI_IMAGE_REPOSITORY}/node:${VERSION},${CI_IMAGE_REPOSITORY}/node:latest" \
-      #       -t ${CI_IMAGE_REPOSITORY}/node:${CI_COMMIT_SHA} -t ${CI_IMAGE_REPOSITORY}/node:latest \
-      #       -f ops/docker/node/Dockerfile .
-      #     docker push ${CI_IMAGE_REPOSITORY}/node:${CI_COMMIT_SHA}
+          docker pull ${CI_IMAGE_REPOSITORY}/node:${VERSION} || docker pull ${CI_IMAGE_REPOSITORY}/node:latest | true
+          docker build --pull \
+            --cache-from "${CI_IMAGE_REPOSITORY}/node:${VERSION},${CI_IMAGE_REPOSITORY}/node:latest" \
+            -t ${CI_IMAGE_REPOSITORY}/node:${CI_COMMIT_SHA} -t ${CI_IMAGE_REPOSITORY}/node:latest \
+            -f ops/docker/node/Dockerfile .
+          docker push ${CI_IMAGE_REPOSITORY}/node:${CI_COMMIT_SHA}
 
   # Push image to GitHub Packages.
   # See also https://docs.docker.com/docker-hub/builds/
-  # push:
-  #   name: Push
-  #   # Ensure build job passes before pushing image.
-  #   needs: build
+  push:
+    name: Push
+    # Ensure build job passes before pushing image.
+    needs: build
 
-  #   runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
 
-  #   steps:
-  #     - uses: actions/checkout@v2
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
 
-  #     - name: Log into registry.
-  #       run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+      - name: Log into Docker registry.
+        uses: azure/docker-login@v1
+        with:
+          login-server: docker.pkg.github.com
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          # - name: Log into registry.
+          #   run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
 
-  #     - name: Pull image.
-  #       run: docker pull ${CI_IMAGE_REPOSITORY}/node:${CI_COMMIT_SHA}
+      - name: Pull image.
+        run: docker pull ${CI_IMAGE_REPOSITORY}/node:${CI_COMMIT_SHA}
 
-  #     - name: Tag and Push image.
-  #       run: |
-  #         IMAGE_ID=${CI_IMAGE_REPOSITORY}/node
+      - name: Tag and Push image.
+        run: |
+          IMAGE_ID=${CI_IMAGE_REPOSITORY}/node
 
-  #         # Change all uppercase to lowercase.
-  #         IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+          # Change all uppercase to lowercase.
+          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
 
-  #         # Strip git ref prefix from version.
-  #         VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+          # Strip git ref prefix from version.
+          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
 
-  #         # Strip "v" prefix from tag name.
-  #         [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+          # Strip "v" prefix from tag name.
+          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
 
-  #         # Use Docker `latest` tag convention.
-  #         [ "$VERSION" == "master" ] && VERSION=latest
+          # Use Docker `latest` tag convention.
+          [ "$VERSION" == "master" ] && VERSION=latest
 
-  #         echo IMAGE_ID=$IMAGE_ID
-  #         echo VERSION=$VERSION
+          echo IMAGE_ID=$IMAGE_ID
+          echo VERSION=$VERSION
 
-  #         docker tag ${CI_IMAGE_REPOSITORY}/node:${CI_COMMIT_SHA} $IMAGE_ID:$VERSION
-  #         docker push $IMAGE_ID:$VERSION
+          docker tag ${CI_IMAGE_REPOSITORY}/node:${CI_COMMIT_SHA} $IMAGE_ID:$VERSION
+          docker push $IMAGE_ID:$VERSION
 
-  # deploy:
-  #   name: Deploy
-  #   needs: push
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - name: Log into registry.
-  #       run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
-  #     - name: Verify Kubernetes and Helm.
-  #       run: |
-  #         which kubectl
-  #         which helm
-  #     - name: Install doctl
-  #       uses: digitalocean/action-doctl@v2
-  #       with:
-  #         token: ${{ secrets.DEPLOYMENT_TOKEN }}
-  #     - name: Deploy
-  #       run: |
-  #         IMAGE_ID=${CI_IMAGE_REPOSITORY}/node
+  deploy:
+    name: Deploy
+    needs: push
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Log into registry.
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+      - name: Verify Kubernetes and Helm.
+        run: |
+          which kubectl
+          which helm
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DEPLOYMENT_TOKEN }}
+      - name: Deploy
+        run: |
+          IMAGE_ID=${CI_IMAGE_REPOSITORY}/node
 
-  #         # Change all uppercase to lowercase.
-  #         IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+          # Change all uppercase to lowercase.
+          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
 
-  #         # Strip git ref prefix from version.
-  #         VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+          # Strip git ref prefix from version.
+          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
 
-  #         # Strip "v" prefix from tag name.
-  #         [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+          # Strip "v" prefix from tag name.
+          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
 
-  #         # Use Docker `latest` tag convention.
-  #         [ "$VERSION" == "master" ] && VERSION=latest
+          # Use Docker `latest` tag convention.
+          [ "$VERSION" == "master" ] && VERSION=latest
 
-  #         doctl kubernetes cluster kubeconfig save ${{ secrets.KUBERNETES_CLUSTER_NAME }}
+          doctl kubernetes cluster kubeconfig save ${{ secrets.KUBERNETES_CLUSTER_NAME }}
 
-  #         # Deploy.
-  #         cd ops/k8s/
-  #         helm dependency build ./weather-app
-  #         helm upgrade \
-  #           --install \
-  #           --atomic \
-  #           --namespace ${RELEASE_NAME} \
-  #           --set web.node.image.repository=${IMAGE_ID} \
-  #           --set web.node.image.tag=${VERSION} \
-  #           --set app.config.autocomplete.apiId=${{ secrets.HERE_MAPS_API_ID }} \
-  #           --set app.config.autocomplete.appCode=${{ secrets.HERE_MAPS_APP_CODE }} \
-  #           --set app.config.weather.apiKey=${{ secrets.DARKSKY_API_KEY }} \
-  #           ${RELEASE_NAME} ./weather-app
+          # Deploy.
+          cd ops/k8s/
+          helm dependency build ./weather-app
+          helm upgrade \
+            --install \
+            --atomic \
+            --namespace ${RELEASE_NAME} \
+            --set web.node.image.repository=${IMAGE_ID} \
+            --set web.node.image.tag=${VERSION} \
+            --set app.config.autocomplete.apiId=${{ secrets.HERE_MAPS_API_ID }} \
+            --set app.config.autocomplete.appCode=${{ secrets.HERE_MAPS_APP_CODE }} \
+            --set app.config.weather.apiKey=${{ secrets.DARKSKY_API_KEY }} \
+            ${RELEASE_NAME} ./weather-app
