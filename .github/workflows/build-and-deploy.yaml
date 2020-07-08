@@ -49,19 +49,16 @@ jobs:
         uses: digitalocean/action-doctl@v2
         with:
           token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-      - name: Set k8s context
-        run: doctl kubernetes cluster kubeconfig save ${{ secrets.KUBERNETES_CLUSTER_NAME }}
-      - name: Deploy to k8s
-        run: |
-          cd ops/k8s/
-          helm dependency build ./weather-app
-          helm upgrade \
-            --install \
-            --atomic \
-            --namespace ${RELEASE_NAME} \
-            --set web.node.image.repository=${CI_IMAGE_REGISTRY}/${CI_IMAGE_REPOSITORY}/node \
-            --set web.node.image.tag=${{ needs.build-and-push.outputs.tag }} \
-            --set app.config.autocomplete.apiId=${{ secrets.HERE_MAPS_API_ID }} \
-            --set app.config.autocomplete.appCode=${{ secrets.HERE_MAPS_APP_CODE }} \
-            --set app.config.weather.apiKey=${{ secrets.DARKSKY_API_KEY }} \
+      - run: doctl kubernetes cluster kubeconfig save ${{ secrets.KUBERNETES_CLUSTER_NAME }}
+      - run: cd ops/k8s/
+      - run: helm dependency build ./weather-app
+      - run: helm upgrade
+            --install
+            --atomic
+            --namespace ${RELEASE_NAME}
+            --set web.node.image.repository=${CI_IMAGE_REGISTRY}/${CI_IMAGE_REPOSITORY}/node
+            --set web.node.image.tag=${{ needs.build-and-push.outputs.tag }}
+            --set app.config.autocomplete.apiId=${{ secrets.HERE_MAPS_API_ID }}
+            --set app.config.autocomplete.appCode=${{ secrets.HERE_MAPS_APP_CODE }}
+            --set app.config.weather.apiKey=${{ secrets.DARKSKY_API_KEY }}
             ${RELEASE_NAME} ./weather-app
