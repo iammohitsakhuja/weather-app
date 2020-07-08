@@ -19,14 +19,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - id: build-and-push
-        name: Build and push.
+      - name: Build and push.
         uses: elgohr/Publish-Docker-Github-Action@master
+        id: build-and-push
         with:
-          name: ${CI_IMAGE_REPOSITORY}/node
+          name: ${{ env.CI_IMAGE_REPOSITORY }}/node
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-          registry: ${CI_IMAGE_REGISTRY}
+          registry: ${{ env.CI_IMAGE_REGISTRY }}
           dockerfile: ops/docker/node/Dockerfile
           context: .
           cache: ${{ github.event_name != 'schedule' }}
@@ -42,7 +42,7 @@ jobs:
       - name: Log into Docker registry.
         uses: azure/docker-login@v1
         with:
-          login-server: ${CI_IMAGE_REGISTRY}
+          login-server: ${{ env.CI_IMAGE_REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Install doctl
