@@ -14,11 +14,9 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-
       - name: Log into Docker registry.
         uses: azure/docker-login@v1
         with:
@@ -26,16 +24,16 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           # run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
-
       - name: Build image.
         run: |
           # Strip git ref prefix from version.
           VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
 
-          docker pull ${CI_IMAGE_REPOSITORY}/node:${VERSION} || docker pull ${CI_IMAGE_REPOSITORY}/node:latest | true
+          docker pull ${CI_IMAGE_REPOSITORY}/node:${VERSION} || docker pull ${CI_IMAGE_REPOSITORY}/node:latest || true
           docker build --pull \
             --cache-from "${CI_IMAGE_REPOSITORY}/node:${VERSION},${CI_IMAGE_REPOSITORY}/node:latest" \
-            -t ${CI_IMAGE_REPOSITORY}/node:${CI_COMMIT_SHA} -t ${CI_IMAGE_REPOSITORY}/node:latest \
+            -t ${CI_IMAGE_REPOSITORY}/node:${CI_COMMIT_SHA} \
+            -t ${CI_IMAGE_REPOSITORY}/node:latest \
             -f ops/docker/node/Dockerfile .
           docker push ${CI_IMAGE_REPOSITORY}/node:${CI_COMMIT_SHA}
 
@@ -51,16 +49,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-
       - name: Log into Docker registry.
         uses: azure/docker-login@v1
         with:
           login-server: docker.pkg.github.com
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-          # - name: Log into registry.
-          #   run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
-
       - name: Pull image.
         run: docker pull ${CI_IMAGE_REPOSITORY}/node:${CI_COMMIT_SHA}
 
@@ -91,18 +85,21 @@ jobs:
     needs: push
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Log into registry.
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
-      - name: Verify Kubernetes and Helm.
-        run: |
-          which kubectl
-          which helm
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Log into Docker registry.
+        uses: azure/docker-login@v1
+        with:
+          login-server: docker.pkg.github.com
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Install doctl
         uses: digitalocean/action-doctl@v2
         with:
-          token: ${{ secrets.DEPLOYMENT_TOKEN }}
-      - name: Deploy
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+      - name: Set k8s context
+        run: doctl kubernetes cluster kubeconfig save ${{ secrets.KUBERNETES_CLUSTER_NAME }}
+      - name: Deploy to k8s
         run: |
           IMAGE_ID=${CI_IMAGE_REPOSITORY}/node
 
@@ -117,8 +114,6 @@ jobs:
 
           # Use Docker `latest` tag convention.
           [ "$VERSION" == "master" ] && VERSION=latest
-
-          doctl kubernetes cluster kubeconfig save ${{ secrets.KUBERNETES_CLUSTER_NAME }}
 
           # Deploy.
           cd ops/k8s/
