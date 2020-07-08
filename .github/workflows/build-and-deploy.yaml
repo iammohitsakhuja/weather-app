@@ -2,7 +2,10 @@ name: Build & Deploy
 
 # Allow building on each push as opposed to push on master and PRs for other branches as GitHub provides a "merge" git
 # ref for PR of any branch. This corrupts the Docker repository.
-on: [push]
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
 
 env:
   CI_IMAGE_REGISTRY: docker.pkg.github.com
@@ -35,6 +38,7 @@ jobs:
   deploy:
     name: Deploy
     needs: build-and-push
+    if: ${{ github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
