@@ -27,8 +27,6 @@ spec:
                 release: {{ .Release.Name }}
                 type: web
         spec:
-            imagePullSecrets:
-                -   name: github-registry-secret
             containers:
                 -   name: node
                     image: '{{ .Values.web.node.image.repository }}:{{ .Values.web.node.image.tag }}'
