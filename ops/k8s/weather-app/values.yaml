@@ -26,7 +26,7 @@ web:
             # this is never used in CI. In CI the image is always passed via --set.
             repository: docker.pkg.github.com/mohitsakhuja/weather-app/node
             tag: latest
-            pullPolicy: IfNotPresent
+            pullPolicy: Always
         resources:
             requests:
                 cpu: 128m
