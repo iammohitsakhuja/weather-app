@@ -51,6 +51,12 @@ jobs:
         with:
           token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
       - run: doctl kubernetes cluster kubeconfig save ${{ secrets.KUBERNETES_CLUSTER_NAME }}
+      - name: Create or Replace Secret
+        run: kubectl create secret docker-registry github-registry-secret
+            --docker-server=${{ env.CI_IMAGE_REGISTRY }}
+            --docker-username=${{ github.actor }}
+            --docker-password=${{ secrets.GITHUB_TOKEN }}
+            --dry-run=client -o yaml | kubectl apply -f -
       - run: helm dependency build ops/k8s/weather-app
       - run: helm upgrade
             --install

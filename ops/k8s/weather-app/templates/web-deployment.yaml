@@ -29,7 +29,6 @@ spec:
         spec:
             imagePullSecrets:
                 -   name: github-registry-secret
-                    namespace: default
             containers:
                 -   name: node
                     image: '{{ .Values.web.node.image.repository }}:{{ .Values.web.node.image.tag }}'
