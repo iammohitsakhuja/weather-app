@@ -1,5 +1,7 @@
 # Weather app
 
+![Build & Deploy](https://github.com/mohitsakhuja/weather-app/workflows/Build%20&%20Deploy/badge.svg)
+
 A simple responsive weather app for displaying weather data for various locations
 in the form of cards. The design of the app tries to be as minimalistic as possible,
 keeping out the clutter from the main view. Cards can be expanded so as to show
