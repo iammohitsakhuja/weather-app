@@ -17,10 +17,9 @@ app:
 web:
     replicaCount: 1
     service:
-        type: NodePort
+        type: ClusterIP
         containerPort: 3001
         clusterPort: 80
-        nodePort:
     node:
         image:
             # this is never used in CI. In CI the image is always passed via --set.
