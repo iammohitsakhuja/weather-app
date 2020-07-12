@@ -73,47 +73,6 @@ This will start the development server. You can open the app in your browser by
 visiting `http://localhost:3000`. And the API server will be running on port `3001`
 if no other port was specified in the environment.
 
-## Building for Production (using Docker)
-
-The app has been deployed to production using Docker. In order to deploy a
-production build, here's what you'll need to do:
-
-- Clone this repository.
-- Repeat the same steps as above for creating an environment file, with the
-  difference that this time you'll need to create a `.env.production.local`
-  file instead of a `.env.development.local` file, in the `server` directory.
-- Have [Docker](https://www.docker.com/) installed and running on your system.
-- Run the following command from the root of this repository to build the docker
-  image.
-
-  ```bash
-  $ docker build -t <docker_image_name> .
-  Sending build context to Docker daemon   6.92MB
-  Step 1/12 : FROM node:10.10.0
-  ...
-  ```
-
-  This will take a while.
-
-- Once that completes, run the image as container by running:
-
-  ```bash
-    $ docker run -d -p 3001:3001 <image_name_you_gave>
-    ...
-  ```
-
-  This too will take a while. You can check the progress by doing:
-
-  ```bash
-  $ docker container ls     # Get the name (or id) of the container.
-  $ docker logs <name or id of the container>
-    ...
-    'Weather App' server listening on port: 3001
-  ```
-
-  Once you see that last line `'Weather App' server listening on port: 3001`, then
-  you can visit `http://localhost:3001` in your browser to view the production build.
-
 ## Built With
 
 - [React](https://reactjs.org/) - Client side rendering
