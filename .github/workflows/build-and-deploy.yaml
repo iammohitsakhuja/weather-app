@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 
 env:
-  CI_IMAGE_REGISTRY: docker.pkg.github.com
+  CI_IMAGE_REGISTRY: ghcr.io
   CI_IMAGE_REPOSITORY: ${{ github.repository }}
   RELEASE_NAME: weather-app
 
