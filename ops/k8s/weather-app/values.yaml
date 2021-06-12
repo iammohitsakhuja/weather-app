@@ -28,10 +28,10 @@ web:
             pullPolicy: Always
         resources:
             requests:
-                cpu: 128m
-                memory: 256Mi
+                cpu: 96m
+                memory: 192Mi
             limits:
-                cpu: 256m
-                memory: 512Mi
+                cpu: 192m
+                memory: 384Mi
         healthCheck:
             path: /ping
