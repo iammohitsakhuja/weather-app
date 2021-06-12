@@ -24,7 +24,7 @@ const Footer = ({ purgeAppData }) => (
       <span className="icon">
         <FontAwesomeIcon icon={faHeart} />
       </span>{' '}
-      by <a href="https://github.com/mohitsakhuja">MS</a> and <a href="https://github.com/ManuSekhon">MS</a>
+      by <a href="https://github.com/iammohitsakhuja">MS</a> and <a href="https://github.com/ManuSekhon">MS</a>
     </div>
   </footer>
 )

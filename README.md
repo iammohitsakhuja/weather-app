@@ -1,6 +1,6 @@
 # Weather app
 
-![Build & Deploy](https://github.com/mohitsakhuja/weather-app/workflows/Build%20&%20Deploy/badge.svg)
+![Build & Deploy](https://github.com/iammohitsakhuja/weather-app/workflows/Build%20&%20Deploy/badge.svg)
 
 A simple responsive weather app for displaying weather data for various locations
 in the form of cards. The design of the app tries to be as minimalistic as possible,
@@ -37,7 +37,7 @@ up your local development environment.
 First, clone the project.
 
 ```bash
-$ git clone https://github.com/mohitsakhuja/weather-app.git
+$ git clone https://github.com/iammohitsakhuja/weather-app.git
 Cloning into 'weather-app'...
 ```
 
