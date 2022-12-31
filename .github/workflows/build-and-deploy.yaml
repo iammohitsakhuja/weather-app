@@ -20,7 +20,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Build and push.
-        uses: elgohr/Publish-Docker-Github-Action@master
+        uses: elgohr/Publish-Docker-Github-Action@v5
         id: build-and-push
         with:
           name: ${{ env.CI_IMAGE_REPOSITORY }}/node
